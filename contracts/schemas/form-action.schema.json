@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "form-action.schema.json",
+  "title": "FormAction 1.0",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "fieldId",
+        "value"
+      ],
+      "properties": {
+        "type": {
+          "const": "set_value"
+        },
+        "fieldId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "$ref": "form-value.schema.json"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "fieldId"
+      ],
+      "properties": {
+        "type": {
+          "const": "clear_value"
+        },
+        "fieldId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "target"
+      ],
+      "properties": {
+        "type": {
+          "const": "navigate"
+        },
+        "target": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "type",
+                "fieldId"
+              ],
+              "properties": {
+                "type": {
+                  "const": "field"
+                },
+                "fieldId": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "next",
+                    "previous"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "reason"
+      ],
+      "properties": {
+        "type": {
+          "const": "request_clarification"
+        },
+        "fieldIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "reason": {
+          "enum": [
+            "ambiguous",
+            "missing_information",
+            "invalid_value",
+            "low_confidence"
+          ]
+        },
+        "detail": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}
