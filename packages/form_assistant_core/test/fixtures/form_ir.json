@@ -1,0 +1,117 @@
+{
+  "specVersion": "1.0",
+  "id": "example",
+  "fields": [
+    {
+      "id": "string",
+      "value": {
+        "type": "string"
+      },
+      "semantics": {
+        "label": "string",
+        "aliases": [
+          "a",
+          "z"
+        ]
+      },
+      "extensions": {},
+      "constraints": {
+        "required": true,
+        "minLength": 1,
+        "maxLength": 20,
+        "pattern": "[a-z]+"
+      }
+    },
+    {
+      "id": "integer",
+      "value": {
+        "type": "integer"
+      },
+      "semantics": {
+        "label": "integer",
+        "aliases": [
+          "a",
+          "z"
+        ]
+      },
+      "extensions": {}
+    },
+    {
+      "id": "number",
+      "value": {
+        "type": "number"
+      },
+      "semantics": {
+        "label": "number",
+        "aliases": [
+          "a",
+          "z"
+        ]
+      },
+      "extensions": {}
+    },
+    {
+      "id": "boolean",
+      "value": {
+        "type": "boolean"
+      },
+      "semantics": {
+        "label": "boolean",
+        "aliases": [
+          "a",
+          "z"
+        ]
+      },
+      "extensions": {}
+    },
+    {
+      "id": "date",
+      "value": {
+        "type": "date"
+      },
+      "semantics": {
+        "label": "date",
+        "aliases": [
+          "a",
+          "z"
+        ]
+      },
+      "extensions": {}
+    },
+    {
+      "id": "choice",
+      "value": {
+        "type": "choice",
+        "multiple": true
+      },
+      "semantics": {
+        "label": "choice",
+        "aliases": [
+          "a",
+          "z"
+        ]
+      },
+      "extensions": {},
+      "options": [
+        {
+          "id": "canonical_id",
+          "label": "Label",
+          "aliases": [],
+          "extensions": {}
+        }
+      ]
+    }
+  ],
+  "requiredCapabilities": [
+    "example:capability"
+  ],
+  "extensions": {
+    "example:future": {
+      "nested": [
+        1,
+        true,
+        null
+      ]
+    }
+  }
+}

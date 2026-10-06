@@ -1,0 +1,11 @@
+{
+  "status": "invalid",
+  "issues": [{
+    "code": "value.type_mismatch",
+    "severity": "error",
+    "fieldId": "field",
+    "message": "Expected integer",
+    "metadata": {"example:diagnostic": {"expected": "integer", "values": [null, true, 4]}}
+  }],
+  "validatedAgainstRevision": 7
+}

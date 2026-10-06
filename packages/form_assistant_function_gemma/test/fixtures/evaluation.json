@@ -1,0 +1,120 @@
+[
+  {
+    "category": "simple",
+    "input": "I am 32 years old",
+    "initial": {},
+    "output": "<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:32}<end_function_call>",
+    "expected": {
+      "age": 32
+    },
+    "clarification": false
+  },
+  {
+    "category": "multi_field",
+    "input": "Age thirty two, consent yes",
+    "initial": {},
+    "output": "<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:32}<end_function_call><start_function_call>call:set_boolean{field_id:<escape>consent<escape>,value:true}<end_function_call>",
+    "expected": {
+      "age": 32,
+      "consent": true
+    },
+    "clarification": false
+  },
+  {
+    "category": "correction",
+    "input": "Age thirty, sorry make age thirty one",
+    "initial": {
+      "age": 30
+    },
+    "output": "<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:31}<end_function_call>",
+    "expected": {
+      "age": 31
+    },
+    "clarification": false
+  },
+  {
+    "category": "negation",
+    "input": "I do not consent",
+    "initial": {},
+    "output": "<start_function_call>call:set_boolean{field_id:<escape>consent<escape>,value:false}<end_function_call>",
+    "expected": {
+      "consent": false
+    },
+    "clarification": false
+  },
+  {
+    "category": "ambiguity",
+    "input": "Age twenty or thirty",
+    "initial": {},
+    "output": "<start_function_call>call:request_clarification{reason:<escape>ambiguous<escape>,field_ids:[]}<end_function_call>",
+    "expected": {},
+    "clarification": true
+  },
+  {
+    "category": "out_of_order",
+    "input": "Set consent yes before my age of twenty",
+    "initial": {},
+    "output": "<start_function_call>call:set_boolean{field_id:<escape>consent<escape>,value:true}<end_function_call><start_function_call>call:set_integer{field_id:<escape>age<escape>,value:20}<end_function_call>",
+    "expected": {
+      "consent": true,
+      "age": 20
+    },
+    "clarification": false
+  },
+  {
+    "category": "previous_reference",
+    "input": "Use the age from my previous answer",
+    "initial": {
+      "age": 40
+    },
+    "output": "<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:40}<end_function_call>",
+    "expected": {
+      "age": 40
+    },
+    "clarification": false
+  },
+  {
+    "category": "invalid_value",
+    "input": "Age is two hundred",
+    "initial": {},
+    "output": "<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:200}<end_function_call>",
+    "expected": {},
+    "clarification": true
+  },
+  {
+    "category": "unsupported",
+    "input": "Submit and email the form",
+    "initial": {},
+    "output": "<start_function_call>call:request_clarification{reason:<escape>missing_information<escape>,field_ids:[]}<end_function_call>",
+    "expected": {},
+    "clarification": true
+  },
+  {
+    "category": "no_answer",
+    "input": "",
+    "initial": {},
+    "output": "",
+    "expected": {},
+    "clarification": true
+  },
+  {
+    "category": "long",
+    "input": "Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. Some background. My age is 25.",
+    "initial": {},
+    "output": "<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:25}<end_function_call>",
+    "expected": {
+      "age": 25
+    },
+    "clarification": false
+  },
+  {
+    "category": "asr_noise",
+    "input": "age thurty too",
+    "initial": {},
+    "output": "<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:32}<end_function_call>",
+    "expected": {
+      "age": 32
+    },
+    "clarification": false
+  }
+]

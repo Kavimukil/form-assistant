@@ -1,0 +1,151 @@
+{
+  "values": [
+    {
+      "type": "string",
+      "value": "  MiXeD  "
+    },
+    {
+      "type": "integer",
+      "value": 4
+    },
+    {
+      "type": "number",
+      "value": 4.0
+    },
+    {
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "type": "date",
+      "value": "2024-02-29"
+    },
+    {
+      "type": "choice",
+      "value": "canonical_id"
+    },
+    {
+      "type": "multi_choice",
+      "value": [
+        "a",
+        "z"
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "set_value",
+      "fieldId": "field",
+      "value": {
+        "type": "string",
+        "value": "  MiXeD  "
+      }
+    },
+    {
+      "type": "set_value",
+      "fieldId": "field",
+      "value": {
+        "type": "integer",
+        "value": 4
+      }
+    },
+    {
+      "type": "set_value",
+      "fieldId": "field",
+      "value": {
+        "type": "number",
+        "value": 4.0
+      }
+    },
+    {
+      "type": "set_value",
+      "fieldId": "field",
+      "value": {
+        "type": "boolean",
+        "value": true
+      }
+    },
+    {
+      "type": "set_value",
+      "fieldId": "field",
+      "value": {
+        "type": "date",
+        "value": "2024-02-29"
+      }
+    },
+    {
+      "type": "set_value",
+      "fieldId": "field",
+      "value": {
+        "type": "choice",
+        "value": "canonical_id"
+      }
+    },
+    {
+      "type": "set_value",
+      "fieldId": "field",
+      "value": {
+        "type": "multi_choice",
+        "value": [
+          "a",
+          "z"
+        ]
+      }
+    },
+    {
+      "type": "clear_value",
+      "fieldId": "field"
+    },
+    {
+      "type": "navigate",
+      "target": {
+        "type": "field",
+        "fieldId": "field"
+      }
+    },
+    {
+      "type": "navigate",
+      "target": {
+        "type": "next"
+      }
+    },
+    {
+      "type": "navigate",
+      "target": {
+        "type": "previous"
+      }
+    },
+    {
+      "type": "request_clarification",
+      "fieldIds": [
+        "a",
+        "z"
+      ],
+      "reason": "ambiguous"
+    },
+    {
+      "type": "request_clarification",
+      "fieldIds": [
+        "a",
+        "z"
+      ],
+      "reason": "missing_information"
+    },
+    {
+      "type": "request_clarification",
+      "fieldIds": [
+        "a",
+        "z"
+      ],
+      "reason": "invalid_value"
+    },
+    {
+      "type": "request_clarification",
+      "fieldIds": [
+        "a",
+        "z"
+      ],
+      "reason": "low_confidence"
+    }
+  ]
+}

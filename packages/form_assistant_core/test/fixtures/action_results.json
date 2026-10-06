@@ -1,0 +1,84 @@
+[
+  {
+    "type": "action_applied",
+    "action": {
+      "type": "set_value",
+      "fieldId": "a",
+      "value": {
+        "type": "integer",
+        "value": 1
+      }
+    },
+    "previousRevision": 0,
+    "revision": 1,
+    "snapshot": {
+      "specVersion": "1.0",
+      "formId": "test",
+      "revision": 1,
+      "values": {
+        "a": {
+          "type": "integer",
+          "value": 1
+        }
+      },
+      "activeFieldId": "a",
+      "lifecycle": "active"
+    }
+  },
+  {
+    "type": "action_no_op",
+    "action": {
+      "type": "set_value",
+      "fieldId": "a",
+      "value": {
+        "type": "integer",
+        "value": 1
+      }
+    },
+    "revision": 1,
+    "snapshot": {
+      "specVersion": "1.0",
+      "formId": "test",
+      "revision": 1,
+      "values": {
+        "a": {
+          "type": "integer",
+          "value": 1
+        }
+      },
+      "activeFieldId": "a",
+      "lifecycle": "active"
+    },
+    "reason": "value_unchanged"
+  },
+  {
+    "type": "action_rejected",
+    "action": {
+      "type": "set_value",
+      "fieldId": "a",
+      "value": {
+        "type": "integer",
+        "value": 1
+      }
+    },
+    "rejection": {
+      "code": "stale_revision",
+      "details": {
+        "expected": 0
+      }
+    },
+    "snapshot": {
+      "specVersion": "1.0",
+      "formId": "test",
+      "revision": 1,
+      "values": {
+        "a": {
+          "type": "integer",
+          "value": 1
+        }
+      },
+      "activeFieldId": "a",
+      "lifecycle": "active"
+    }
+  }
+]

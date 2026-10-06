@@ -1,0 +1,8 @@
+name: form_assistant_core
+description: Canonical contracts for the schema-agnostic form assistant runtime.
+version: 0.1.0
+publish_to: none
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+dev_dependencies:
+  test: ^1.25.0

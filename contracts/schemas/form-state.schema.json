@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "form-state.schema.json",
+  "title": "FormStateSnapshot 1.0",
+  "$defs": {
+    "FormStateSnapshot": {
+      "type": "object",
+      "properties": {
+        "specVersion": {
+          "type": "string",
+          "pattern": "^1\\.\\d+$"
+        },
+        "formId": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "form-value.schema.json"
+          }
+        },
+        "activeFieldId": {
+          "type": "string"
+        },
+        "lifecycle": {
+          "enum": [
+            "active",
+            "completed",
+            "read_only"
+          ]
+        }
+      },
+      "required": [
+        "specVersion",
+        "formId",
+        "revision",
+        "values",
+        "lifecycle"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "$ref": "#/$defs/FormStateSnapshot"
+}

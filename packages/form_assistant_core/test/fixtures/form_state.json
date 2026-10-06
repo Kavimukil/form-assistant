@@ -1,0 +1,13 @@
+{
+  "specVersion": "1.0",
+  "formId": "test",
+  "revision": 1,
+  "values": {
+    "a": {
+      "type": "integer",
+      "value": 1
+    }
+  },
+  "activeFieldId": "a",
+  "lifecycle": "active"
+}

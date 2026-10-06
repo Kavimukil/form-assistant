@@ -1,0 +1,612 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bridge-event.schema.json",
+  "title": "FormStateBridgeEvent 1.0",
+  "$defs": {
+    "FormStateSnapshot": {
+      "type": "object",
+      "properties": {
+        "specVersion": {
+          "type": "string",
+          "pattern": "^1\\.\\d+$"
+        },
+        "formId": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "values": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "form-value.schema.json"
+          }
+        },
+        "activeFieldId": {
+          "type": "string"
+        },
+        "lifecycle": {
+          "enum": [
+            "active",
+            "completed",
+            "read_only"
+          ]
+        }
+      },
+      "required": [
+        "specVersion",
+        "formId",
+        "revision",
+        "values",
+        "lifecycle"
+      ],
+      "additionalProperties": true
+    },
+    "ActionApplied": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "action_applied"
+        },
+        "action": {
+          "$ref": "form-action.schema.json"
+        },
+        "previousRevision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "snapshot": {
+          "$ref": "#/$defs/FormStateSnapshot"
+        }
+      },
+      "required": [
+        "type",
+        "action",
+        "previousRevision",
+        "revision",
+        "snapshot"
+      ],
+      "additionalProperties": true
+    },
+    "ActionNoOp": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "action_no_op"
+        },
+        "action": {
+          "$ref": "form-action.schema.json"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "snapshot": {
+          "$ref": "#/$defs/FormStateSnapshot"
+        },
+        "reason": {
+          "enum": [
+            "value_unchanged",
+            "already_clear",
+            "already_at_target"
+          ]
+        }
+      },
+      "required": [
+        "type",
+        "action",
+        "revision",
+        "snapshot",
+        "reason"
+      ],
+      "additionalProperties": true
+    },
+    "ActionRejection": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "enum": [
+            "stale_revision",
+            "read_only",
+            "unknown_field",
+            "invalid_value",
+            "validation_failed",
+            "unsupported_action",
+            "capability_unavailable",
+            "conflict",
+            "atomic_batch_aborted",
+            "disposed",
+            "internal_error"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "additionalProperties": true
+    },
+    "ActionRejected": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "action_rejected"
+        },
+        "action": {
+          "$ref": "form-action.schema.json"
+        },
+        "rejection": {
+          "$ref": "#/$defs/ActionRejection"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/FormStateSnapshot"
+        }
+      },
+      "required": [
+        "type",
+        "action",
+        "rejection",
+        "snapshot"
+      ],
+      "additionalProperties": true
+    },
+    "BatchRejection": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "enum": [
+            "stale_revision",
+            "batch_unsupported",
+            "atomic_batch_unsupported",
+            "read_only",
+            "conflict",
+            "disposed",
+            "internal_error"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "code"
+      ],
+      "additionalProperties": true
+    },
+    "BatchActionResult": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": [
+            "atomic",
+            "best_effort"
+          ]
+        },
+        "baseRevision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "finalRevision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "enum": [
+            "applied",
+            "partially_applied",
+            "no_op",
+            "rejected"
+          ]
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ActionResult"
+          }
+        },
+        "snapshot": {
+          "$ref": "#/$defs/FormStateSnapshot"
+        },
+        "rejection": {
+          "$ref": "#/$defs/BatchRejection"
+        }
+      },
+      "required": [
+        "mode",
+        "baseRevision",
+        "finalRevision",
+        "status",
+        "results",
+        "snapshot"
+      ],
+      "additionalProperties": true
+    },
+    "BridgeInitialized": {
+      "type": "object",
+      "properties": {
+        "specVersion": {
+          "type": "string",
+          "pattern": "^1\\.\\d+$"
+        },
+        "type": {
+          "const": "bridge_initialized"
+        },
+        "bridgeId": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}(?:\\d{3})?Z$"
+        },
+        "snapshot": {
+          "$ref": "#/$defs/FormStateSnapshot"
+        }
+      },
+      "required": [
+        "specVersion",
+        "type",
+        "bridgeId",
+        "timestamp",
+        "snapshot"
+      ],
+      "additionalProperties": true
+    },
+    "FieldChange": {
+      "type": "object",
+      "properties": {
+        "fieldId": {
+          "type": "string"
+        },
+        "previousValue": {
+          "$ref": "form-value.schema.json"
+        },
+        "value": {
+          "$ref": "form-value.schema.json"
+        },
+        "type": {
+          "enum": [
+            "set",
+            "changed",
+            "cleared"
+          ]
+        }
+      },
+      "required": [
+        "fieldId",
+        "type"
+      ],
+      "additionalProperties": true
+    },
+    "StateChanged": {
+      "type": "object",
+      "properties": {
+        "specVersion": {
+          "type": "string",
+          "pattern": "^1\\.\\d+$"
+        },
+        "type": {
+          "const": "state_changed"
+        },
+        "bridgeId": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}(?:\\d{3})?Z$"
+        },
+        "previousRevision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "changes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FieldChange"
+          }
+        },
+        "origin": {
+          "enum": [
+            "user",
+            "deterministic",
+            "intelligence",
+            "external",
+            "system",
+            "undo",
+            "redo"
+          ]
+        },
+        "interactionId": {
+          "type": "string"
+        },
+        "operationId": {
+          "type": "string"
+        },
+        "proposalId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "specVersion",
+        "type",
+        "bridgeId",
+        "timestamp",
+        "previousRevision",
+        "revision",
+        "changes",
+        "origin"
+      ],
+      "additionalProperties": true
+    },
+    "ActiveFieldChanged": {
+      "type": "object",
+      "properties": {
+        "specVersion": {
+          "type": "string",
+          "pattern": "^1\\.\\d+$"
+        },
+        "type": {
+          "const": "active_field_changed"
+        },
+        "bridgeId": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}(?:\\d{3})?Z$"
+        },
+        "previousFieldId": {
+          "type": "string"
+        },
+        "fieldId": {
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "user",
+            "deterministic",
+            "intelligence",
+            "external",
+            "system",
+            "undo",
+            "redo"
+          ]
+        },
+        "interactionId": {
+          "type": "string"
+        },
+        "operationId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "specVersion",
+        "type",
+        "bridgeId",
+        "timestamp",
+        "origin"
+      ],
+      "additionalProperties": true
+    },
+    "ActionCompleted": {
+      "type": "object",
+      "properties": {
+        "specVersion": {
+          "type": "string",
+          "pattern": "^1\\.\\d+$"
+        },
+        "type": {
+          "const": "action_completed"
+        },
+        "bridgeId": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}(?:\\d{3})?Z$"
+        },
+        "operationId": {
+          "type": "string"
+        },
+        "interactionId": {
+          "type": "string"
+        },
+        "proposalId": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/ActionResult"
+        }
+      },
+      "required": [
+        "specVersion",
+        "type",
+        "bridgeId",
+        "timestamp",
+        "operationId",
+        "interactionId",
+        "result"
+      ],
+      "additionalProperties": true
+    },
+    "BatchCompleted": {
+      "type": "object",
+      "properties": {
+        "specVersion": {
+          "type": "string",
+          "pattern": "^1\\.\\d+$"
+        },
+        "type": {
+          "const": "batch_completed"
+        },
+        "bridgeId": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}(?:\\d{3})?Z$"
+        },
+        "operationId": {
+          "type": "string"
+        },
+        "interactionId": {
+          "type": "string"
+        },
+        "proposalId": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/$defs/BatchActionResult"
+        }
+      },
+      "required": [
+        "specVersion",
+        "type",
+        "bridgeId",
+        "timestamp",
+        "operationId",
+        "interactionId",
+        "result"
+      ],
+      "additionalProperties": true
+    },
+    "BridgeError": {
+      "type": "object",
+      "properties": {
+        "specVersion": {
+          "type": "string",
+          "pattern": "^1\\.\\d+$"
+        },
+        "type": {
+          "const": "bridge_error"
+        },
+        "bridgeId": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}(?:\\d{3})?Z$"
+        },
+        "code": {
+          "enum": [
+            "initialization_failed",
+            "external_store_failure",
+            "mapping_failure",
+            "serialization_failure",
+            "unexpected_state",
+            "operation_failure",
+            "disposed",
+            "unknown"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "recoverable": {
+          "type": "boolean"
+        },
+        "interactionId": {
+          "type": "string"
+        },
+        "operationId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "specVersion",
+        "type",
+        "bridgeId",
+        "timestamp",
+        "code",
+        "message",
+        "recoverable"
+      ],
+      "additionalProperties": true
+    },
+    "BridgeDisposed": {
+      "type": "object",
+      "properties": {
+        "specVersion": {
+          "type": "string",
+          "pattern": "^1\\.\\d+$"
+        },
+        "type": {
+          "const": "bridge_disposed"
+        },
+        "bridgeId": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}(?:\\d{3})?Z$"
+        }
+      },
+      "required": [
+        "specVersion",
+        "type",
+        "bridgeId",
+        "timestamp"
+      ],
+      "additionalProperties": true
+    },
+    "ActionResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ActionApplied"
+        },
+        {
+          "$ref": "#/$defs/ActionNoOp"
+        },
+        {
+          "$ref": "#/$defs/ActionRejected"
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/BridgeInitialized"
+    },
+    {
+      "$ref": "#/$defs/StateChanged"
+    },
+    {
+      "$ref": "#/$defs/ActiveFieldChanged"
+    },
+    {
+      "$ref": "#/$defs/ActionCompleted"
+    },
+    {
+      "$ref": "#/$defs/BatchCompleted"
+    },
+    {
+      "$ref": "#/$defs/BridgeError"
+    },
+    {
+      "$ref": "#/$defs/BridgeDisposed"
+    }
+  ]
+}

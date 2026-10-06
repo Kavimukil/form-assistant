@@ -22,7 +22,7 @@
           "$ref": "form-value.schema.json"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     {
       "type": "object",
@@ -39,7 +39,7 @@
           "minLength": 1
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     {
       "type": "object",
@@ -68,7 +68,7 @@
                   "minLength": 1
                 }
               },
-              "additionalProperties": false
+              "additionalProperties": true
             },
             {
               "type": "object",
@@ -83,12 +83,12 @@
                   ]
                 }
               },
-              "additionalProperties": false
+              "additionalProperties": true
             }
           ]
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     },
     {
       "type": "object",
@@ -120,7 +120,7 @@
           "type": "string"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": true
     }
   ]
 }

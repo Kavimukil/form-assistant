@@ -1,0 +1,159 @@
+[
+  {
+    "specVersion": "1.0",
+    "bridgeId": "local",
+    "timestamp": "2026-10-05T12:00:00.000Z",
+    "type": "bridge_initialized",
+    "snapshot": {
+      "specVersion": "1.0",
+      "formId": "test",
+      "revision": 1,
+      "values": {
+        "a": {
+          "type": "integer",
+          "value": 1
+        }
+      },
+      "activeFieldId": "a",
+      "lifecycle": "active"
+    }
+  },
+  {
+    "specVersion": "1.0",
+    "bridgeId": "local",
+    "timestamp": "2026-10-05T12:00:00.000Z",
+    "interactionId": "interaction",
+    "operationId": "op",
+    "proposalId": "proposal",
+    "type": "state_changed",
+    "previousRevision": 0,
+    "revision": 1,
+    "changes": [
+      {
+        "fieldId": "a",
+        "value": {
+          "type": "integer",
+          "value": 1
+        },
+        "type": "set"
+      }
+    ],
+    "origin": "user"
+  },
+  {
+    "specVersion": "1.0",
+    "bridgeId": "local",
+    "timestamp": "2026-10-05T12:00:00.000Z",
+    "type": "active_field_changed",
+    "fieldId": "a",
+    "origin": "user",
+    "interactionId": "interaction",
+    "operationId": "op"
+  },
+  {
+    "specVersion": "1.0",
+    "bridgeId": "local",
+    "timestamp": "2026-10-05T12:00:00.000Z",
+    "interactionId": "interaction",
+    "operationId": "op",
+    "proposalId": "proposal",
+    "type": "action_completed",
+    "result": {
+      "type": "action_applied",
+      "action": {
+        "type": "set_value",
+        "fieldId": "a",
+        "value": {
+          "type": "integer",
+          "value": 1
+        }
+      },
+      "previousRevision": 0,
+      "revision": 1,
+      "snapshot": {
+        "specVersion": "1.0",
+        "formId": "test",
+        "revision": 1,
+        "values": {
+          "a": {
+            "type": "integer",
+            "value": 1
+          }
+        },
+        "activeFieldId": "a",
+        "lifecycle": "active"
+      }
+    }
+  },
+  {
+    "specVersion": "1.0",
+    "bridgeId": "local",
+    "timestamp": "2026-10-05T12:00:00.000Z",
+    "interactionId": "interaction",
+    "operationId": "op",
+    "proposalId": "proposal",
+    "type": "batch_completed",
+    "result": {
+      "mode": "atomic",
+      "baseRevision": 0,
+      "finalRevision": 1,
+      "status": "applied",
+      "results": [
+        {
+          "type": "action_applied",
+          "action": {
+            "type": "set_value",
+            "fieldId": "a",
+            "value": {
+              "type": "integer",
+              "value": 1
+            }
+          },
+          "previousRevision": 0,
+          "revision": 1,
+          "snapshot": {
+            "specVersion": "1.0",
+            "formId": "test",
+            "revision": 1,
+            "values": {
+              "a": {
+                "type": "integer",
+                "value": 1
+              }
+            },
+            "activeFieldId": "a",
+            "lifecycle": "active"
+          }
+        }
+      ],
+      "snapshot": {
+        "specVersion": "1.0",
+        "formId": "test",
+        "revision": 1,
+        "values": {
+          "a": {
+            "type": "integer",
+            "value": 1
+          }
+        },
+        "activeFieldId": "a",
+        "lifecycle": "active"
+      }
+    }
+  },
+  {
+    "specVersion": "1.0",
+    "bridgeId": "local",
+    "timestamp": "2026-10-05T12:00:00.000Z",
+    "type": "bridge_error",
+    "code": "operation_failure",
+    "message": "Diagnostic",
+    "recoverable": true
+  },
+  {
+    "specVersion": "1.0",
+    "bridgeId": "local",
+    "timestamp": "2026-10-05T12:00:00.000Z",
+    "type": "bridge_disposed"
+  }
+]
