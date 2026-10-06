@@ -1,0 +1,250 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FunctionGemma Extraction Tool Call v1",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "arguments"
+      ],
+      "properties": {
+        "name": {
+          "const": "set_string"
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id",
+            "value"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "arguments"
+      ],
+      "properties": {
+        "name": {
+          "const": "set_integer"
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id",
+            "value"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "arguments"
+      ],
+      "properties": {
+        "name": {
+          "const": "set_number"
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id",
+            "value"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "arguments"
+      ],
+      "properties": {
+        "name": {
+          "const": "set_boolean"
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id",
+            "value"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "arguments"
+      ],
+      "properties": {
+        "name": {
+          "const": "set_date"
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id",
+            "value"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "string",
+              "format": "date",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "arguments"
+      ],
+      "properties": {
+        "name": {
+          "const": "set_choice"
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id",
+            "value"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "arguments"
+      ],
+      "properties": {
+        "name": {
+          "const": "set_multi_choice"
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id",
+            "value"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "value": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "arguments"
+      ],
+      "properties": {
+        "name": {
+          "const": "clear_field"
+        },
+        "arguments": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "field_id"
+          ],
+          "properties": {
+            "field_id": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  ]
+}
