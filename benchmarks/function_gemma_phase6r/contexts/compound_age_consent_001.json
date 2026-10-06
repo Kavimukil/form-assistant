@@ -1,0 +1,31 @@
+{
+  "specVersion": "1.1",
+  "formId": "compound_age_consent_001",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"age\",\"fields\":[{\"aliases\":[],\"currentValue\":null,\"id\":\"age\",\"label\":\"Age\",\"options\":[],\"optionsTruncated\":false,\"type\":\"integer\",\"writable\":true},{\"aliases\":[],\"currentValue\":null,\"id\":\"consent\",\"label\":\"Consent\",\"options\":[],\"optionsTruncated\":false,\"type\":\"boolean\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "age",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "age",
+      "type": "integer",
+      "label": "Age",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    },
+    {
+      "id": "consent",
+      "type": "boolean",
+      "label": "Consent",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    }
+  ]
+}

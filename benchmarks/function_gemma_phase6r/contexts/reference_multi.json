@@ -1,0 +1,50 @@
+{
+  "specVersion": "1.1",
+  "formId": "reference_multi",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"technologies\",\"fields\":[{\"aliases\":[\"languages\"],\"currentValue\":{\"type\":\"multi_choice\",\"value\":[\"flutter\",\"java\"]},\"id\":\"technologies\",\"label\":\"Technologies\",\"options\":[{\"aliases\":[],\"id\":\"java\",\"label\":\"Java\"},{\"aliases\":[],\"id\":\"flutter\",\"label\":\"Flutter\"},{\"aliases\":[],\"id\":\"react\",\"label\":\"React\"},{\"aliases\":[],\"id\":\"python\",\"label\":\"Python\"}],\"optionsTruncated\":false,\"type\":\"multi_choice\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "technologies",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "technologies",
+      "type": "multi_choice",
+      "label": "Technologies",
+      "aliases": [
+        "languages"
+      ],
+      "currentValue": {
+        "type": "multi_choice",
+        "value": [
+          "flutter",
+          "java"
+        ]
+      },
+      "writable": true,
+      "optionsTruncated": false,
+      "options": [
+        {
+          "id": "java",
+          "label": "Java",
+          "aliases": []
+        },
+        {
+          "id": "flutter",
+          "label": "Flutter",
+          "aliases": []
+        },
+        {
+          "id": "react",
+          "label": "React",
+          "aliases": []
+        },
+        {
+          "id": "python",
+          "label": "Python",
+          "aliases": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "specVersion": "1.1",
+  "formId": "date_birth",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"date_of_birth\",\"fields\":[{\"aliases\":[\"DOB\"],\"currentValue\":null,\"id\":\"date_of_birth\",\"label\":\"Date of birth\",\"options\":[],\"optionsTruncated\":false,\"type\":\"date\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "date_of_birth",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "date_of_birth",
+      "type": "date",
+      "label": "Date of birth",
+      "aliases": [
+        "DOB"
+      ],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    }
+  ]
+}

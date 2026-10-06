@@ -1,0 +1,21 @@
+{
+  "specVersion": "1.1",
+  "formId": "string_city",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"city\",\"fields\":[{\"aliases\":[],\"currentValue\":null,\"id\":\"city\",\"label\":\"City\",\"options\":[],\"optionsTruncated\":false,\"type\":\"string\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "city",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "city",
+      "type": "string",
+      "label": "City",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    }
+  ]
+}

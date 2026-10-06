@@ -1,0 +1,44 @@
+{
+  "specVersion": "1.1",
+  "formId": "choice_alias",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"promotion\",\"fields\":[{\"aliases\":[],\"currentValue\":null,\"id\":\"promotion\",\"label\":\"Promotion\",\"options\":[{\"aliases\":[],\"id\":\"spring\",\"label\":\"Spring\"},{\"aliases\":[],\"id\":\"summer\",\"label\":\"Summer\"},{\"aliases\":[\"autumn\"],\"id\":\"fall\",\"label\":\"Fall\"},{\"aliases\":[],\"id\":\"winter\",\"label\":\"Winter\"}],\"optionsTruncated\":false,\"type\":\"choice\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "promotion",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "promotion",
+      "type": "choice",
+      "label": "Promotion",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": [
+        {
+          "id": "spring",
+          "label": "Spring",
+          "aliases": []
+        },
+        {
+          "id": "summer",
+          "label": "Summer",
+          "aliases": []
+        },
+        {
+          "id": "fall",
+          "label": "Fall",
+          "aliases": [
+            "autumn"
+          ]
+        },
+        {
+          "id": "winter",
+          "label": "Winter",
+          "aliases": []
+        }
+      ]
+    }
+  ]
+}

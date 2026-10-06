@@ -1,0 +1,21 @@
+{
+  "specVersion": "1.1",
+  "formId": "number_discount",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"discount_percent\",\"fields\":[{\"aliases\":[],\"currentValue\":null,\"id\":\"discount_percent\",\"label\":\"Discount\",\"options\":[],\"optionsTruncated\":false,\"type\":\"number\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "discount_percent",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "discount_percent",
+      "type": "number",
+      "label": "Discount",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    }
+  ]
+}

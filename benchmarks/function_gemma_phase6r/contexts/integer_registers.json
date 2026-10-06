@@ -1,0 +1,23 @@
+{
+  "specVersion": "1.1",
+  "formId": "integer_registers",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"register_count\",\"fields\":[{\"aliases\":[\"registers open\"],\"currentValue\":null,\"id\":\"register_count\",\"label\":\"Registers\",\"options\":[],\"optionsTruncated\":false,\"type\":\"integer\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "register_count",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "register_count",
+      "type": "integer",
+      "label": "Registers",
+      "aliases": [
+        "registers open"
+      ],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    }
+  ]
+}

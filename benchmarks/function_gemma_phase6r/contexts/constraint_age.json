@@ -1,0 +1,26 @@
+{
+  "specVersion": "1.1",
+  "formId": "constraint_age",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"age\",\"fields\":[{\"aliases\":[],\"constraints\":{\"max\":100,\"min\":18,\"required\":false},\"currentValue\":null,\"id\":\"age\",\"label\":\"Age\",\"options\":[],\"optionsTruncated\":false,\"type\":\"integer\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "age",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "age",
+      "type": "integer",
+      "label": "Age",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "constraints": {
+        "required": false,
+        "min": 18,
+        "max": 100
+      },
+      "options": []
+    }
+  ]
+}

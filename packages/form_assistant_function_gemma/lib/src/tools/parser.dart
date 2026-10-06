@@ -1,9 +1,14 @@
 import 'protocol.dart';
 
 final class FunctionGemmaToolCallParser {
-  List<FunctionGemmaToolCall> parse(String text) {
+  List<FunctionGemmaToolCall> parse(String text) => parseEnvelopes(text)
+      .map(FunctionGemmaToolCall.fromJson)
+      .toList(growable: false);
+
+  /// Diagnostic envelope decoding does not authorize or map any call.
+  List<Map<String, Object?>> parseEnvelopes(String text) {
     final p = _Parser(text);
-    final calls = <FunctionGemmaToolCall>[];
+    final calls = <Map<String, Object?>>[];
     while (true) {
       p.space();
       if (p.atEnd) break;
@@ -15,7 +20,7 @@ final class FunctionGemmaToolCallParser {
       if (args is! Map<String, Object?>) {
         throw const FormatException('Arguments must be an object');
       }
-      calls.add(FunctionGemmaToolCall(name: name, arguments: args));
+      calls.add({'name': name, 'arguments': args});
       if (calls.length > 64) throw const FormatException('Too many calls');
     }
     return List.unmodifiable(calls);

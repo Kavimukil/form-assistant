@@ -1,0 +1,64 @@
+{
+  "specVersion": "1.1",
+  "formId": "compound_store",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"has_back_room\",\"fields\":[{\"aliases\":[],\"currentValue\":null,\"id\":\"has_back_room\",\"label\":\"Back room\",\"options\":[],\"optionsTruncated\":false,\"type\":\"boolean\",\"writable\":true},{\"aliases\":[],\"currentValue\":null,\"id\":\"register_count\",\"label\":\"Registers\",\"options\":[],\"optionsTruncated\":false,\"type\":\"integer\",\"writable\":true},{\"aliases\":[],\"currentValue\":null,\"id\":\"promotion\",\"label\":\"Promotion\",\"options\":[{\"aliases\":[],\"id\":\"spring\",\"label\":\"Spring\"},{\"aliases\":[],\"id\":\"summer\",\"label\":\"Summer\"},{\"aliases\":[\"autumn\"],\"id\":\"fall\",\"label\":\"Fall\"},{\"aliases\":[],\"id\":\"winter\",\"label\":\"Winter\"}],\"optionsTruncated\":false,\"type\":\"choice\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "has_back_room",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "has_back_room",
+      "type": "boolean",
+      "label": "Back room",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    },
+    {
+      "id": "register_count",
+      "type": "integer",
+      "label": "Registers",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    },
+    {
+      "id": "promotion",
+      "type": "choice",
+      "label": "Promotion",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": [
+        {
+          "id": "spring",
+          "label": "Spring",
+          "aliases": []
+        },
+        {
+          "id": "summer",
+          "label": "Summer",
+          "aliases": []
+        },
+        {
+          "id": "fall",
+          "label": "Fall",
+          "aliases": [
+            "autumn"
+          ]
+        },
+        {
+          "id": "winter",
+          "label": "Winter",
+          "aliases": []
+        }
+      ]
+    }
+  ]
+}

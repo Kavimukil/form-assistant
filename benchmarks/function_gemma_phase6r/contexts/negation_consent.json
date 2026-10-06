@@ -1,0 +1,21 @@
+{
+  "specVersion": "1.1",
+  "formId": "negation_consent",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"consent\",\"fields\":[{\"aliases\":[],\"currentValue\":null,\"id\":\"consent\",\"label\":\"Consent\",\"options\":[],\"optionsTruncated\":false,\"type\":\"boolean\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "consent",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "consent",
+      "type": "boolean",
+      "label": "Consent",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    }
+  ]
+}

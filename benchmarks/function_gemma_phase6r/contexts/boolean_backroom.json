@@ -1,0 +1,21 @@
+{
+  "specVersion": "1.1",
+  "formId": "boolean_backroom",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"has_back_room\",\"fields\":[{\"aliases\":[],\"currentValue\":null,\"id\":\"has_back_room\",\"label\":\"Back room\",\"options\":[],\"optionsTruncated\":false,\"type\":\"boolean\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "has_back_room",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "has_back_room",
+      "type": "boolean",
+      "label": "Back room",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    }
+  ]
+}

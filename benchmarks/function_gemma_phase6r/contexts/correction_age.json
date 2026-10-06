@@ -1,0 +1,24 @@
+{
+  "specVersion": "1.1",
+  "formId": "correction_age",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"age\",\"fields\":[{\"aliases\":[],\"currentValue\":{\"type\":\"integer\",\"value\":31},\"id\":\"age\",\"label\":\"Age\",\"options\":[],\"optionsTruncated\":false,\"type\":\"integer\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "age",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "age",
+      "type": "integer",
+      "label": "Age",
+      "aliases": [],
+      "currentValue": {
+        "type": "integer",
+        "value": 31
+      },
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    }
+  ]
+}

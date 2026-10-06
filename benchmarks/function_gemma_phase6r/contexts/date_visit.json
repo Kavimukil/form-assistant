@@ -1,0 +1,21 @@
+{
+  "specVersion": "1.1",
+  "formId": "date_visit",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"visit_date\",\"fields\":[{\"aliases\":[],\"currentValue\":null,\"id\":\"visit_date\",\"label\":\"Visit date\",\"options\":[],\"optionsTruncated\":false,\"type\":\"date\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "visit_date",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "visit_date",
+      "type": "date",
+      "label": "Visit date",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    }
+  ]
+}

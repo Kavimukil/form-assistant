@@ -1,0 +1,21 @@
+{
+  "specVersion": "1.1",
+  "formId": "number_weight",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"weight_kg\",\"fields\":[{\"aliases\":[],\"currentValue\":null,\"id\":\"weight_kg\",\"label\":\"Weight\",\"options\":[],\"optionsTruncated\":false,\"type\":\"number\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "weight_kg",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "weight_kg",
+      "type": "number",
+      "label": "Weight",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    }
+  ]
+}

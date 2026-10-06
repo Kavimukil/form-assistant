@@ -1,0 +1,21 @@
+{
+  "specVersion": "1.1",
+  "formId": "string_name",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"name\",\"fields\":[{\"aliases\":[],\"currentValue\":null,\"id\":\"name\",\"label\":\"Name\",\"options\":[],\"optionsTruncated\":false,\"type\":\"string\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "name",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "name",
+      "type": "string",
+      "label": "Name",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": false,
+      "options": []
+    }
+  ]
+}

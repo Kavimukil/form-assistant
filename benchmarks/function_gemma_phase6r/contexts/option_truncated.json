@@ -1,0 +1,32 @@
+{
+  "specVersion": "1.1",
+  "formId": "option_truncated",
+  "revision": 0,
+  "fingerprint": "canonical-json:{\"activeFieldId\":\"country\",\"fields\":[{\"aliases\":[],\"currentValue\":null,\"id\":\"country\",\"label\":\"Country\",\"options\":[{\"aliases\":[],\"id\":\"india\",\"label\":\"India\"},{\"aliases\":[],\"id\":\"indonesia\",\"label\":\"Indonesia\"}],\"optionsTruncated\":true,\"type\":\"choice\",\"writable\":true}],\"locale\":\"en\",\"recentFieldIds\":[]}",
+  "locale": "en",
+  "activeFieldId": "country",
+  "recentFieldIds": [],
+  "fields": [
+    {
+      "id": "country",
+      "type": "choice",
+      "label": "Country",
+      "aliases": [],
+      "currentValue": null,
+      "writable": true,
+      "optionsTruncated": true,
+      "options": [
+        {
+          "id": "india",
+          "label": "India",
+          "aliases": []
+        },
+        {
+          "id": "indonesia",
+          "label": "Indonesia",
+          "aliases": []
+        }
+      ]
+    }
+  ]
+}

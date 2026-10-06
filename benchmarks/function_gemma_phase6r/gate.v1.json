@@ -1,0 +1,14 @@
+{
+  "simpleExact": 0.97,
+  "booleanExact": 0.98,
+  "numericTyped": 0.97,
+  "choiceCanonical": 0.97,
+  "multiChoiceExact": 0.93,
+  "compoundExact": 0.92,
+  "correctionReferenceExact": 0.9,
+  "hallucinatedFieldRateMax": 0.01,
+  "hallucinatedOptionRateMax": 0.01,
+  "malformedCallRateMax": 0.02,
+  "latencyBudgetMs": null,
+  "targetDevice": "Zebra: measurements required"
+}
