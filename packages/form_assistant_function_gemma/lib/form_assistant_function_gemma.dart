@@ -21,7 +21,7 @@ final class FunctionGemmaAdapter implements IntelligenceAdapter {
       QualityGate? qualityGate,
       FunctionGemmaSchemaCache? schemaCache,
       this.id = 'function_gemma',
-      this.version = '0.2.0'})
+      this.version = '0.2.1'})
       : _backend = CallbackBackend(inference),
         qualityGate = qualityGate ?? QualityGate(),
         schemaCache = schemaCache ?? FunctionGemmaSchemaCache();

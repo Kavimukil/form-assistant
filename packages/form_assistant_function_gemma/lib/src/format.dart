@@ -98,12 +98,44 @@ List<ProposedAction> parseOutput(String output, IntelligenceRequest request) =>
             request)
         .actions;
 
-String encodeNativeDeclarations(FunctionGemmaToolSet specialized) => specialized
-    .definitions
-    .map((d) => '<start_function_declaration>declaration:${d.name}${nativeWire({
-              'description': d.name == 'clear_field'
-                  ? 'Clear the supplied field when explicitly requested.'
-                  : 'Extract the supplied typed field answer.',
-              'parameters': nativeSchema(d.parameters),
-            })}<end_function_declaration>')
-    .join();
+String encodeNativeDeclarations(FunctionGemmaToolSet specialized,
+        {bool simpleChoiceSchema = true}) =>
+    specialized.definitions
+        .map((d) =>
+            '<start_function_declaration>declaration:${d.name}${nativeWire({
+                  'description': d.name == 'clear_field'
+                      ? 'Clear the supplied field when explicitly requested.'
+                      : 'Extract the supplied typed field answer.',
+                  'parameters': nativeSchema(simpleChoiceSchema
+                      ? simpleNativeParameters(d.parameters)
+                      : d.parameters),
+                })}<end_function_declaration>')
+        .join();
+
+/// Native-model experiment permitted by plan §7.10: flat candidate enums.
+/// Canonical schema stays correlated; strict context validator remains unchanged.
+Map<String, Object?> simpleNativeParameters(Map<String, Object?> parameters) {
+  if (!parameters.containsKey('oneOf')) return parameters;
+  final projected = Map<String, Object?>.of(parameters)..remove('oneOf');
+  final properties =
+      Map<String, Object?>.of(jsonObject(parameters['properties']));
+  final value = Map<String, Object?>.of(jsonObject(properties['value']));
+  final candidates = <String>{};
+  for (final branch in requireType<List<Object?>>(parameters['oneOf'])) {
+    final branchValue =
+        jsonObject(jsonObject(jsonObject(branch)['properties'])['value']);
+    final enumSchema = branchValue['type'] == 'array'
+        ? jsonObject(branchValue['items'])
+        : branchValue;
+    candidates.addAll(stringList(enumSchema['enum']));
+  }
+  final ids = candidates.toList()..sort();
+  if (value['type'] == 'array') {
+    value['items'] = {...jsonObject(value['items']), 'enum': ids};
+  } else {
+    value['enum'] = ids;
+  }
+  properties['value'] = value;
+  projected['properties'] = properties;
+  return projected;
+}
