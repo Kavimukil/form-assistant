@@ -2,8 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:form_assistant_core/form_assistant_core.dart';
-import 'package:form_assistant_function_gemma/form_assistant_function_gemma.dart';
-import 'package:form_assistant_function_gemma/src/format.dart';
+import 'package:form_assistant_function_gemma/form_assistant_function_gemma.dart'
+    hide FunctionGemmaAdapter;
+import 'package:form_assistant_function_gemma/src/legacy_adapter.dart'
+    show FunctionGemmaAdapter;
+import 'package:form_assistant_function_gemma/src/legacy_format.dart';
 import 'package:test/test.dart';
 
 FormIR form() => FormIR(id: 'profile', fields: [

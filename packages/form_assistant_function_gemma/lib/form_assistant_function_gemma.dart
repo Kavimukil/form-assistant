@@ -17,7 +17,7 @@ final class FunctionGemmaAdapter implements IntelligenceAdapter {
       {required LocalFunctionGemmaInference inference,
       QualityGate? qualityGate,
       this.id = 'function_gemma',
-      this.version = '0.1.0'})
+      this.version = '0.2.0'})
       : _backend = CallbackBackend(inference),
         qualityGate = qualityGate ?? QualityGate();
 
