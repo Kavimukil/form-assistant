@@ -33,6 +33,7 @@ final class ContextCompiler {
   CompiledContext compile(
       {required FormStateSnapshot snapshot,
       required UserInput input,
+      bool writable = true,
       List<String> candidates = const [],
       List<String> explicitDependencies = const [],
       List<String> recent = const [],
@@ -143,7 +144,7 @@ final class ContextCompiler {
 
       selected.add(FormFieldContext(
           field: _semanticField(source, budget),
-          writable: snapshot.lifecycle == FormLifecycle.active,
+          writable: writable && snapshot.lifecycle == FormLifecycle.active,
           optionsTruncated:
               (source.options?.length ?? 0) > budget.maxOptionsPerField));
       if (snapshot.values.containsKey(id)) values[id] = snapshot.values[id]!;

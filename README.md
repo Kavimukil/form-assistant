@@ -1,5 +1,11 @@
 # Form Assistant Runtime — Production Implementation Plan
 
+Current recovery state: phases 0–5 are complete. Original Phase 6 is superseded by
+[Phase 6R](PHASE_6R_RECOVERY_IMPLEMENTATION_PLAN/PHASE_6R_RECOVERY_IMPLEMENTATION_PLAN.md).
+See [recovery status](docs/phase6r/PHASE_6R_STATUS.md) and the
+[GO/NO-GO decision](docs/phase6r/GO_NO_GO.md). Do not restart phases 0–5 or begin
+Phase 7 while recovery is NO-GO.
+
 ## Cursor instruction
 
 This repository is an implementation specification. **Implement it; do not redesign it.**

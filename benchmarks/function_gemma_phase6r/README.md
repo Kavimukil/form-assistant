@@ -33,3 +33,5 @@ per-token timing. Token counts come from llama.cpp performance diagnostics. Peak
 comes from /usr/bin/time and includes model loading. No target-device claim follows.
 Legacy corpus metrics are preserved separately and not numerically comparable to
 this expanded exact-action benchmark.
+
+The current CLI defaults to reports/latest.v1.json to preserve the frozen review reports. Use --report for an explicit comparison artifact.

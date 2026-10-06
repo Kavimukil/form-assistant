@@ -1,102 +1,77 @@
 # form_assistant_function_gemma
 
-FunctionGemma IntelligenceAdapter, isolated from core and all form stores. Supply
-`FunctionGemmaAdapter(inference: localGenerate)` where localGenerate has signature
+Phase 6R constrained local typed slot extractor, isolated behind IntelligenceAdapter.
+Phases 0–5 remain the deterministic foundation. Supply
+`FunctionGemmaAdapter(inference: localGenerate)` with
 `Future<FunctionGemmaOutput> Function(String prompt, CancellationToken token)`.
-The host owns model loading, tokenizer, local inference runtime and physical abort.
-The internal InferenceBackend interface and formatter/parser are not exported.
-No model is downloaded, trained or contacted over a network by this package.
+The host owns model loading, tokenizer, local runtime and physical abort.
+No network inference, fine-tuning, workflow tools or cloud fallback is included.
 
-The zero-shot prompt uses FunctionGemma developer/user/model turns, native
-function declaration/call tokens and `<escape>` string delimiters, based on
-[Google's formatting guide](https://ai.google.dev/gemma/docs/functiongemma/formatting-and-best-practices).
-The callback receives a complete prompt including the open model turn and must
-return only the newly generated continuation, not the echoed prompt. Configure
-engine stopping at `<end_of_turn>`/`<eos>` or function-response boundaries; return
-all tool calls for one proposal before stopping. The parser accepts consecutive
-calls and an optional terminal end-of-turn or eos marker. It rejects function
-responses, prose, JSON, unknown tools, duplicate/extra arguments and malformed
-values; it never repairs output or commits a valid prefix of an invalid response.
+The model sees compact canonical SemanticContext v1.1: selected field IDs/types,
+labels/aliases/concepts, current values, active/recent references, constraints and
+candidate option IDs/labels/aliases. Source extensions, full forms, selection
+reasons, tracing and fingerprints are excluded from its prompt. Oversized context
+fails closed. Context budgets are estimates; actual llama.cpp counts are reported
+in live evaluation.
 
-Typed model tools (set_string/integer/number/boolean/date/choice/multi_choice)
-map to the existing canonical SetValueAction and strict FormValue codecs.
-clear_value, navigate and request_clarification map to the unchanged canonical
-vocabulary. navigate target uses next/previous or a selected canonical field ID.
-The tool schema contains only allowed action families. Prompt context excludes
-extensions, raw form/schema data and unselected values. Untrusted user/context
-control-token characters are JSON escaped to prevent closing the model turn.
+Exactly eight extraction tools are available: set_string, set_integer, set_number,
+set_boolean, set_date, set_choice, set_multi_choice, clear_field. Only compatible
+writable selected fields appear in declarations; empty setter groups are omitted.
+clear_field maps to canonical ClearValueAction. No navigation, submit, undo/redo or
+request_clarification model tool exists. Canonical runtime workflow stays available
+outside this extraction surface.
 
-QualityGate checks allowed actions, selected field identity, type/constraints and
-optional model confidence before returning proposals. Low confidence (default
-threshold 0.8), unknown context fields and empty output clarify. Valid actions can
-be retained alongside invalid-value clarification in a multi-action proposal.
-Confidence is optional because most runners do not produce a calibrated score;
-absent confidence does not imply high confidence and is not invented. Confidence
-and quality diagnostics remain outside canonical actions/values. Runtime and
-bridge still perform fresh validation and final concurrency checks.
+FunctionGemma uses native developer/user/model turns, tool declarations/calls and
+`<escape>` string delimiters. Return only the newly generated continuation without
+an echoed prompt. Stop at turn/eos/function-response boundaries after all calls for
+one proposal. Control-looking untrusted text is escaped. Syntax, argument names,
+exact types, finite numbers, real ISO dates, field writability/type and candidate
+option membership are validated strictly. No repair or valid-prefix acceptance.
+Duplicates are diagnosed/deduplicated; conflicting same-field calls are rejected.
+Multi-choice output replaces the complete selection, never appends implicitly.
 
-IntelligenceOptions supports timeout and cooperative cancellation. Timeouts and
-cancellation release the caller, signal backend cancellation and ignore late
-outputs/errors. A host runner should observe the token to physically abort work.
-Cancellation cannot roll back an authoritative write already dispatched/committed.
-No cloud fallback exists. Model unavailability and malformed output surface as
-errors; manual form state remains usable.
+Canonical schema correlates choice fields/options. Native v0.2.1 declarations use
+flat candidate enums after the first real benchmark exposed spurious `oneOf`
+arguments; strict validation still enforces per-field correlation. This experiment
+is explicitly permitted by the recovery plan and changes no expected answers.
 
-Run `dart pub get --offline`, `dart analyze`, `dart test --reporter expanded`.
-The twelve-category evaluation fixture corpus checks final canonical state and
-clarification through the headless runtime, plus malformed parser, quality,
-formatting and cancellation tests. **Outputs are hand-authored scripted fixtures,
-not recorded FunctionGemma generations.** Passing these verifies the adapter
-pipeline, not zero-shot model quality. Live results are recorded separately in
-`docs/evaluation/P6_GGUF_EVALUATION.json`; the tested GGUF currently fails P6.
+QualityGate handles constraints, empty extraction and optional confidence, producing
+canonical clarification when needed. Model confidence is never invented. Malformed
+outputs are explicit failures. Runtime and bridge own fresh validation, authoritative
+revision checks and commits. Schema LRU caches prepared declarations only, never
+requests, current values, model results or proposals.
 
-## Live GGUF evaluation
+Use `await adapter.interpretJson(request)` for a JSON-safe proposal envelope and
+`jsonEncode` to serialize. `proposal.actions[].action` contains unchanged canonical
+action/value JSON; provenance/confidence/quality stay outside actions. This returns
+a proposal, not a form commit. `interpret` remains the standard adapter interface.
+Timeout/cancellation signal the backend; the host must observe the token to abort.
+
+## Verification and live evaluation
+
+Run formatter/analyzer from the repository root, `dart test` in both packages and
+the external integration example, and both Python schema checkers. Scripted tests
+prove software behavior, not model quality.
 
 Run from this package directory:
 
-```sh
-dart run bin/evaluate_gguf.dart \
+```
+dart run bin/evaluate_phase6r.dart \
   --binary /tmp/form-assistant-llama/llama-b11429/llama-completion \
   --model ../../functiongemma-270m-it-q8_0.gguf
 ```
 
-The runner uses the existing twelve-case corpus without scripted completions or
-changing expected states. It captures prompts, real outputs, runner diagnostics,
-model SHA-256, generation settings and final runtime state. CPU-only llama.cpp
-build b11429 is an external evaluation tool, not a core/package dependency.
-Temperature is zero, seed 42, one CPU thread, context 8192 tokens and output cap
-512 tokens. Per-case inference timeout is two minutes. Generation stops at the
-native function-response boundary; the runner removes only llama-completion's
-terminal display marker and the configured terminal stop marker. Parser validation
-remains strict. Exit code 1 means the complete-case corpus did not pass.
+See [recovery documentation](../../docs/phase6r/README.md) and the
+[frozen benchmark](../../benchmarks/function_gemma_phase6r/README.md). JSON/CSV reports
+record model/corpus hashes, full prompts/outputs, strict validation, exact extraction,
+commit behavior, failure categories, host latency/token counts and peak RSS. The
+threshold config is frozen before real generation. No target Zebra claim is made.
 
-The baseline scored 0/12 complete cases. After stopping function responses and
-improving zero-shot descriptions/type-specific declarations, the supplied Q8_0
-model scored **2/12 complete cases**, with **5/12 field-state matches**. The latter
-includes unchanged initial/empty states and is not equivalent to successful
-interpretation. No incorrect values committed in these runs; refusals/malformed
-arguments were rejected. P6 remains failed; no fine-tuning, parser repair or cloud
-fallback was introduced. Two formatter regression tests protect typed declarations
-and escaping of untrusted tool metadata.
+## Superseded Phase 6
 
-
-## Natural-language extraction persona and JSON output
-
-The developer turn defines a form-answer extraction assistant: extract all explicit
-slots by canonical field ID, use the active field for unambiguous unnamed answers,
-preserve negation, take the final corrected value, and clarify unresolved answers.
-User input remains natural language. Context and user text are data; output must
-contain declared tool calls with exact argument names and types.
-
-Use `await adapter.interpretJson(request)` for a JSON-safe proposal envelope,
-then `jsonEncode` to serialize it. Its `proposal.actions[].action` contains the
-unchanged canonical action/value JSON; provenance, confidence and quality remain
-outside those actions. This returns a proposal, not a form-state commit. The model
-continues using its native function-call format, which the adapter converts to JSON.
-
-The persona-only comparison in `docs/evaluation/P6_GGUF_PERSONA_EVALUATION.json`
-scored **1/12 complete cases** and **5/12 final-state matches**, compared with the
-previous 2/12 complete cases. Model, corpus and generation settings were unchanged.
-Malformed calls, refusals and unrelated navigation persist. This small comparison
-does not establish persona wording as the main cause, and the live P6 gate remains
-failed. The report includes canonical proposed actions for inspection.
+Internal legacy_adapter.dart / legacy_format.dart preserve the old broad model
+surface. The historical `bin/evaluate_gguf.dart` explicitly uses that legacy adapter;
+its original corpus and regression expectations remain unchanged. Reports in
+`docs/evaluation` show 0/12, 2/12 and persona-only 1/12 complete cases. The failed
+baseline is reproducible at tag `phase-6-failed-baseline`. These are different
+corpora/scoring from 6R and must not be compared as equivalent accuracy estimates.

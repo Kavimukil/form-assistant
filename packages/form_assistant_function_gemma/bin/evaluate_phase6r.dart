@@ -18,7 +18,7 @@ Future<void> main(List<String> args) async {
       .absolute
       .path;
   final report =
-      File(option('--report', '${root.path}/reports/baseline.v1.json'));
+      File(option('--report', '${root.path}/reports/latest.v1.json'));
   final artifact = await Process.run('sha256sum', [model]);
   if (artifact.exitCode != 0) throw StateError('Model artifact unavailable');
   final corpus = File('${root.path}/corpus.v1.jsonl');

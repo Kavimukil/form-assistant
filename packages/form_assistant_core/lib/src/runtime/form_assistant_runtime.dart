@@ -306,6 +306,7 @@ final class FormAssistantRuntime {
         if (compiled == null) {
           final result = _compiler.compile(
               snapshot: original,
+              writable: bridge.capabilities.writable,
               input: input,
               candidates: selected,
               explicitDependencies: dependencies,

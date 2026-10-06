@@ -1,10 +1,11 @@
 # Implementation Status
 
-Status: **Phase 5 GREEN; Phase 6 implementation verified, live-model gate FAILED (latest persona comparison: 1/12 cases).**
+Status: **Phases 0–5 GREEN; original Phase 6 superseded; Phase 6R recovery implemented/reviewed, FunctionGemma NO-GO. Phase 7 blocked.**
 
-Verified: 2026-10-05, Dart SDK 3.13.5 stable.
-Current completed phase: Phase 5 — Internal ContextCompiler.
-Current work: Phase 6 — local GGUF evaluated; live-model correctness gate failed.
+Verified: 2026-10-06, Dart SDK 3.13.5 stable.
+Current completed foundation: Phase 5 — Internal ContextCompiler.
+Current recovery: Phase 6R — constrained extraction implemented; model-quality gate FAILED.
+See [task status](phase6r/PHASE_6R_STATUS.md) and [decision](phase6r/GO_NO_GO.md).
 
 ## Phase 0 completed deliverables
 
@@ -459,3 +460,32 @@ Phase 7 — Hybrid/cloud fallback. **Not started; prerequisite P6 is not green.*
   check. All software checks passed; **live-model P6 gate FAILED**.
 - Next: investigate checkpoint/template parity and task adaptation before claiming
   model correctness. Phase 7 remains unstarted.
+
+
+## Phase 6R recovery — 2026-10-06
+
+Original Phase 6 preserved at tag `phase-6-failed-baseline` (f1a32df); recovery branch
+`phase-6r-functiongemma-recovery`. Implemented tasks 6R.0–6R.11 in order, with each
+software gate checked before the next task. Canonical actions/values, FormIR,
+bridges, authoritative state and phases 0–5 behavior are preserved.
+
+Deliverables: SemanticContext v1.1 and compatibility projection, writable/candidate
+metadata and budgets, frozen eight-tool protocol, dynamic field/option specialization,
+strict parser/validator, canonical action mapping, compact native formatter, quality
+policy, revision/fingerprint checks, bounded prepared-schema cache and frozen live
+JSON/CSV evaluation. Legacy broad model path isolated rather than deleted.
+
+Verification: formatter/analyzer, **233 tests** across three packages, 42 canonical
+schema checks, 45 extraction schema checks, whitespace check all pass.
+
+Live evidence: 31 frozen cases across 17 categories; two native-schema variants each
+scored **7/31 complete cases**. Critical age+consent case failed **0/3 successes per
+variant**. No expectations/thresholds weakened. Hard deterministic accepted-output
+and concurrency checks pass; valid-but-wrong semantic values remain a model failure.
+Simpler native enums reduced malformed output from 41.9% to 29.0%, still above 2%.
+
+**Decision: NO-GO FunctionGemma for the supplied GGUF/current integration.**
+[Full decision](phase6r/GO_NO_GO.md), [recovery task status](phase6r/PHASE_6R_STATUS.md),
+[raw simpler-schema report](../benchmarks/function_gemma_phase6r/reports/simple_native.v1.json).
+Phase 7 remains untouched and blocked. Next work requires a separate decision on
+checkpoint parity/task adaptation or another IntelligenceAdapter, not a project restart.

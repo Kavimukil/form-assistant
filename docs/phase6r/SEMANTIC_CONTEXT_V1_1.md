@@ -10,7 +10,7 @@ Compilation caps fields (16), estimated tokens (768), recent IDs (5), aliases (6
 options (32) and field semantic characters (512). Oversized mandatory fields fail
 closed instead of destroying meaning by truncation. Current answer text is never
 silently truncated. Option/alias candidates are capped explicitly; supplied options
-alone define permitted outputs. Read-only lifecycle produces non-writable fields.
+alone define permitted outputs. Read-only lifecycle or a non-writable bridge capability produces non-writable fields.
 Individual writable flags may also be supplied by semantic-context callers; the
 existing FormIR has no per-field authorization contract to infer one from.
 

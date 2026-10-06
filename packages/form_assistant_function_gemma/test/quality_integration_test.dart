@@ -6,6 +6,45 @@ import 'extraction_adapter_test.dart' show extractionRequest;
 import 'strict_extraction_test.dart' show native;
 
 void main() {
+  test('read-only bridge capability removes every model mutation target',
+      () async {
+    final form = FormIR(id: 'f', fields: [
+      FormField(
+          id: 'age',
+          value: const IntegerDefinition(),
+          semantics: FieldSemantics(label: 'Age'))
+    ]);
+    final bridge = LocalFormStateBridge(
+        form: form,
+        activeFieldId: 'age',
+        capabilities: const FormStateBridgeCapabilities(
+            writable: false,
+            supportsBatch: false,
+            supportsAtomicBatch: false,
+            supportsUndo: false,
+            supportsRedo: false,
+            supportsExternalChanges: false,
+            supportsActiveField: true,
+            supportsNavigation: true));
+    var invoked = false;
+    final adapter = FunctionGemmaAdapter(inference: (prompt, token) async {
+      invoked = true;
+      expect(prompt, isNot(contains('declaration:set_integer')));
+      expect(prompt, isNot(contains('declaration:clear_field')));
+      expect(prompt, contains('"writable":false'));
+      return const FunctionGemmaOutput('');
+    });
+    final runtime =
+        FormAssistantRuntime(form: form, bridge: bridge, intelligence: adapter);
+    final result = await runtime.submit(
+        const UserInput(text: 'Please extract my age as thirty two'),
+        trace: extractionRequest().trace);
+    expect(invoked, true);
+    expect(result.snapshot.values, isEmpty);
+    expect(result.snapshot.revision, 0);
+    await runtime.dispose();
+    await bridge.dispose();
+  });
   test(
       'empty calls clarify deterministically; invalid constraints never become mutations',
       () async {

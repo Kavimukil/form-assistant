@@ -201,9 +201,9 @@ from bridge StateChanged events, including external edits. Reference retrieval
 selects context only; it never generates an action. Optional fields may be omitted
 under a budget. If the active field or required dependencies cannot fit, the
 runtime returns `runtime.context_budget_exceeded` without calling intelligence
-or mutating the form. Canonical values/options are never silently truncated.
+or mutating the form. Current values are never silently truncated. Phase 6R caps supplied option candidates explicitly with optionsTruncated.
 
-Budget cost covers the complete compiled semantic context JSON: selected fields,
+Conservative compiler budget cost covers the compiled semantic projection (excluding the exact canonical fingerprint identity): selected fields,
 current canonical values, options, locale, identifiers, revision and history,
 including JSON escaping. Token cost is `ceil(chars / 4)`, an estimate rather than
 a model tokenizer measurement. The current UserInput/request envelope is outside
@@ -274,3 +274,11 @@ IntelligenceResult carries optional quality diagnostics, and the runtime emits
 IntelligenceQualityEvaluated. No cloud fallback outcome or provider dependency
 has been introduced into core. The mock supports the same timeout/cancellation
 contract, and runtime enforces options for arbitrary injected adapters too.
+
+
+Phase 6R adds explicit SemanticContext v1.1 encoding and compatible accessors.
+See [the contract notes](../../docs/phase6r/SEMANTIC_CONTEXT_V1_1.md). Defaults:
+16 fields, 768 estimated tokens, 5 recent IDs, 6 aliases and 32 option candidates.
+Field semantic text above 512 characters fails closed for mandatory fields.
+FunctionGemma formatting/cache/types remain outside this package. The selected
+semantic fingerprint supports fresh revision checks; it never authorizes a write.

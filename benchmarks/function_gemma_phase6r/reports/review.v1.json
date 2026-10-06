@@ -1,0 +1,150 @@
+{
+  "decision": "NO-GO FunctionGemma",
+  "scope": "Supplied Q8_0 artifact/current constrained integration; deterministic project foundation retained",
+  "date": "2026-10-06T09:54:00.286135Z",
+  "evaluationCommit": "6f97d78312a28289e27a4e2117009dac516835f4",
+  "modelSha256": "83940d4dd9676710856f43523bed096164a595a96f6b34771610a03937de5270",
+  "corpusSha256": "f788fc886642f9b9a7f371e4a3e46c426ad2215ac264635803eda701dc08dad5",
+  "phase7Permitted": false,
+  "reportHashes": {
+    "baseline.v1.json": "3c420b1b54fe2a6bcbc9a93c549775b3f82ed9031aefa8e21515d24d58c9cca4",
+    "simple_native.v1.json": "1693c37dbc9b123517102782857bb9f4ff9cf569c3ab8f37a9c98d841d5e5da0"
+  },
+  "comparison": {
+    "nestedCanonicalNative": {
+      "passed": 7,
+      "total": 31,
+      "metrics": {
+        "exactActionSet": 0.22580645161290322,
+        "completeCase": 0.22580645161290322,
+        "fieldIdentification": 0.5161290322580645,
+        "typedValueExact": 0.22580645161290322,
+        "simpleExact": 0.35714285714285715,
+        "booleanExact": 0.0,
+        "numericTyped": 0.5,
+        "choiceCanonical": 0.0,
+        "multiChoiceExact": 0.0,
+        "compoundExact": 0.0,
+        "correctionReferenceExact": 0.6666666666666666,
+        "hallucinatedFieldRate": 0.0,
+        "hallucinatedOptionRate": 0.03225806451612903,
+        "malformedCallRate": 0.41935483870967744,
+        "unnecessaryNoAnswerRate": 0.4074074074074074,
+        "unnecessaryClarificationRate": 0.0,
+        "constraintExtraction": 0.0,
+        "constraintCommitRejection": 1.0
+      }
+    },
+    "flatCandidateNative": {
+      "passed": 7,
+      "total": 31,
+      "metrics": {
+        "exactActionSet": 0.22580645161290322,
+        "completeCase": 0.22580645161290322,
+        "fieldIdentification": 0.5483870967741935,
+        "typedValueExact": 0.22580645161290322,
+        "simpleExact": 0.35714285714285715,
+        "booleanExact": 0.0,
+        "numericTyped": 0.5,
+        "choiceCanonical": 0.0,
+        "multiChoiceExact": 0.0,
+        "compoundExact": 0.0,
+        "correctionReferenceExact": 0.6666666666666666,
+        "hallucinatedFieldRate": 0.0,
+        "hallucinatedOptionRate": 0.06451612903225806,
+        "malformedCallRate": 0.2903225806451613,
+        "unnecessaryNoAnswerRate": 0.2962962962962963,
+        "unnecessaryClarificationRate": 0.0,
+        "constraintExtraction": 0.0,
+        "constraintCommitRejection": 1.0
+      }
+    }
+  },
+  "hardCorrectness": {
+    "unauthorizedFieldAccepted": 0,
+    "unknownOptionAccepted": 0,
+    "wrongTypeCommitted": 0,
+    "malformedDateCommitted": 0,
+    "rawSourceFieldAccepted": 0,
+    "staleBlindCommit": 0,
+    "staleEvidence": "Core runtime concurrency/CAS suites and adapter revision_test.dart; no stale race introduced by static live corpus"
+  },
+  "invalidToolArgumentRate": 0.45161290322580644,
+  "semanticWrongStateCases": [
+    "number_weight",
+    "boolean_consent",
+    "boolean_backroom",
+    "string_name",
+    "string_city",
+    "multi_selection",
+    "negation_consent",
+    "reference_multi",
+    "out_of_context"
+  ],
+  "criticalRegression": {
+    "passed": 0,
+    "runsPerVariant": 3,
+    "variants": 2
+  },
+  "qualityThresholds": {
+    "simpleExact": 0.97,
+    "booleanExact": 0.98,
+    "numericTyped": 0.97,
+    "choiceCanonical": 0.97,
+    "multiChoiceExact": 0.93,
+    "compoundExact": 0.92,
+    "correctionReferenceExact": 0.9,
+    "hallucinatedFieldRateMax": 0.01,
+    "hallucinatedOptionRateMax": 0.01,
+    "malformedCallRateMax": 0.02,
+    "latencyBudgetMs": null,
+    "targetDevice": "Zebra: measurements required"
+  },
+  "qualityChecks": {
+    "simpleExact": false,
+    "booleanExact": false,
+    "numericTyped": false,
+    "choiceCanonical": false,
+    "multiChoiceExact": false,
+    "compoundExact": false,
+    "correctionReferenceExact": false,
+    "hallucinatedFieldRate": true,
+    "hallucinatedOptionRate": false,
+    "malformedCallRate": false,
+    "criticalRegression": false,
+    "hardCorrectness": true
+  },
+  "hostMeasurements": {
+    "p50LatencyMs": 2046.0,
+    "p95LatencyMs": 2941.0,
+    "p50TtftMs": 1449.0,
+    "p95TtftMs": 1630.0,
+    "peakRssKb": 407200,
+    "targetDeviceMeasured": false
+  },
+  "failureCounts": {
+    "CONTEXT_SELECTION": 0,
+    "CONTEXT_FORMATTING": 0,
+    "FIELD_SELECTION": 4,
+    "VALUE_EXTRACTION": 6,
+    "TYPE_ERROR": 0,
+    "OPTION_MAPPING": 0,
+    "MULTI_CHOICE_STATE": 1,
+    "NEGATION": 1,
+    "REFERENCE_RESOLUTION": 1,
+    "MODEL_HALLUCINATION": 2,
+    "TOOL_FORMAT": 9,
+    "AMBIGUITY_POLICY": 0,
+    "CONSTRAINT_REJECTION_EXPECTED": 0,
+    "RUNTIME_VALIDATION": 0,
+    "UNKNOWN": 0
+  },
+  "followUp": [
+    "Verify original checkpoint/tokenizer/conversion parity before attributing all failure to model family.",
+    "Keep frozen corpus and strict validators; evaluate a replacement IntelligenceAdapter if FunctionGemma remains unreliable.",
+    "Measure target Zebra latency/memory only for an extraction engine that meets correctness requirements."
+  ],
+  "benchmarkExpectationsChanged": false,
+  "fineTuned": false,
+  "phase7Implemented": false
+}
