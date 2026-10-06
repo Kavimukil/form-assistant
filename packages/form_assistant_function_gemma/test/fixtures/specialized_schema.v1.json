@@ -1,0 +1,81 @@
+[
+  {
+    "name": "set_integer",
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field_id",
+        "value"
+      ],
+      "properties": {
+        "field_id": {
+          "type": "string",
+          "enum": [
+            "age"
+          ]
+        },
+        "value": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  {
+    "name": "set_choice",
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field_id",
+        "value"
+      ],
+      "properties": {
+        "field_id": {
+          "type": "string",
+          "enum": [
+            "promotion"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "field_id": {
+              "const": "promotion"
+            },
+            "value": {
+              "type": "string",
+              "enum": [
+                "fall"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "clear_field",
+    "parameters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field_id"
+      ],
+      "properties": {
+        "field_id": {
+          "type": "string",
+          "enum": [
+            "age",
+            "promotion"
+          ]
+        }
+      }
+    }
+  }
+]
