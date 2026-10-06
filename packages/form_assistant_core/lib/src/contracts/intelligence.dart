@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'canonical_json.dart';
 import 'form_ir.dart';
@@ -14,10 +15,115 @@ final class UserInput {
   const UserInput({required this.text, this.segmentId});
 }
 
+enum SemanticValueType {
+  string,
+  integer,
+  number,
+  boolean,
+  date,
+  choice,
+  multiChoice
+}
+
+enum FieldSelectionReason {
+  active,
+  candidate,
+  dependency,
+  reference,
+  recent,
+  unanswered
+}
+
+/// Compatibility wrapper: canonical field access remains available to runtime.
 final class FormFieldContext {
   final FormField field;
-  const FormFieldContext({required this.field});
+  final FormValue? currentValue;
+  final bool writable;
+  final bool optionsTruncated;
+  final Set<FieldSelectionReason> selectionReasons;
+  const FormFieldContext(
+      {required this.field,
+      this.currentValue,
+      this.writable = true,
+      this.optionsTruncated = false,
+      this.selectionReasons = const {}});
+  String get id => field.id;
+  String get label => field.semantics.label;
+  String? get concept => field.semantics.concept;
+  List<String> get aliases => field.semantics.aliases;
+  FieldConstraints? get constraints => field.constraints;
+  List<FormOption> get options => field.options ?? const [];
+  SemanticValueType get type => switch (field.value) {
+        StringDefinition() => SemanticValueType.string,
+        IntegerDefinition() => SemanticValueType.integer,
+        NumberDefinition() => SemanticValueType.number,
+        BooleanDefinition() => SemanticValueType.boolean,
+        DateDefinition() => SemanticValueType.date,
+        ChoiceDefinition(:final multiple) =>
+          multiple ? SemanticValueType.multiChoice : SemanticValueType.choice,
+      };
+  Map<String, Object?> toJson() => {
+        'id': id,
+        'type':
+            type == SemanticValueType.multiChoice ? 'multi_choice' : type.name,
+        'label': label,
+        if (concept != null) 'concept': concept,
+        'aliases': aliases,
+        'currentValue': currentValue?.toJson(),
+        'writable': writable,
+        'optionsTruncated': optionsTruncated,
+        if (constraints != null) 'constraints': constraints!.toJson(),
+        'options': options
+            .map((o) => {'id': o.id, 'label': o.label, 'aliases': o.aliases})
+            .toList(),
+      };
+  factory FormFieldContext.fromJson(Object? input) {
+    final j = jsonObject(input);
+    final kind = requiredString(j, 'type');
+    final definition = kind == 'multi_choice' || kind == 'choice'
+        ? ChoiceDefinition(multiple: kind == 'multi_choice')
+        : ValueDefinition.fromJson({'type': kind});
+    return FormFieldContext(
+        field: FormField(
+            id: requiredId(j, 'id'),
+            value: definition,
+            semantics: FieldSemantics(
+                label: requiredString(j, 'label'),
+                concept: optional<String>(j, 'concept'),
+                aliases: stringList(j['aliases'])),
+            constraints: j.containsKey('constraints')
+                ? FieldConstraints.fromJson(j['constraints'])
+                : null,
+            options: requireType<List<Object?>>(j['options'])
+                .map(FormOption.fromJson)
+                .toList()),
+        currentValue: j['currentValue'] == null
+            ? null
+            : FormValueCodec.decode(j['currentValue']),
+        writable: requireType<bool>(j['writable']),
+        optionsTruncated: requireType<bool>(j['optionsTruncated']));
+  }
 }
+
+typedef SemanticFieldContext = FormFieldContext;
+
+/// Canonical sorted JSON identity. No probabilistic hash collisions and no
+/// dependency in core; not an authentication token. Cache compares exact bytes.
+String semanticFingerprint(Object? value) {
+  Object? canonical(Object? v) {
+    if (v is Map<String, Object?>) {
+      final keys = v.keys.toList()..sort();
+      return {for (final key in keys) key: canonical(v[key])};
+    }
+    if (v is List<Object?>) return v.map(canonical).toList();
+    return v;
+  }
+
+  return 'canonical-json:' + jsonEncode(canonical(freezeJson(value)));
+}
+
+String normalizeSemanticLocale(String locale) =>
+    locale.trim().replaceAll('_', '-').toLowerCase();
 
 final class InteractionHistoryEntry {
   final String interactionId;
@@ -31,6 +137,8 @@ final class InteractionHistoryEntry {
 }
 
 final class SemanticContext {
+  static const currentSpecVersion = '1.1';
+  final String specVersion;
   final FormId formId;
   final Revision revision;
   final FieldId? activeFieldId;
@@ -38,17 +146,81 @@ final class SemanticContext {
   final Map<FieldId, FormValue> values;
   final String locale;
   final List<InteractionHistoryEntry> history;
+  final List<String> recentFieldIds;
+  late final String fingerprint = semanticFingerprint(modelRelevantJson());
   SemanticContext(
-      {required this.formId,
+      {this.specVersion = currentSpecVersion,
+      required this.formId,
       required this.revision,
       this.activeFieldId,
       required List<FormFieldContext> fields,
-      required Map<FieldId, FormValue> values,
-      this.locale = 'en',
-      List<InteractionHistoryEntry> history = const []})
-      : fields = List.unmodifiable(fields),
-        values = Map.unmodifiable(values),
-        history = List.unmodifiable(history);
+      Map<FieldId, FormValue> values = const {},
+      String locale = 'en',
+      List<InteractionHistoryEntry> history = const [],
+      List<String> recentFieldIds = const []})
+      : locale = normalizeSemanticLocale(locale),
+        fields = List.unmodifiable(fields.map((f) => FormFieldContext(
+            field: f.field,
+            currentValue: values[f.id] ?? f.currentValue,
+            writable: f.writable,
+            optionsTruncated: f.optionsTruncated,
+            selectionReasons: Set.unmodifiable(f.selectionReasons)))),
+        values = Map.unmodifiable({
+          for (final f in fields)
+            if (values[f.id] != null || f.currentValue != null)
+              f.id: values[f.id] ?? f.currentValue!
+        }),
+        history = List.unmodifiable(history),
+        recentFieldIds = List.unmodifiable(recentFieldIds) {
+    if (specVersion != currentSpecVersion ||
+        revision < 0 ||
+        formId.isEmpty ||
+        this.locale.isEmpty ||
+        fields.map((f) => f.id).toSet().length != fields.length ||
+        fields.any((f) => f.id.isEmpty)) {
+      throw ArgumentError('Invalid SemanticContext v1.1');
+    }
+    final ids = fields.map((f) => f.id).toSet();
+    if (activeFieldId != null &&
+            !ids.contains(activeFieldId) &&
+            fields.isNotEmpty ||
+        recentFieldIds.any((id) => !ids.contains(id))) {
+      throw ArgumentError('Unknown context reference');
+    }
+  }
+  Map<String, Object?> modelRelevantJson() => {
+        'locale': locale,
+        'activeFieldId': activeFieldId,
+        'recentFieldIds': recentFieldIds,
+        'fields': fields.map((f) => f.toJson()).toList(),
+      };
+  Map<String, Object?> toJson() => {
+        'specVersion': specVersion,
+        'formId': formId,
+        'revision': revision,
+        'fingerprint': fingerprint,
+        ...modelRelevantJson()
+      };
+  factory SemanticContext.fromJson(Object? input) {
+    final j = jsonObject(input);
+    if (j['specVersion'] != currentSpecVersion) {
+      throw const FormatException(
+          'Explicit v1.1 required; legacy constructor is compatibility path');
+    }
+    final result = SemanticContext(
+        formId: requiredId(j, 'formId'),
+        revision: requireType<int>(j['revision']),
+        locale: requiredString(j, 'locale'),
+        activeFieldId: optional<String>(j, 'activeFieldId'),
+        recentFieldIds: stringList(j['recentFieldIds']),
+        fields: requireType<List<Object?>>(j['fields'])
+            .map(FormFieldContext.fromJson)
+            .toList());
+    if (j['fingerprint'] != result.fingerprint) {
+      throw const FormatException('Semantic fingerprint mismatch');
+    }
+    return result;
+  }
 }
 
 final class IntelligenceRequest {

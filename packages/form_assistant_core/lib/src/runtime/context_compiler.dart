@@ -87,7 +87,7 @@ final class ContextCompiler {
         queue.add(dep);
       }
     }
-    for (final id in recent) {
+    for (final id in recent.take(budget.maxRecentFields)) {
       add(id, 'recent_changed');
     }
     for (final field in form.fields) {
@@ -110,7 +110,11 @@ final class ContextCompiler {
         activeFieldId: active,
         fields: selected,
         values: values,
-        history: keptHistory);
+        history: keptHistory,
+        recentFieldIds: recent
+            .take(budget.maxRecentFields)
+            .where((id) => selected.any((f) => f.id == id))
+            .toList());
     bool fits(SemanticContext candidate) {
       final chars = contextChars(candidate);
       return chars <= budget.maxChars &&
@@ -124,7 +128,24 @@ final class ContextCompiler {
         omitted[id] = 'field_budget';
         continue;
       }
-      selected.add(FormFieldContext(field: _semanticField(_fields[id]!)));
+      final source = _fields[id]!;
+      final textChars = [
+        source.semantics.label,
+        source.semantics.description ?? '',
+        source.semantics.concept ?? '',
+        ...source.semantics.aliases.take(budget.maxAliasesPerField)
+      ].join().length;
+      if (textChars > budget.maxFieldCharacters) {
+        if (mandatory.contains(id)) throw const ContextBudgetExceeded();
+        omitted[id] = 'field_character_budget';
+        continue;
+      }
+
+      selected.add(FormFieldContext(
+          field: _semanticField(source, budget),
+          writable: snapshot.lifecycle == FormLifecycle.active,
+          optionsTruncated:
+              (source.options?.length ?? 0) > budget.maxOptionsPerField));
       if (snapshot.values.containsKey(id)) values[id] = snapshot.values[id]!;
       if (!fits(context())) {
         selected.removeLast();
@@ -163,13 +184,21 @@ final class ContextCompiler {
 
 String _words(String text) =>
     text.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), ' ').trim();
-FormField _semanticField(FormField f) => FormField(
+FormField _semanticField(FormField f, ContextBudget budget) => FormField(
     id: f.id,
     value: f.value,
-    semantics: f.semantics,
+    semantics: FieldSemantics(
+        label: f.semantics.label,
+        description: f.semantics.description,
+        concept: f.semantics.concept,
+        aliases: f.semantics.aliases.take(budget.maxAliasesPerField).toList()),
     constraints: f.constraints,
     options: f.options
-        ?.map((o) => FormOption(id: o.id, label: o.label, aliases: o.aliases))
+        ?.take(budget.maxOptionsPerField)
+        .map((o) => FormOption(
+            id: o.id,
+            label: o.label,
+            aliases: o.aliases.take(budget.maxAliasesPerField).toList()))
         .toList());
 
 /// Cost includes JSON escapes, canonical values/options, locale and history.
@@ -177,7 +206,13 @@ int contextChars(SemanticContext c) => jsonEncode({
       'formId': c.formId,
       'revision': c.revision,
       if (c.activeFieldId != null) 'activeFieldId': c.activeFieldId,
-      'fields': c.fields.map((f) => f.field.toJson()).toList(),
+      'fields': c.fields
+          .map((f) => {
+                ...f.field.toJson(),
+                'writable': f.writable,
+                'optionsTruncated': f.optionsTruncated
+              })
+          .toList(),
       'values': c.values.map((id, value) => MapEntry(id, value.toJson())),
       'locale': c.locale,
       'history': c.history

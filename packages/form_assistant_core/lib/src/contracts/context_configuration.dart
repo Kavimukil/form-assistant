@@ -7,19 +7,28 @@ final class ContextBudget {
   final int maxHistoryEntries;
   final int maxHistoryEntryChars;
   final int maxRecentFields;
+  final int maxAliasesPerField;
+  final int maxOptionsPerField;
+  final int maxFieldCharacters;
   ContextBudget(
-      {this.maxFields = 8,
+      {this.maxFields = 16,
       this.maxChars = 12000,
-      this.maxEstimatedTokens = 3000,
+      this.maxEstimatedTokens = 768,
       this.maxHistoryEntries = 4,
       this.maxHistoryEntryChars = 512,
-      this.maxRecentFields = 16}) {
+      this.maxRecentFields = 5,
+      this.maxAliasesPerField = 6,
+      this.maxOptionsPerField = 32,
+      this.maxFieldCharacters = 512}) {
     if (maxFields < 1 ||
         maxChars < 1 ||
         maxEstimatedTokens < 1 ||
         maxHistoryEntries < 0 ||
         maxHistoryEntryChars < 0 ||
-        maxRecentFields < 0) {
+        maxRecentFields < 0 ||
+        maxAliasesPerField < 0 ||
+        maxOptionsPerField < 0 ||
+        maxFieldCharacters < 1) {
       throw ArgumentError('Invalid context budget');
     }
   }
