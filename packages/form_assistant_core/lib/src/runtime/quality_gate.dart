@@ -23,7 +23,7 @@ final class QualityGate {
   }
   QualityDecision evaluate(
       IntelligenceRequest request, List<ProposedAction> actions,
-      {double? confidence}) {
+      {double? confidence, bool rejectConflictingWrites = false}) {
     final fields = {
       for (final f in request.context.fields) f.field.id: f.field
     };
@@ -44,9 +44,31 @@ final class QualityGate {
     if (actions.isEmpty) {
       return clarify('no_answer', ClarificationReason.missingInformation);
     }
+    final writable = {for (final f in request.context.fields) f.id: f.writable};
+    final writes = <String, FormMutationAction>{};
+    final unique = <ProposedAction>[];
+    for (final proposed in actions) {
+      final action = proposed.action;
+      if (action is FormMutationAction) {
+        if (writable[action.fieldId] == false) {
+          return clarify(
+              'non_writable_field', ClarificationReason.invalidValue);
+        }
+        final prior = writes[action.fieldId];
+        if (rejectConflictingWrites && prior != null) {
+          if (prior != action) {
+            return clarify(
+                'conflicting_writes', ClarificationReason.invalidValue);
+          }
+          continue;
+        }
+        writes[action.fieldId] = action;
+      }
+      unique.add(proposed);
+    }
     final checked = <ProposedAction>[];
     var invalid = false;
-    for (final proposed in actions) {
+    for (final proposed in unique) {
       final action = proposed.action;
       final type = action.toJson()['type'];
       if (!request.allowedActionTypes.contains(type)) {

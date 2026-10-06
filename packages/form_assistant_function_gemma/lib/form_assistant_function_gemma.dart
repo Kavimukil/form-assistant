@@ -3,6 +3,7 @@ library;
 import 'package:form_assistant_core/form_assistant_core.dart';
 import 'src/backend.dart';
 import 'src/format.dart';
+import 'src/extraction_quality.dart';
 export 'src/backend.dart' show FunctionGemmaOutput, LocalFunctionGemmaInference;
 
 /// Zero-shot local adapter. The callback owns the local model runner.
@@ -66,9 +67,10 @@ final class FunctionGemmaAdapter implements IntelligenceAdapter {
         final output =
             await _backend.generate(formatPrompt(request), cancellation);
         cancellation.throwIfCancelled();
-        final decision = qualityGate.evaluate(
-            request, parseOutput(output.text, request),
-            confidence: output.confidence);
+        final extractionDecision = FunctionGemmaQualityGate(qualityGate)
+            .evaluate(request, parseOutput(output.text, request),
+                confidence: output.confidence);
+        final decision = extractionDecision.canonical!;
         return IntelligenceResult(
             proposal: ActionProposal(
                 id: '${request.trace.requestId}/function-gemma',
