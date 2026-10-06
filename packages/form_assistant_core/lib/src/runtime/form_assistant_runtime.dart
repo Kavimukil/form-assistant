@@ -219,6 +219,25 @@ final class FormAssistantRuntime {
         before.activeFieldId != after.activeFieldId) {
       return true;
     }
+    // Compare the exact selected semantic surface, independently of revision.
+    // Unrelated changes may revalidate; selected answers/focus/lifecycle may not.
+    final freshContext = SemanticContext(
+      formId: context.formId,
+      revision: after.revision,
+      locale: context.locale,
+      activeFieldId: after.activeFieldId,
+      recentFieldIds: context.recentFieldIds,
+      fields: [
+        for (final field in context.fields)
+          FormFieldContext(
+              field: field.field,
+              currentValue: after.values[field.id],
+              writable:
+                  field.writable && after.lifecycle == FormLifecycle.active,
+              optionsTruncated: field.optionsTruncated)
+      ],
+    );
+    if (freshContext.fingerprint != context.fingerprint) return true;
     final touched = <FieldId>{
       ...dependencies,
       ...context.fields.map((f) => f.field.id)
