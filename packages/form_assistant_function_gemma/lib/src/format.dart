@@ -76,19 +76,12 @@ Object? nativeSchema(Object? value, {String? key}) {
 }
 
 String formatPrompt(IntelligenceRequest request,
-    {FunctionGemmaToolSet? tools}) {
+    {FunctionGemmaToolSet? tools, String? preparedDeclarations}) {
   final specialized = tools ??
       FunctionGemmaToolSchemaBuilder().build(request.context,
           allowedActionTypes: request.allowedActionTypes);
-  final declarations = specialized.definitions
-      .map((d) =>
-          '<start_function_declaration>declaration:${d.name}${nativeWire({
-                'description': d.name == 'clear_field'
-                    ? 'Clear the supplied field when explicitly requested.'
-                    : 'Extract the supplied typed field answer.',
-                'parameters': nativeSchema(d.parameters),
-              })}<end_function_declaration>')
-      .join();
+  final declarations =
+      preparedDeclarations ?? encodeNativeDeclarations(specialized);
   final context = const FunctionGemmaContextFormatter().format(request.context);
   final input =
       request.input.text.replaceAll('<', r'\u003c').replaceAll('>', r'\u003e');
@@ -104,3 +97,13 @@ List<ProposedAction> parseOutput(String output, IntelligenceRequest request) =>
                 allowedActionTypes: request.allowedActionTypes),
             request)
         .actions;
+
+String encodeNativeDeclarations(FunctionGemmaToolSet specialized) => specialized
+    .definitions
+    .map((d) => '<start_function_declaration>declaration:${d.name}${nativeWire({
+              'description': d.name == 'clear_field'
+                  ? 'Clear the supplied field when explicitly requested.'
+                  : 'Extract the supplied typed field answer.',
+              'parameters': nativeSchema(d.parameters),
+            })}<end_function_declaration>')
+    .join();

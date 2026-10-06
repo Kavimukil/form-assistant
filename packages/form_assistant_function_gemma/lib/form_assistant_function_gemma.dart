@@ -4,12 +4,14 @@ import 'package:form_assistant_core/form_assistant_core.dart';
 import 'src/backend.dart';
 import 'src/format.dart';
 import 'src/extraction_quality.dart';
+import 'src/schema_cache.dart';
 export 'src/backend.dart' show FunctionGemmaOutput, LocalFunctionGemmaInference;
 
 /// Zero-shot local adapter. The callback owns the local model runner.
 final class FunctionGemmaAdapter implements IntelligenceAdapter {
   final InferenceBackend _backend;
   final QualityGate qualityGate;
+  final FunctionGemmaSchemaCache schemaCache;
   @override
   final String id;
   @override
@@ -17,10 +19,12 @@ final class FunctionGemmaAdapter implements IntelligenceAdapter {
   FunctionGemmaAdapter(
       {required LocalFunctionGemmaInference inference,
       QualityGate? qualityGate,
+      FunctionGemmaSchemaCache? schemaCache,
       this.id = 'function_gemma',
       this.version = '0.2.0'})
       : _backend = CallbackBackend(inference),
-        qualityGate = qualityGate ?? QualityGate();
+        qualityGate = qualityGate ?? QualityGate(),
+        schemaCache = schemaCache ?? FunctionGemmaSchemaCache();
 
   /// JSON-safe application output; the model still uses native tool syntax.
   /// Canonical action JSON is unchanged and metadata stays in the envelope.
@@ -64,8 +68,14 @@ final class FunctionGemmaAdapter implements IntelligenceAdapter {
     try {
       return await runIntelligence(() async {
         cancellation.throwIfCancelled();
-        final output =
-            await _backend.generate(formatPrompt(request), cancellation);
+        final prepared = schemaCache.prepare(request.context,
+            adapterVersion: version,
+            allowedActionTypes: request.allowedActionTypes);
+        final output = await _backend.generate(
+            formatPrompt(request,
+                tools: prepared.tools,
+                preparedDeclarations: prepared.declarations),
+            cancellation);
         cancellation.throwIfCancelled();
         final extractionDecision = FunctionGemmaQualityGate(qualityGate)
             .evaluate(request, parseOutput(output.text, request),
