@@ -40,22 +40,36 @@ form-assistant/
 │   │   │       │   ├── form_assistant_runtime.dart
 │   │   │       │   ├── action_runtime.dart
 │   │   │       │   ├── input_router.dart
-│   │   │       │   └── runtime_events.dart
+│   │   │       │   ├── runtime_events.dart
+│   │   │       │   ├── production.dart
+│   │   │       │   ├── native_form.dart
+│   │   │       │   └── multilingual.dart
 │   │   │       ├── state/
 │   │   │       │   └── local_form_state_bridge.dart
 │   │   │       ├── validation/
 │   │   │       └── context/
 │   │   └── test/
 │   ├── form_assistant_flutter/
-│   │   └── thin Flutter-facing bindings only
+│   │   └── Phase 9 chrome, plus a Phase 11 native-form renderer
 │   ├── form_assistant_function_gemma/
 │   │   └── FunctionGemma IntelligenceAdapter implementation
+│   ├── form_assistant_needle/
+│   │   └── Needle 3 IntelligenceAdapter (evaluated MODEL_NO_GO)
+│   ├── form_assistant_qwen3vl/
+│   │   └── Qwen3VL llama.cpp IntelligenceAdapter (host-eval MODEL_NO_GO)
 │   ├── form_assistant_stt/
-│   │   └── concrete STT implementation(s), not STT contract
+│   │   └── Phase 8 host STT session; contract stays in core
 │   └── form_assistant_cloud/
-│       └── optional cloud IntelligenceAdapter
+│       └── Phase 7 CloudLLMAdapter and HybridIntelligenceAdapter
+├── bindings/
+│   └── form_assistant_react/
+│       └── Phase 12 protocol 1.0 decoder; not a second runtime
 └── examples/
     ├── external_form_integration/
+    ├── flutter_existing_form/
+    │   └── source Flutter form; no dependency on form_assistant_flutter
+    ├── flutter_assistant_shell/
+    │   └── optional chrome around flutter_existing_form
     └── local_form_runtime/
 ```
 
@@ -72,7 +86,7 @@ runtime
 |                        |
 Flutter binding     adapters/providers
                          |
-               FunctionGemma / STT / Cloud
+               FunctionGemma / Needle / Qwen3VL / STT / Cloud
 ```
 
 Core must not import Flutter, provider-specific inference runtimes, source-project types, or cloud SDKs.

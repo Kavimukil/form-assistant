@@ -1,0 +1,23 @@
+name: flutter_assistant_shell
+description: Optional assistant chrome around the existing Flutter form.
+version: 0.1.0
+publish_to: none
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.16.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_existing_form:
+    path: ../flutter_existing_form
+  form_assistant_core:
+    path: ../../packages/form_assistant_core
+  form_assistant_flutter:
+    path: ../../packages/form_assistant_flutter
+  form_assistant_stt:
+    path: ../../packages/form_assistant_stt
+  form_assistant_external_example:
+    path: ../external_form_integration
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

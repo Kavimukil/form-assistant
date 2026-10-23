@@ -37,7 +37,12 @@ final class ContextCompiler {
       List<String> candidates = const [],
       List<String> explicitDependencies = const [],
       List<String> recent = const [],
-      List<InteractionHistoryEntry> history = const []}) {
+      List<InteractionHistoryEntry> history = const [],
+      String locale = 'en'}) {
+    final resolvedLocale = normalizeSemanticLocale(locale);
+    if (resolvedLocale.isEmpty) {
+      throw ArgumentError('Invalid locale');
+    }
     final reasons = <String, String>{};
     final mandatory = <String>{};
     void add(String id, String reason, {bool required = false}) {
@@ -60,8 +65,14 @@ final class ContextCompiler {
     // interpretation and action selection remain behind the router/adapter.
     final utterance = ' ${_words(input.text)} ';
     for (final field in form.fields) {
-      if ([field.id, field.semantics.label, ...field.semantics.aliases]
-          .any((name) {
+      if ([
+        field.id,
+        field.semantics.label,
+        field.semantics.labelFor(resolvedLocale),
+        ...field.semantics.aliases,
+        ...field.semantics.aliasesFor(resolvedLocale),
+        ...field.semantics.localizedLabels.values,
+      ].any((name) {
         final words = _words(name);
         return words.isNotEmpty && utterance.contains(' $words ');
       })) {
@@ -108,6 +119,7 @@ final class ContextCompiler {
     SemanticContext context() => SemanticContext(
         formId: form.id,
         revision: snapshot.revision,
+        locale: resolvedLocale,
         activeFieldId: active,
         fields: selected,
         values: values,
@@ -183,8 +195,10 @@ final class ContextCompiler {
   }
 }
 
-String _words(String text) =>
-    text.toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), ' ').trim();
+String _words(String text) => text
+    .toLowerCase()
+    .replaceAll(RegExp(r'[^\p{L}\p{N}]+', unicode: true), ' ')
+    .trim();
 FormField _semanticField(FormField f, ContextBudget budget) => FormField(
     id: f.id,
     value: f.value,
@@ -192,14 +206,25 @@ FormField _semanticField(FormField f, ContextBudget budget) => FormField(
         label: f.semantics.label,
         description: f.semantics.description,
         concept: f.semantics.concept,
-        aliases: f.semantics.aliases.take(budget.maxAliasesPerField).toList()),
+        aliases: f.semantics.aliases.take(budget.maxAliasesPerField).toList(),
+        localizedLabels: f.semantics.localizedLabels,
+        localizedAliases: {
+          for (final entry in f.semantics.localizedAliases.entries)
+            entry.key: entry.value.take(budget.maxAliasesPerField).toList(),
+        }),
     constraints: f.constraints,
     options: f.options
         ?.take(budget.maxOptionsPerField)
         .map((o) => FormOption(
-            id: o.id,
-            label: o.label,
-            aliases: o.aliases.take(budget.maxAliasesPerField).toList()))
+                id: o.id,
+                label: o.label,
+                aliases: o.aliases.take(budget.maxAliasesPerField).toList(),
+                localizedLabels: o.localizedLabels,
+                localizedAliases: {
+                  for (final entry in o.localizedAliases.entries)
+                    entry.key:
+                        entry.value.take(budget.maxAliasesPerField).toList(),
+                }))
         .toList());
 
 /// Cost includes JSON escapes, canonical values/options, locale and history.

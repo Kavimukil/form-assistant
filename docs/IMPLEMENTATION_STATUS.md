@@ -1,6 +1,6 @@
 # Implementation Status
 
-Status: **Phases 0–5 GREEN; original Phase 6 superseded; Phase 6R recovery implemented/reviewed, FunctionGemma NO-GO. Phase 7 blocked.**
+Status: **Phases 0–5 GREEN; original Phase 6 superseded; Phase 6R recovery implemented/reviewed. Frozen category gate remains NO-GO. Phase 7 started 2026-10-22 under a 29/31 complete-case acceptance of Qwen3.8-27B. Phase 8 voice orchestration started 2026-10-22. Phase 9 thin Flutter chrome started 2026-10-22. Phase 10 production hardening started 2026-10-22. Phase 11 native forms started 2026-10-23. Phase 12 multilingual semantics and React bindings started 2026-10-23. Phase 12 completes the written plan.**
 
 Verified: 2026-10-06, Dart SDK 3.13.5 stable.
 Current completed foundation: Phase 5 — Internal ContextCompiler.
@@ -438,7 +438,9 @@ provided GGUF and tested prompt/runner configuration do not achieve that. No
 fine-tuning, deterministic NLP expansion, parser coercion, oracle injection or
 architecture redesign was used to manufacture a passing result.
 
-Phase 7 — Hybrid/cloud fallback. **Not started; prerequisite P6 is not green.**
+Phase 7 — Hybrid/cloud fallback. **Started 2026-10-22** under the 29/31
+complete-case acceptance. The frozen category gate is still not green. See
+[phase7/README.md](phase7/README.md).
 
 ## Phase 6 extraction persona comparison — 2026-10-06
 
@@ -489,3 +491,171 @@ Simpler native enums reduced malformed output from 41.9% to 29.0%, still above 2
 [raw simpler-schema report](../benchmarks/function_gemma_phase6r/reports/simple_native.v1.json).
 Phase 7 remains untouched and blocked. Next work requires a separate decision on
 checkpoint parity/task adaptation or another IntelligenceAdapter, not a project restart.
+
+## Additional model gate — Needle 3 (2026-10-06)
+
+- FunctionGemma 270M recorded as **MODEL_NO_GO**, including 35 raw ablation runs proving clear-field competition and independent semantic/type failures. Its adapter and raw benchmark remain preserved.
+- Added NeedleAdapter using the same SemanticContext, specialized eight-tool contract, strict validators and runtime; no Phase 6R architecture changes.
+- Complete frozen 31-case benchmark: FunctionGemma 7/31; Needle 4/31; critical compound 0/3 each. **Needle MODEL_NO_GO**. Expected outputs and quality thresholds unchanged.
+- [Side-by-side report](model_evaluation/FUNCTIONGEMMA_VS_NEEDLE3.md) includes native-engine limitations, pinned artifacts, all-call evidence and reproducible JSON/CSV comparison. Suppressed Needle candidates are diagnostic only; confidence gate remains 0.8.
+- Formatter, fatal analyzer, all 273 software tests, canonical/extraction schema gates and whitespace check: PASS. Model quality: FAIL for both. No Phase 7 work.
+
+## Additional model gate — Qwen3VL-2B (2026-10-06)
+
+- Added `form_assistant_qwen3vl` (`Qwen3VlAdapter`) behind `IntelligenceAdapter`, reusing Phase 6R compact context, eight-tool specialization, strict validator/mapper and QualityGate. Host owns llama.cpp `llama-completion` (CPU build b11445 / commit 58cb913). Text-only Qwen chat prompts; no images; no repair.
+- Pinned artifact: `Qwen3VL-2B-Instruct-Q4_K_M.gguf` SHA-256 `089d75c52f4b7ffc56ba998ffc50aae89fcafc755f9e7208aacca281dca6c2ae`.
+- Frozen 31-case host eval: **22/31** complete; critical age+consent **0/3**; boolean/numeric typed and hallucination caps PASS; simpleExact 92.9%, compoundExact 0%, malformed 19.4% FAIL. Primary compound failure: multiple consecutive JSON objects instead of one `function_calls` array.
+- Decision: **MODEL_NO_GO**. Report: [qwen3vl.v1.json](../benchmarks/qwen3vl_phase6r/reports/qwen3vl.v1.json). Write-up: [QWEN3VL_2B.md](model_evaluation/QWEN3VL_2B.md). Comparison tool updated for three models. Phase 7 remains blocked.
+
+## Additional model gate — Qwen3-4B-Instruct-2507 (2026-10-06)
+
+- Same Qwen chat adapter / frozen corpus / eight-tool contract; pinned
+  `Qwen3-4B-Instruct-2507-Q4_K_M.gguf` SHA-256
+  `3605803b982cb64aead44f6c1b2ae36e3acdb41d8e46c8a94c6533bc4c67e597`.
+- Host eval: **22/31** complete (same as 2B). Critical age+consent **3/3**;
+  malformedCallRate **0%**; compoundExact 80%. Failures moved to field-selection /
+  ambiguity / multi_add / noise value extraction.
+- Decision: **MODEL_NO_GO**. Report:
+  [qwen3_4b.v1.json](../benchmarks/qwen3_4b_phase6r/reports/qwen3_4b.v1.json).
+  Write-up: [QWEN3_4B.md](model_evaluation/QWEN3_4B.md). Phase 7 remains blocked.
+
+## Additional model gate — Qwen3VL-8B-Instruct (2026-10-06)
+
+- Same adapter / frozen corpus; pinned `Qwen3VL-8B-Instruct-Q4_K_M.gguf`
+  SHA-256 `67d1659bfe71b89d50b45a4ad1a9e5b997e5bb16ce5da66a6a6167abd569e9e2`.
+- Host eval: **26/31** complete (best so far). Critical **3/3**; simpleExact
+  **100%**; malformed **0%**. Remaining fails: negation_consent, reference_multi,
+  ambiguous_number, noise_compound (age 30 vs 32), noise_choice.
+- Decision: **MODEL_NO_GO**. Report:
+  [qwen3vl_8b.v1.json](../benchmarks/qwen3vl_8b_phase6r/reports/qwen3vl_8b.v1.json).
+  Write-up: [QWEN3VL_8B.md](model_evaluation/QWEN3VL_8B.md). Phase 7 remains blocked.
+
+## Additional model gate — functiongemma270_trained (2026-10-09)
+
+- Same FunctionGemma adapter and frozen corpus. Artifact
+  `functiongemma270_trained.gguf` SHA-256
+  `6452fdf7c89be44a861e3e3de1961d642db5b5acad12a9728ee4b5fe6bcf47bd`.
+- Host eval: **3/31** complete (untuned baseline 7/31). Critical **0/3**.
+  18/31 TOOL_FORMAT (model emits a user turn instead of a function call).
+- Decision: **MODEL_NO_GO**. Report:
+  [trained.v1.json](../benchmarks/function_gemma_phase6r/reports/trained.v1.json).
+  Write-up: [FUNCTIONGEMMA_270M_TRAINED.md](model_evaluation/FUNCTIONGEMMA_270M_TRAINED.md).
+  Phase 7 remains blocked.
+
+## Additional model gate — Qwen3.8-27B (2026-10-22)
+
+- Same Qwen chat adapter, frozen corpus, and eight-tool contract. Pinned
+  `Qwen3.8-27B-UD-Q4_K_M.gguf` SHA-256
+  `322e194ff79741c7baa497c240f677f54b201b0efab44ca8e50f122b39123482`.
+  Prompt uses the model's `enable_thinking=false` prefix so generation is the
+  required JSON object.
+- Host eval on Apple Silicon Metal (llama.cpp build 11515): **29/31** complete.
+  Critical age+consent **3/3**. simpleExact, boolean, numeric, multi-choice,
+  correction/reference, hallucination, and malformed gates PASS.
+  choiceCanonical **75%** and compoundExact **80%** FAIL.
+- Remaining fails: noise_compound wrote age 30 (expected 32); noise_choice
+  emitted no calls (expected promotion=fall).
+- Decision: **MODEL_NO_GO**. Report:
+  [qwen3_8_27b.v1.json](../benchmarks/qwen3_8_27b_phase6r/reports/qwen3_8_27b.v1.json).
+  Write-up: [QWEN3_8_27B.md](model_evaluation/QWEN3_8_27B.md). Accepted for
+  Phase 7 at 29/31 complete cases. Frozen category gate remains failed.
+
+## Phase 7 — Hybrid/cloud fallback (2026-10-22)
+
+- Acceptance bar for leaving Phase 6R: **≥29/31** complete cases on the frozen
+  corpus. Qwen3.8-27B is 29/31. `gate.v1.json` thresholds were not edited.
+- Added `form_assistant_cloud`: `CloudLLMAdapter`, `HybridIntelligenceAdapter`,
+  `IntelligenceCapabilities` (`networkAvailable`, `cloudAllowed`,
+  `localModelAvailable`), and `SensitiveContextPolicy`.
+- The host owns cloud transport. Offline, cloud-disabled, and sensitive
+  contexts never invoke it. Ambiguous clarifications stay local. Fallback
+  keeps the interaction trace and emits canonical `FormAction`s.
+- Core `QualityOutcome.fallback` and `QualityGate.considerFallback` added.
+  `QualityGate.evaluate` still returns only accept or clarify.
+- Gate tests: `packages/form_assistant_cloud/test/phase7_gate_test.dart`,
+  10 tests. Core suite 121 tests.
+
+## Phase 8 — Streaming STT and voice orchestration (2026-10-22)
+
+- Core contract: `AudioChunk` (PCM16), `STTAdapter` / `STTSession`, partial,
+  final, error, and end events, plus `VoiceInput`.
+- `VoiceOrchestrator` sends one final transcript through the existing runtime
+  and `InputRouter`. Partials update voice state only. Transcript confidence
+  stays off `ActionProposal.confidence`. `segmentId` is on the submit trace.
+- Interrupt cancels the in-flight interpretation. A later final for that
+  segment cannot commit. An STT error does not dispose the runtime, so a
+  manual submit still commits.
+- `HostSTTAdapter` drops audio bytes unless `retainAudio` is set. It does not
+  open a microphone. Gate tests:
+  `packages/form_assistant_stt/test/phase8_gate_test.dart`, 5 tests.
+
+## Phase 9 — Thin Flutter integration (2026-10-22)
+
+- `form_assistant_flutter` listens to runtime and voice events and builds
+  listen/stop controls, a clarification banner, and highlight colors.
+  `AssistantChrome` places that chrome around a form widget the host builds.
+  The package builds no source fields and does not open a microphone.
+- Provisional highlight follows a proposal. Accepted highlight follows
+  `ActionApplied`. Dismissing a clarification does not write the store.
+  A partial transcript is display text and is not submitted.
+- `examples/flutter_existing_form` has no dependency on the assistant
+  package. Its age field writes `ExistingFormStore` directly. Removing the
+  assistant package leaves that form working.
+- `examples/flutter_assistant_shell` is the optional composition: it passes
+  `ExistingAgeForm` into `AssistantChrome.buildForm`. Core does not import
+  Flutter.
+- Gate tests: `packages/form_assistant_flutter/test/chrome_test.dart` (4),
+  `examples/flutter_existing_form/test/existing_age_form_test.dart` (1),
+  `examples/flutter_assistant_shell/test/assistant_shell_test.dart` (1).
+
+## Phase 10 — Production hardening (2026-10-22)
+
+- `TelemetryPolicy` defaults off. `RedactingTelemetrySink` removes utterances
+  and field values unless a flag allows them, and always removes audio and
+  raw bytes. `StageTimer` and nearest-rank `latencyPercentile` cover STT,
+  context, model, validation, and commit.
+- `observeInteraction` and `ProductionMetrics` report deterministic,
+  local-model, fallback, clarification, and correction rates, state accuracy,
+  and the share of failures from STT, context selection, model, adapter, and
+  runtime. p50 and p95 are per stage.
+- `EvalTraceStore` stores nothing unless `persistEvalTraces` is set. Raw
+  utterance and values still require their own flags.
+- `RecoveryCheckpoint` copies the committed bridge snapshot and abandons
+  in-flight proposal ids. `CrashRecovery.resume` accepts only that snapshot.
+  Proposals are not replayed.
+- `ProtocolDocument` accepts spec version 1.0. Fixture:
+  `packages/form_assistant_core/test/fixtures/protocol_1_0.json`.
+- Gate tests: `packages/form_assistant_core/test/phase10_gate_test.dart`,
+  9 tests, including a 250-step seeded soak. Core suite is 130 tests.
+  Cookbook: [phase10/COOKBOOK.md](phase10/COOKBOOK.md).
+
+## Phase 11 — Native form platform (2026-10-23)
+
+- Not required for an existing-form integration. `LocalFormStateBridge`
+  remains the state owner. No new canonical value types.
+- `NativeForm` adds visibility rules and a workflow that covers every field
+  in exactly one step. `NativeFormView` is the renderer contract: visibility,
+  labels, canonical values, and the current step.
+- A hidden field write or navigation fails in `ActionRuntime` with
+  `rule.field_hidden` and does not change the revision.
+- `commitNative` runs a manual edit through `executeProposal` and does not
+  call the model. Deterministic speech uses the same action runtime. Only
+  unresolved utterances call intelligence.
+- `NativeFormRenderer` paints the current step and sends edits to the host
+  callback. Phase 9 chrome still does not replace a source form.
+- Gate tests: `packages/form_assistant_core/test/phase11_gate_test.dart` (3)
+  and `packages/form_assistant_flutter/test/native_form_renderer_test.dart`.
+  Core suite is 133 tests.
+
+## Phase 12 — Multilingual semantics and React bindings (2026-10-23)
+
+- Not a V1 blocker. Field ids and `FormAction` JSON are unchanged. Localized
+  labels and aliases are optional and omitted when empty.
+- `FormAssistantRuntime.locale` and an STT session locale reach
+  `SemanticContext`. English routing is unchanged. Code-switch commits only
+  when a non-English lexicon contributed, and the action still has no locale.
+- `contracts/schemas/` stays the shared contract.
+  `bindings/form_assistant_react` decodes protocol 1.0 and does not
+  reimplement the runtime.
+- Gate tests: `packages/form_assistant_core/test/phase12_gate_test.dart` (6).
+  Core suite is 139 tests. Phase 12 completes the written plan.

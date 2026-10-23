@@ -1,0 +1,9 @@
+{
+  "name": "@form-assistant/react",
+  "private": true,
+  "type": "module",
+  "description": "Decode canonical form actions for a React host. This is not a second runtime.",
+  "scripts": {
+    "test": "node --experimental-strip-types src/protocol.test.ts"
+  }
+}

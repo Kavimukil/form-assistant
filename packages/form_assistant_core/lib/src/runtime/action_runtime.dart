@@ -5,6 +5,7 @@ import '../contracts/form_state_bridge.dart';
 import '../contracts/trace.dart';
 import '../contracts/validation_metadata.dart';
 import '../validation/form_ir_validator.dart';
+import 'native_form.dart';
 import 'runtime_events.dart';
 
 /// Routes only through FormStateBridge capabilities and interaction callbacks.
@@ -16,12 +17,15 @@ final class ActionRuntime {
           TraceContext trace, List<ProposedAction> actions, bool batch)
       registerOperation;
   final bool Function() isDisposed;
+  final List<FieldVisibilityRule> visibilityRules;
   ActionRuntime(
       {required this.form,
       required this.bridge,
       required this.emit,
       required this.registerOperation,
-      required this.isDisposed});
+      required this.isDisposed,
+      List<FieldVisibilityRule> visibilityRules = const []})
+      : visibilityRules = List.unmodifiable(visibilityRules);
 
   ActionValidationMetadata validate(
       FormAction action, FormStateSnapshot state) {
@@ -38,6 +42,8 @@ final class ActionRuntime {
         final matching = form.fields.where((f) => f.id == mutation.fieldId);
         if (matching.isEmpty) {
           issue('value.field_unknown', fieldId: mutation.fieldId);
+        } else if (fieldIsHidden(mutation.fieldId, state, visibilityRules)) {
+          issue('rule.field_hidden', fieldId: mutation.fieldId);
         } else {
           issues.addAll(validateFieldAction(matching.first, mutation));
         }
@@ -50,6 +56,9 @@ final class ActionRuntime {
         if (target is FieldNavigationTarget &&
             !form.fields.any((f) => f.id == target.fieldId)) {
           issue('value.field_unknown', fieldId: target.fieldId);
+        } else if (target is FieldNavigationTarget &&
+            fieldIsHidden(target.fieldId, state, visibilityRules)) {
+          issue('rule.field_hidden', fieldId: target.fieldId);
         }
       case ActionClassification.assistantControl:
         final clarification = action as RequestClarificationAction;

@@ -1,0 +1,15 @@
+name: form_assistant_flutter
+description: Flutter chrome for an existing form, plus a renderer for a canonical native form. It does not replace source form fields.
+version: 0.1.0
+publish_to: none
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+  flutter: ">=3.16.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  form_assistant_core:
+    path: ../form_assistant_core
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

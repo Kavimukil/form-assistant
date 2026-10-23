@@ -3,8 +3,23 @@
 Current recovery state: phases 0–5 are complete. Original Phase 6 is superseded by
 [Phase 6R](PHASE_6R_RECOVERY_IMPLEMENTATION_PLAN/PHASE_6R_RECOVERY_IMPLEMENTATION_PLAN.md).
 See [recovery status](docs/phase6r/PHASE_6R_STATUS.md) and the
-[GO/NO-GO decision](docs/phase6r/GO_NO_GO.md). Do not restart phases 0–5 or begin
-Phase 7 while recovery is NO-GO.
+[GO/NO-GO decision](docs/phase6r/GO_NO_GO.md). Do not restart phases 0–5.
+The frozen Phase 6R category gate remains NO-GO. Phase 7 started under a
+separate 29/31 complete-case acceptance; see [Phase 7](docs/phase7/README.md).
+Phase 8 streaming speech-to-text has started; see [Phase 8](docs/phase8/README.md).
+Phase 9 thin Flutter chrome has started; see [Phase 9](docs/phase9/README.md).
+Phase 10 production hardening has started; see [Phase 10](docs/phase10/README.md).
+Phase 11 native forms have started; see [Phase 11](docs/phase11/README.md).
+Phase 12 multilingual semantics and React bindings have started; see
+[Phase 12](docs/phase12/README.md). Phase 12 completes the written plan.
+FunctionGemma 270M, Needle 3, Qwen3VL-2B, Qwen3-4B and Qwen3VL-8B are all
+MODEL_NO_GO; see the [model comparison](docs/model_evaluation/FUNCTIONGEMMA_VS_NEEDLE3.md),
+[Qwen3VL-2B](docs/model_evaluation/QWEN3VL_2B.md),
+[Qwen3-4B](docs/model_evaluation/QWEN3_4B.md) and
+[Qwen3VL-8B](docs/model_evaluation/QWEN3VL_8B.md).
+Qwen3.8-27B is the Phase 7 local candidate at 29/31 complete cases; its frozen
+category gate is still NO-GO
+([Qwen3.8-27B](docs/model_evaluation/QWEN3_8_27B.md)).
 
 ## Cursor instruction
 
@@ -52,8 +67,8 @@ A new form project must integrate by supplying schema/state adapters. It must **
 - Best-effort batches may partially succeed; atomic batches never silently downgrade.
 - State and events are distinct.
 - Interaction/request/operation/proposal/segment IDs preserve provenance.
-- English first; canonical identity must remain language-neutral.
-- Flutter first. React/React Native are future bindings, not current scope.
+- English first; canonical identity must remain language-neutral. Localized labels are optional display text.
+- Flutter first. A React host decodes the same protocol 1.0 JSON with `bindings/form_assistant_react`. That package is not a second runtime.
 - Public serialized contracts use portable JSON concepts and explicit `specVersion`.
 - Do not turn FormIR into a universal widget/backend dump.
 - Do not add generic arbitrary ObjectValue/ListValue in v1.

@@ -68,8 +68,20 @@ Future<void> main(List<String> args) async {
         ];
         final watch = Stopwatch()..start();
         int? firstByteMs;
-        final process =
-            await Process.start('/usr/bin/time', ['-v', binary, ...flags]);
+        // GNU time -v is used when present. macOS /usr/bin/time lacks -v.
+        final useGnuTime = await File('/usr/bin/time').exists() &&
+            (await Process.run('/usr/bin/time', ['-v', 'true'])).exitCode == 0;
+        final binaryDir = File(binary).parent.path;
+        final environment = Map<String, String>.from(Platform.environment);
+        final existingDyld = environment['DYLD_LIBRARY_PATH'];
+        environment['DYLD_LIBRARY_PATH'] =
+            existingDyld == null || existingDyld.isEmpty
+                ? binaryDir
+                : '$binaryDir:$existingDyld';
+        final process = useGnuTime
+            ? await Process.start('/usr/bin/time', ['-v', binary, ...flags],
+                environment: environment)
+            : await Process.start(binary, flags, environment: environment);
         final detach = cancel.listen(process.kill);
         try {
           final stdoutFuture = process.stdout

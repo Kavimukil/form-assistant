@@ -177,6 +177,9 @@ No cloud yet.
 
 ## Phase 7 — Hybrid/cloud fallback
 
+Status: started 2026-10-22. Local-first package `form_assistant_cloud`.
+The host supplies transport. See [phase7/README.md](phase7/README.md).
+
 Deliver:
 - CloudLLMAdapter;
 - HybridIntelligenceAdapter by composition;
@@ -194,6 +197,10 @@ Gate P7:
 - local and cloud produce same canonical action protocol.
 
 ## Phase 8 — Streaming STT + voice orchestration
+
+Status: started 2026-10-22. Contract and `VoiceOrchestrator` are in core.
+`form_assistant_stt` is the host session and does not capture the microphone.
+See [phase8/README.md](phase8/README.md).
 
 Deliver:
 - STTAdapter/session contract;
@@ -216,6 +223,10 @@ Gate P8:
 
 ## Phase 9 — Thin Flutter integration
 
+Status: started 2026-10-22. `form_assistant_flutter` is chrome only.
+`examples/flutter_existing_form` does not depend on it. See
+[phase9/README.md](phase9/README.md).
+
 Deliver `form_assistant_flutter`:
 - provider/controller integration as appropriate;
 - listen to runtime state/events;
@@ -230,6 +241,10 @@ Remove assistant package from example and existing form must still function norm
 Assistant package must not own source form UI.
 
 ## Phase 10 — Production hardening
+
+Status: started 2026-10-22. Telemetry, redaction, latency, failure rates,
+eval-trace policy, and crash recovery are in core. See
+[phase10/README.md](phase10/README.md).
 
 Deliver:
 - structured telemetry interfaces;
@@ -259,6 +274,10 @@ Measure:
 
 ## Phase 11 — Future native form platform (not V1 blocker)
 
+Status: started 2026-10-23. Visibility rules, a step workflow, and a Flutter
+renderer sit on `LocalFormStateBridge`. Manual edits use `commitNative`.
+See [phase11/README.md](phase11/README.md).
+
 Build on LocalFormStateBridge:
 - richer rules/workflow;
 - renderer contract;
@@ -268,6 +287,12 @@ Build on LocalFormStateBridge:
 AI remains optional. Manual UI and AI use same ActionRuntime/state path.
 
 ## Phase 12 — Future multilingual / React (not V1 blocker)
+
+Status: started 2026-10-23. Localized labels stay off canonical actions.
+English routing is unchanged. A non-English lexicon can commit the same
+action types. The React package only decodes protocol 1.0 JSON.
+See [phase12/README.md](phase12/README.md). This is the last phase in the
+written plan.
 
 Multilingual:
 - localized semantics;

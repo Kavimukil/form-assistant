@@ -14,6 +14,8 @@ import '../contracts/validation_metadata.dart';
 import 'action_runtime.dart';
 import 'context_compiler.dart';
 import 'input_router.dart';
+import 'multilingual.dart';
+import 'native_form.dart';
 import 'runtime_events.dart';
 
 /// Headless interaction runtime. Its only form-state boundary is the injected
@@ -22,6 +24,8 @@ final class FormAssistantRuntime {
   final FormIR form;
   final FormStateBridge bridge;
   final IntelligenceAdapter intelligence;
+  final String locale;
+  final List<FieldVisibilityRule> visibilityRules;
   final int maxStaleRetries;
   late final ActionRuntime _actions;
   late final ContextCompiler _compiler;
@@ -46,10 +50,17 @@ final class FormAssistantRuntime {
       {required this.form,
       required this.bridge,
       required this.intelligence,
+      String locale = 'en',
+      List<FieldVisibilityRule> visibilityRules = const [],
       this.maxStaleRetries = 2,
       ContextBudget? contextBudget,
       Map<FieldId, List<FieldId>> dependenciesByField = const {}})
-      : contextBudget = contextBudget ?? ContextBudget() {
+      : locale = normalizeSemanticLocale(locale),
+        visibilityRules = List.unmodifiable(visibilityRules),
+        contextBudget = contextBudget ?? ContextBudget() {
+    if (this.locale.isEmpty) {
+      throw ArgumentError('Invalid locale');
+    }
     _compiler = ContextCompiler(
         form: form,
         budget: this.contextBudget,
@@ -68,7 +79,8 @@ final class FormAssistantRuntime {
         registerOperation: (trace, actions, batch) {
           _operations[trace.operationId] =
               _OperationTrace(trace, actions, batch);
-        });
+        },
+        visibilityRules: this.visibilityRules);
     _subscription = bridge.events.listen(_onBridgeEvent,
         onError: (Object error, StackTrace stack) {
       _emit(RuntimeError(code: 'runtime.bridge_event_error', cause: error));
@@ -157,18 +169,20 @@ final class FormAssistantRuntime {
 
   Future<RuntimeInteractionResult> submit(UserInput input,
       {required TraceContext trace,
+      String? locale,
       Iterable<FieldId> contextFieldIds = const [],
       Iterable<FieldId> dependencyFieldIds = const [],
       BatchApplyMode mode = BatchApplyMode.bestEffort,
       IntelligenceOptions options = const IntelligenceOptions()}) {
     final inputTrace = _inputTrace(input, trace);
+    final requestLocale = _requestLocale(locale);
     final selected = List<FieldId>.unmodifiable(contextFieldIds);
     final dependencies = List<FieldId>.unmodifiable(dependencyFieldIds);
     return _enqueue(() => _withCancellation(
         options,
         (effective) => _run(
             input, inputTrace, bridge.snapshot, selected, dependencies, mode,
-            options: effective)));
+            locale: requestLocale, options: effective)));
   }
 
   /// Executes an already-produced proposal while retaining its original basis.
@@ -177,18 +191,28 @@ final class FormAssistantRuntime {
       {required UserInput input,
       required TraceContext trace,
       required FormStateSnapshot basedOn,
+      String? locale,
       Iterable<FieldId> contextFieldIds = const [],
       Iterable<FieldId> dependencyFieldIds = const [],
       BatchApplyMode mode = BatchApplyMode.bestEffort,
       IntelligenceOptions options = const IntelligenceOptions()}) {
     final inputTrace = _inputTrace(input, trace);
+    final requestLocale = _requestLocale(locale);
     final selected = List<FieldId>.unmodifiable(contextFieldIds);
     final dependencies = List<FieldId>.unmodifiable(dependencyFieldIds);
     return _enqueue(() => _withCancellation(
         options,
         (effective) => _run(
             input, inputTrace, basedOn, selected, dependencies, mode,
-            initial: proposal, options: effective)));
+            locale: requestLocale, initial: proposal, options: effective)));
+  }
+
+  String _requestLocale(String? locale) {
+    final resolved = normalizeSemanticLocale(locale ?? this.locale);
+    if (resolved.isEmpty) {
+      throw ArgumentError('Invalid locale');
+    }
+    return resolved;
   }
 
   Future<RuntimeInteractionResult> _withCancellation(
@@ -288,7 +312,8 @@ final class FormAssistantRuntime {
       List<FieldId> selected,
       List<FieldId> dependencies,
       BatchApplyMode mode,
-      {ActionProposal? initial,
+      {required String locale,
+      ActionProposal? initial,
       required IntelligenceOptions options}) async {
     var trace = root;
     var original = basis;
@@ -311,7 +336,8 @@ final class FormAssistantRuntime {
               candidates: selected,
               explicitDependencies: dependencies,
               recent: List.of(_recentFields),
-              history: List.of(_history));
+              history: List.of(_history),
+              locale: locale);
           compiled = result.context;
           _emit(ContextCompiled(diagnostics: result.diagnostics, trace: trace));
         }
@@ -326,8 +352,19 @@ final class FormAssistantRuntime {
       final context = compiled;
       if (proposal == null) {
         final active = form.fields.where((f) => f.id == original.activeFieldId);
-        final decision = const InputRouter()
-            .route(input, activeField: active.isEmpty ? null : active.single);
+        final activeField = active.isEmpty ? null : active.single;
+        var decision = const InputRouter()
+            .route(input, activeField: activeField, locale: locale);
+        if (decision.route == InputRoute.needsIntelligence) {
+          final switched =
+              evaluateCodeSwitch(input.text, activeField: activeField);
+          final otherLanguage =
+              switched.locales.any((item) => item.split('-').first != 'en');
+          if (otherLanguage &&
+              switched.result.route != InputRoute.needsIntelligence) {
+            decision = switched.result;
+          }
+        }
         _emit(InputRouted(result: decision, trace: trace));
         if (decision.route != InputRoute.needsIntelligence) {
           final id = '${trace.requestId}/deterministic';
@@ -543,6 +580,17 @@ final class FormAssistantRuntime {
       _emit(InteractionCompleted(result));
       return result;
     }
+  }
+
+  /// Manual native-form edit. This does not call the intelligence adapter.
+  Future<RuntimeInteractionResult> commitNative(FormAction action,
+      {required TraceContext trace}) {
+    final basedOn = bridge.snapshot;
+    return executeProposal(
+        nativeManualProposal(action: action, basedOn: basedOn, trace: trace),
+        input: const UserInput(text: 'native'),
+        trace: trace,
+        basedOn: basedOn);
   }
 
   Future<void> dispose() => _disposal ??= _dispose();

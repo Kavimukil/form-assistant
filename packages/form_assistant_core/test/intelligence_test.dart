@@ -100,4 +100,34 @@ void main() {
     expect(mock.requests, isEmpty);
     expect(bridge.snapshot.values, isEmpty);
   });
+  test('fallback never replaces an ambiguous or invalid clarification', () {
+    final gate = QualityGate();
+    final request = IntelligenceRequest(
+        input: const UserInput(text: 'please set answers'),
+        context: SemanticContext(formId: 'form', revision: 2, fields: [
+          FormFieldContext(
+              field: FormField(
+                  id: 'age',
+                  value: const IntegerDefinition(),
+                  semantics: FieldSemantics(label: 'Age')))
+        ]),
+        allowedActionTypes: ['set_value', 'request_clarification'],
+        trace: const TraceContext(
+            interactionId: 'i', requestId: 'r', operationId: 'o'));
+    for (final reason in qualityClarificationReasons) {
+      final stayed = gate.considerFallback(
+          QualityDecision(QualityOutcome.clarify, reason, const []),
+          allowFallback: true);
+      expect(stayed.outcome, QualityOutcome.clarify, reason: reason);
+    }
+    expect(gate.evaluate(request, const [], confidence: 0.2).outcome,
+        QualityOutcome.clarify);
+    final promoted = gate.considerFallback(
+        QualityDecision(QualityOutcome.clarify, 'local_failed', const []),
+        allowFallback: true);
+    expect(promoted.outcome, QualityOutcome.fallback);
+    final blocked = gate.considerFallback(promoted, allowFallback: false);
+    expect(blocked.outcome, QualityOutcome.clarify);
+    expect(blocked.reason, 'local_failed');
+  });
 }

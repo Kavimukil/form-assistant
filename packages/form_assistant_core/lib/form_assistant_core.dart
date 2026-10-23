@@ -16,10 +16,15 @@ export 'src/state/external_state_source.dart';
 export 'src/state/external_state_bridge.dart';
 export 'src/contracts/trace.dart';
 export 'src/contracts/intelligence.dart';
+export 'src/contracts/stt.dart';
 export 'src/runtime/action_runtime.dart';
 export 'src/runtime/form_assistant_runtime.dart';
 export 'src/runtime/runtime_events.dart';
 
 export 'src/runtime/input_router.dart';
+export 'src/runtime/voice_orchestrator.dart';
 export 'src/contracts/context_configuration.dart';
 export 'src/runtime/quality_gate.dart';
+export 'src/runtime/production.dart';
+export 'src/runtime/native_form.dart';
+export 'src/runtime/multilingual.dart';

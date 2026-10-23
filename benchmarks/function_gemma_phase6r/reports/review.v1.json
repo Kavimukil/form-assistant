@@ -1,5 +1,5 @@
 {
-  "decision": "NO-GO FunctionGemma",
+  "decision": "MODEL_NO_GO",
   "scope": "Supplied Q8_0 artifact/current constrained integration; deterministic project foundation retained",
   "date": "2026-10-06T09:54:00.286135Z",
   "evaluationCommit": "6f97d78312a28289e27a4e2117009dac516835f4",
@@ -146,5 +146,19 @@
   ],
   "benchmarkExpectationsChanged": false,
   "fineTuned": false,
-  "phase7Implemented": false
+  "phase7Implemented": false,
+  "model": "FunctionGemma 270M",
+  "ablationEvidence": {
+    "report": "benchmarks/function_gemma_ablation/results.json",
+    "sha256": "55dda2c4ae101f24c5502f0bf4ac7e1b57af9848cd7031fbf5e2605c68a2ce56",
+    "runs": 35,
+    "repeatsPerCase": 5,
+    "allRepeatedOutputsIdentical": true,
+    "positiveConsentSetterOnly": "5/5 correct",
+    "positiveConsentWithClear": "0/5 correct; clear in 5/5",
+    "negationSetterOnly": "0/5 correct; true instead of false",
+    "registerIntegerSetterOnly": "0/5 correct; numeric invented field IDs",
+    "compoundNoClear": "0/5 correct; invalid boolean yes",
+    "conclusion": "Both tool competition and semantic/field/type failures; removing clear_field alone is insufficient."
+  }
 }

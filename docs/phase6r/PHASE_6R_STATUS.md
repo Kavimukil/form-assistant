@@ -1,6 +1,6 @@
 # Phase 6R status
 
-Original Phase 6 superseded. Phases 0–5 preserved. Recovery implementation and review complete: **NO-GO FunctionGemma**. Phase 7 blocked.
+Original Phase 6 superseded. Phases 0–5 preserved. Recovery implementation and review complete: **MODEL_NO_GO — FunctionGemma 270M**. Phase 7 blocked.
 
 | Task | Status | Evidence |
 | --- | --- | --- |
@@ -51,3 +51,24 @@ to the model. The explicit flat-native-schema comparison follows plan §7.10. Le
 benchmark reports and expected outputs are retained. No Phase 7, STT or fine-tuning.
 
 Final review correction: ContextCompiler now receives bridge.capabilities.writable in addition to lifecycle. An active but read-only bridge exposes no model mutation target; a native adapter integration regression verifies this. All frozen live fixtures use writable bridges, so benchmark prompts and results are unaffected.
+
+FunctionGemma formal model result is MODEL_NO_GO with the separate 35-run ablation evidence. Needle evaluation is a new IntelligenceAdapter candidate, not a Phase 6R architecture change or Phase 7 implementation.
+
+Needle 3 candidate evaluation is complete: **MODEL_NO_GO**, 4/31 complete cases,
+critical compound 0/3. See [model comparison](../model_evaluation/FUNCTIONGEMMA_VS_NEEDLE3.md).
+The recovery architecture and frozen gate remain unchanged; Phase 7 remains blocked.
+
+Qwen3VL-2B (`Qwen3VL-2B-Instruct-Q4_K_M.gguf`) host eval via llama.cpp
+`llama-completion` (CPU, b11445/58cb913): **MODEL_NO_GO**, 22/31; critical 0/3.
+Adapter package `form_assistant_qwen3vl`; report under
+`benchmarks/qwen3vl_phase6r/reports/`. See
+[QWEN3VL_2B.md](../model_evaluation/QWEN3VL_2B.md). Phase 7 remains blocked.
+
+Qwen3.8-27B (`Qwen3.8-27B-UD-Q4_K_M.gguf`) host eval via llama.cpp
+`llama-completion` (Apple Silicon Metal, build 11515 / `3d65c90d0`), with the
+model's non-thinking chat prefix: **MODEL_NO_GO**, 29/31; critical 3/3.
+Choice canonical 75% and compound exact 80% still fail the frozen gate. See
+[QWEN3_8_27B.md](../model_evaluation/QWEN3_8_27B.md).
+
+Phase 7 started on 2026-10-22 under a separate 29/31 complete-case acceptance.
+The frozen category gate is unchanged. See [Phase 7](../phase7/README.md).

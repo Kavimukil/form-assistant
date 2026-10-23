@@ -16,10 +16,12 @@ final class InputRouterResult {
       : actions = List.unmodifiable(actions);
 }
 
-/// English whole-utterance recognition. Unsupported language falls through.
+/// Whole-utterance recognition. English phrases stay the default. [locale]
+/// selects localized option labels; the written value is still the option id.
 final class InputRouter {
   const InputRouter();
-  InputRouterResult route(UserInput input, {FormField? activeField}) {
+  InputRouterResult route(UserInput input,
+      {FormField? activeField, String locale = 'en'}) {
     final text = _normalize(input.text);
     InputRouterResult resolved(FormAction action, String reason) {
       if (action is FormMutationAction &&
@@ -46,8 +48,8 @@ final class InputRouter {
         }.contains(text);
     if (command &&
         activeField?.value is ChoiceDefinition &&
-        (activeField!.options ?? const <FormOption>[]).any((o) =>
-            [o.id, o.label, ...o.aliases].any((s) => _normalize(s) == text))) {
+        (activeField!.options ?? const <FormOption>[])
+            .any((o) => o.namesFor(locale).any((s) => _normalize(s) == text))) {
       return InputRouterResult(
           InputRoute.needsClarification, 'command_choice_conflict');
     }
@@ -97,8 +99,7 @@ final class InputRouter {
     } else if (definition is ChoiceDefinition) {
       final options = activeField.options ?? const <FormOption>[];
       final exact = options
-          .where((o) =>
-              [o.id, o.label, ...o.aliases].any((s) => _normalize(s) == answer))
+          .where((o) => o.namesFor(locale).any((s) => _normalize(s) == answer))
           .toList();
       if (exact.length > 1) {
         return InputRouterResult(
@@ -114,7 +115,10 @@ final class InputRouter {
         final distances = <FormOption, int>{};
         for (final option in options) {
           var distance = 999;
-          for (final name in [option.label, ...option.aliases]) {
+          for (final name in option.namesFor(locale)) {
+            if (name == option.id) {
+              continue;
+            }
             final normalized = _normalize(name);
             if (RegExp(r'^[a-z]{5,}$').hasMatch(normalized)) {
               final d = _distance(answer, normalized);

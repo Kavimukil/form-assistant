@@ -282,3 +282,42 @@ See [the contract notes](../../docs/phase6r/SEMANTIC_CONTEXT_V1_1.md). Defaults:
 Field semantic text above 512 characters fails closed for mandatory fields.
 FunctionGemma formatting/cache/types remain outside this package. The selected
 semantic fingerprint supports fresh revision checks; it never authorizes a write.
+
+## Production hardening
+
+`TelemetryPolicy` defaults to dropping utterances, field values, and every
+audio or raw payload. `RedactingTelemetrySink` applies that policy before a
+host sink sees a record. `StageTimer` measures STT, context, model,
+validation, and commit. `observeInteraction` plus `ProductionMetrics` turn a
+batch of interactions into deterministic, local-model, fallback,
+clarification, and correction rates, state accuracy, failure shares, and
+nearest-rank p50/p95 latency.
+
+`EvalTraceStore.persist` returns false unless `persistEvalTraces` is set.
+Raw text and values still require `includeUtterance` and `includeFieldValues`.
+`RecoveryCheckpoint.capture` copies the committed snapshot and lists in-flight
+proposal ids. `CrashRecovery.resume` is true only when a restored snapshot
+matches that checkpoint; abandoned proposals are not replayed.
+`ProtocolDocument.decode` accepts spec version 1.0 and rejects anything else.
+See `docs/phase10/COOKBOOK.md`.
+
+## Native forms
+
+`NativeForm` is an optional workflow over a `FormIR` and `LocalFormStateBridge`.
+Visibility rules hide a field until another field equals a canonical value.
+`FormWorkflow` places every field in exactly one step. `project` returns a
+`NativeFormView` for a renderer. Hidden writes fail in the action runtime with
+`rule.field_hidden` and do not advance the revision.
+
+`commitNative` submits a manual `FormAction` through `executeProposal` and
+does not call intelligence. Spoken answers that the input router understands
+use that same action path. See `docs/phase11/README.md`.
+
+## Multilingual semantics
+
+`localizedLabels` and `localizedAliases` are optional. Empty maps are omitted
+from JSON. `labelFor` resolves a locale without changing the field id.
+`FormAssistantRuntime.locale` is copied onto `SemanticContext`. A final STT
+segment uses the session locale. `evaluateCodeSwitch` can commit a canonical
+action when a non-English lexicon contributed; English phrases keep the
+existing router result. See `docs/phase12/README.md`.

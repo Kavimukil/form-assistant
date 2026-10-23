@@ -69,6 +69,34 @@ Future<Map<String, Object?>> evaluateExtractionCase(
     Map<String, Object?> fixture,
     SemanticContext context,
     LocalFunctionGemmaInference inference) async {
+  final raw = <String>[];
+  final adapter = FunctionGemmaAdapter(inference: (prompt, cancel) async {
+    final output = await inference(prompt, cancel);
+    raw.add(output.text);
+    return output;
+  });
+  return evaluateAdapterCase(fixture, context,
+      adapter: adapter,
+      rawOutputs: raw,
+      decodeEnvelopes: FunctionGemmaToolCallParser().parseEnvelopes,
+      diagnostics: () => {
+            'hits': adapter.schemaCache.hits,
+            'misses': adapter.schemaCache.misses,
+            'specializationMicroseconds':
+                adapter.schemaCache.specializationMicroseconds,
+            'preparationMicroseconds':
+                adapter.schemaCache.preparationMicroseconds,
+          });
+}
+
+/// Same frozen scoring/runtime path for any IntelligenceAdapter. No expectations
+/// or normalization policies change when a model-native decoder is supplied.
+Future<Map<String, Object?>> evaluateAdapterCase(
+    Map<String, Object?> fixture, SemanticContext context,
+    {required IntelligenceAdapter adapter,
+    required List<String> rawOutputs,
+    required List<Map<String, Object?>> Function(String) decodeEnvelopes,
+    Map<String, Object?> Function()? diagnostics}) async {
   final id = requiredString(fixture, 'id');
   final category = requiredString(fixture, 'category');
   final expected = requireType<List<Object?>>(fixture['expectedCalls'])
@@ -90,12 +118,7 @@ Future<Map<String, Object?>> evaluateExtractionCase(
       form: form,
       initialValues: context.values,
       activeFieldId: context.activeFieldId);
-  final raw = <String>[];
-  final adapter = FunctionGemmaAdapter(inference: (prompt, cancel) async {
-    final output = await inference(prompt, cancel);
-    raw.add(output.text);
-    return output;
-  });
+  final raw = rawOutputs;
   final runtime =
       FormAssistantRuntime(form: form, bridge: bridge, intelligence: adapter);
   final initial = bridge.snapshot;
@@ -114,13 +137,12 @@ Future<Map<String, Object?>> evaluateExtractionCase(
   } catch (e) {
     error = e.toString();
   }
-  final parser = FunctionGemmaToolCallParser();
   List<FunctionGemmaToolCall> calls = [];
   List<Map<String, Object?>> envelopes = [];
   var malformed = false;
   String? decodingError;
   try {
-    envelopes = parser.parseEnvelopes(raw.single);
+    envelopes = decodeEnvelopes(raw.single);
     calls = envelopes.map(FunctionGemmaToolCall.fromJson).toList();
   } catch (e) {
     malformed = true;
@@ -253,13 +275,7 @@ Future<Map<String, Object?>> evaluateExtractionCase(
             commitCorrect: commitCorrect,
             expectedConstraint: constraint),
     'durationMs': watch.elapsedMilliseconds,
-    'cache': {
-      'hits': adapter.schemaCache.hits,
-      'misses': adapter.schemaCache.misses,
-      'specializationMicroseconds':
-          adapter.schemaCache.specializationMicroseconds,
-      'preparationMicroseconds': adapter.schemaCache.preparationMicroseconds
-    },
+    'cache': diagnostics?.call() ?? const <String, Object?>{},
   };
   await runtime.dispose();
   await bridge.dispose();

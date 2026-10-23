@@ -8,7 +8,8 @@ import 'form_value.dart';
 import 'trace.dart';
 import 'validation_metadata.dart';
 
-/// Phase 3 text boundary; no microphone, transcript processing or parsing.
+/// Text boundary passed to the router and model. Voice audio and transcript
+/// confidence stay outside this type.
 final class UserInput {
   final String text;
   final SegmentId? segmentId;
@@ -69,13 +70,32 @@ final class FormFieldContext {
         'label': label,
         if (concept != null) 'concept': concept,
         'aliases': aliases,
+        if (field.semantics.localizedLabels.isNotEmpty)
+          'localizedLabels': field.semantics.localizedLabels,
+        if (field.semantics.localizedAliases.isNotEmpty)
+          'localizedAliases': {
+            for (final entry in field.semantics.localizedAliases.entries)
+              entry.key: entry.value,
+          },
         'currentValue': currentValue?.toJson(),
         'writable': writable,
         'optionsTruncated': optionsTruncated,
         if (constraints != null) 'constraints': constraints!.toJson(),
-        'options': options
-            .map((o) => {'id': o.id, 'label': o.label, 'aliases': o.aliases})
-            .toList(),
+        'options': [
+          for (final option in options)
+            {
+              'id': option.id,
+              'label': option.label,
+              'aliases': option.aliases,
+              if (option.localizedLabels.isNotEmpty)
+                'localizedLabels': option.localizedLabels,
+              if (option.localizedAliases.isNotEmpty)
+                'localizedAliases': {
+                  for (final entry in option.localizedAliases.entries)
+                    entry.key: entry.value,
+                },
+            }
+        ],
       };
   factory FormFieldContext.fromJson(Object? input) {
     final j = jsonObject(input);
@@ -87,10 +107,15 @@ final class FormFieldContext {
         field: FormField(
             id: requiredId(j, 'id'),
             value: definition,
-            semantics: FieldSemantics(
-                label: requiredString(j, 'label'),
-                concept: optional<String>(j, 'concept'),
-                aliases: stringList(j['aliases'])),
+            semantics: FieldSemantics.fromJson({
+              'label': requiredString(j, 'label'),
+              if (j.containsKey('concept')) 'concept': j['concept'],
+              if (j.containsKey('aliases')) 'aliases': j['aliases'],
+              if (j.containsKey('localizedLabels'))
+                'localizedLabels': j['localizedLabels'],
+              if (j.containsKey('localizedAliases'))
+                'localizedAliases': j['localizedAliases'],
+            }),
             constraints: j.containsKey('constraints')
                 ? FieldConstraints.fromJson(j['constraints'])
                 : null,
@@ -316,11 +341,15 @@ final class ActionProvenance {
   final String adapterId;
   final String adapterVersion;
   final ActionOrigin origin;
+
+  /// Which composed backend produced the proposal. Outside canonical actions.
+  final String? backendId;
   const ActionProvenance(
       {required this.trace,
       required this.adapterId,
       required this.adapterVersion,
-      this.origin = ActionOrigin.intelligence});
+      this.origin = ActionOrigin.intelligence,
+      this.backendId});
 }
 
 final class ActionProposal {
@@ -349,7 +378,7 @@ final class ActionProposal {
   }
 }
 
-enum QualityOutcome { accept, clarify }
+enum QualityOutcome { accept, clarify, fallback }
 
 final class IntelligenceResult {
   final ActionProposal proposal;

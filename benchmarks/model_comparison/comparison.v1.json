@@ -1,0 +1,3203 @@
+{
+  "corpusSha256": "f788fc886642f9b9a7f371e4a3e46c426ad2215ac264635803eda701dc08dad5",
+  "thresholds": {
+    "simpleExact": 0.97,
+    "booleanExact": 0.98,
+    "numericTyped": 0.97,
+    "choiceCanonical": 0.97,
+    "multiChoiceExact": 0.93,
+    "compoundExact": 0.92,
+    "correctionReferenceExact": 0.9,
+    "hallucinatedFieldRateMax": 0.01,
+    "hallucinatedOptionRateMax": 0.01,
+    "malformedCallRateMax": 0.02,
+    "latencyBudgetMs": null,
+    "targetDevice": "Zebra: measurements required"
+  },
+  "corpusAndExpectedOutputsUnchanged": true,
+  "phase7": "BLOCKED",
+  "ablationSource": "benchmarks/function_gemma_ablation/results.json",
+  "ablationSha256": "55dda2c4ae101f24c5502f0bf4ac7e1b57af9848cd7031fbf5e2605c68a2ce56",
+  "models": {
+    "functionGemma": {
+      "decision": "MODEL_NO_GO",
+      "source": "benchmarks/function_gemma_phase6r/reports/simple_native.v1.json",
+      "sourceSha256": "1693c37dbc9b123517102782857bb9f4ff9cf569c3ab8f37a9c98d841d5e5da0",
+      "model": "/home/mukil/workspace/form-assistant/packages/form_assistant_function_gemma/../../functiongemma-270m-it-q8_0.gguf",
+      "modelSha256": "83940d4dd9676710856f43523bed096164a595a96f6b34771610a03937de5270",
+      "passed": 7,
+      "total": 31,
+      "metrics": {
+        "exactActionSet": 0.22580645161290322,
+        "completeCase": 0.22580645161290322,
+        "fieldIdentification": 0.5483870967741935,
+        "typedValueExact": 0.22580645161290322,
+        "simpleExact": 0.35714285714285715,
+        "booleanExact": 0.0,
+        "numericTyped": 0.5,
+        "choiceCanonical": 0.0,
+        "multiChoiceExact": 0.0,
+        "compoundExact": 0.0,
+        "correctionReferenceExact": 0.6666666666666666,
+        "hallucinatedFieldRate": 0.0,
+        "hallucinatedOptionRate": 0.06451612903225806,
+        "malformedCallRate": 0.2903225806451613,
+        "unnecessaryNoAnswerRate": 0.2962962962962963,
+        "unnecessaryClarificationRate": 0.0,
+        "constraintExtraction": 0.0,
+        "constraintCommitRejection": 1.0
+      },
+      "checks": {
+        "simpleExact": false,
+        "booleanExact": false,
+        "numericTyped": false,
+        "choiceCanonical": false,
+        "multiChoiceExact": false,
+        "compoundExact": false,
+        "correctionReferenceExact": false,
+        "hallucinatedFieldRate": true,
+        "hallucinatedOptionRate": false,
+        "malformedCallRate": false,
+        "criticalRegression": false,
+        "hardCorrectness": true
+      },
+      "p50LatencyMs": 2046.0,
+      "p95LatencyMs": 2941.0,
+      "peakRssKb": 407200,
+      "candidateExactIncludingSuppressed": null,
+      "failureCounts": {
+        "CONTEXT_SELECTION": 0,
+        "CONTEXT_FORMATTING": 0,
+        "FIELD_SELECTION": 4,
+        "VALUE_EXTRACTION": 6,
+        "TYPE_ERROR": 0,
+        "OPTION_MAPPING": 0,
+        "MULTI_CHOICE_STATE": 1,
+        "NEGATION": 1,
+        "REFERENCE_RESOLUTION": 1,
+        "MODEL_HALLUCINATION": 2,
+        "TOOL_FORMAT": 9,
+        "AMBIGUITY_POLICY": 0,
+        "CONSTRAINT_REJECTION_EXPECTED": 0,
+        "RUNTIME_VALIDATION": 0,
+        "UNKNOWN": 0
+      },
+      "criticalPassed": 0
+    },
+    "needle3": {
+      "decision": "MODEL_NO_GO",
+      "source": "benchmarks/needle3_phase6r/reports/needle3.v1.json",
+      "sourceSha256": "6b36b77cc5f86c8c2c299eea0e283903c1a0ae981d30b50527e59617a22236bc",
+      "model": "Needle 3 full-depth base .cact",
+      "modelSha256": "c9d915eca282ed42d1a09b143b592adb4cc6744ffe2d294adf5cfc5548170c38",
+      "passed": 4,
+      "total": 31,
+      "metrics": {
+        "exactActionSet": 0.1935483870967742,
+        "completeCase": 0.12903225806451613,
+        "fieldIdentification": 0.3548387096774194,
+        "typedValueExact": 0.1935483870967742,
+        "simpleExact": 0.14285714285714285,
+        "booleanExact": 0.0,
+        "numericTyped": 0.0,
+        "choiceCanonical": 0.0,
+        "multiChoiceExact": 0.0,
+        "compoundExact": 0.0,
+        "correctionReferenceExact": 0.0,
+        "hallucinatedFieldRate": 0.0,
+        "hallucinatedOptionRate": 0.0,
+        "malformedCallRate": 0.06451612903225806,
+        "unnecessaryNoAnswerRate": 0.7407407407407407,
+        "unnecessaryClarificationRate": 0.9230769230769231,
+        "constraintExtraction": 0.0,
+        "constraintCommitRejection": 1.0
+      },
+      "checks": {
+        "simpleExact": false,
+        "booleanExact": false,
+        "numericTyped": false,
+        "choiceCanonical": false,
+        "multiChoiceExact": false,
+        "compoundExact": false,
+        "correctionReferenceExact": false,
+        "hallucinatedFieldRate": true,
+        "hallucinatedOptionRate": true,
+        "malformedCallRate": false,
+        "criticalRegression": false,
+        "hardCorrectness": true
+      },
+      "p50LatencyMs": 1047.0,
+      "p95LatencyMs": 2590.0,
+      "peakRssKb": 81040,
+      "candidateExactIncludingSuppressed": 0.1935483870967742,
+      "failureCounts": {
+        "CONTEXT_SELECTION": 0,
+        "CONTEXT_FORMATTING": 0,
+        "FIELD_SELECTION": 18,
+        "VALUE_EXTRACTION": 4,
+        "TYPE_ERROR": 0,
+        "OPTION_MAPPING": 0,
+        "MULTI_CHOICE_STATE": 0,
+        "NEGATION": 1,
+        "REFERENCE_RESOLUTION": 0,
+        "MODEL_HALLUCINATION": 0,
+        "TOOL_FORMAT": 2,
+        "AMBIGUITY_POLICY": 0,
+        "CONSTRAINT_REJECTION_EXPECTED": 0,
+        "RUNTIME_VALIDATION": 2,
+        "UNKNOWN": 0
+      },
+      "criticalPassed": 0
+    },
+    "qwen3vl": {
+      "decision": "MODEL_NO_GO",
+      "source": "benchmarks/qwen3vl_phase6r/reports/qwen3vl.v1.json",
+      "sourceSha256": "3f5a511bda6807fa5aa236dfb96283f1ce2a3ce108261a7e852bfddd159db657",
+      "model": "Qwen3VL-2B-Instruct-Q4_K_M.gguf",
+      "modelSha256": "089d75c52f4b7ffc56ba998ffc50aae89fcafc755f9e7208aacca281dca6c2ae",
+      "passed": 22,
+      "total": 31,
+      "metrics": {
+        "exactActionSet": 0.7096774193548387,
+        "completeCase": 0.7096774193548387,
+        "fieldIdentification": 0.7419354838709677,
+        "typedValueExact": 0.7096774193548387,
+        "simpleExact": 0.9285714285714286,
+        "booleanExact": 1.0,
+        "numericTyped": 1.0,
+        "choiceCanonical": 0.75,
+        "multiChoiceExact": 0.3333333333333333,
+        "compoundExact": 0.0,
+        "correctionReferenceExact": 0.6666666666666666,
+        "hallucinatedFieldRate": 0.0,
+        "hallucinatedOptionRate": 0.0,
+        "malformedCallRate": 0.1935483870967742,
+        "unnecessaryNoAnswerRate": 0.2222222222222222,
+        "unnecessaryClarificationRate": 0.0,
+        "constraintExtraction": 1.0,
+        "constraintCommitRejection": 1.0
+      },
+      "checks": {
+        "simpleExact": false,
+        "booleanExact": true,
+        "numericTyped": true,
+        "choiceCanonical": false,
+        "multiChoiceExact": false,
+        "compoundExact": false,
+        "correctionReferenceExact": false,
+        "hallucinatedFieldRate": true,
+        "hallucinatedOptionRate": true,
+        "malformedCallRate": false,
+        "criticalRegression": false,
+        "hardCorrectness": true
+      },
+      "p50LatencyMs": 4841.0,
+      "p95LatencyMs": 6521.0,
+      "peakRssKb": null,
+      "candidateExactIncludingSuppressed": null,
+      "failureCounts": {
+        "CONTEXT_SELECTION": 0,
+        "CONTEXT_FORMATTING": 0,
+        "FIELD_SELECTION": 2,
+        "VALUE_EXTRACTION": 0,
+        "TYPE_ERROR": 0,
+        "OPTION_MAPPING": 0,
+        "MULTI_CHOICE_STATE": 1,
+        "NEGATION": 0,
+        "REFERENCE_RESOLUTION": 0,
+        "MODEL_HALLUCINATION": 0,
+        "TOOL_FORMAT": 6,
+        "AMBIGUITY_POLICY": 0,
+        "CONSTRAINT_REJECTION_EXPECTED": 0,
+        "RUNTIME_VALIDATION": 0,
+        "UNKNOWN": 0
+      },
+      "criticalPassed": 0
+    }
+  },
+  "cases": [
+    {
+      "id": "integer_age",
+      "input": "Age thirty two",
+      "expectedCalls": [
+        {
+          "name": "set_integer",
+          "arguments": {
+            "field_id": "age",
+            "value": 32
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:32}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 32
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "age",
+            "value": {
+              "type": "integer",
+              "value": 32
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":30}}],\"suppressed_calls\":[],\"reasoning\":\"'thirty two' -> value 30; 'Age' -> field_id age; no other fields.\",\"confidence\":0.1588,\"prefill_tps\":281.9,\"decode_tps\":366.0,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 30
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "VALUE_EXTRACTION",
+        "modelConfidence": 0.1588,
+        "suppressedCalls": [],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"age\", \"value\": 32}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 32
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "age",
+            "value": {
+              "type": "integer",
+              "value": 32
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "integer_registers",
+      "input": "There were four registers open",
+      "expectedCalls": [
+        {
+          "name": "set_integer",
+          "arguments": {
+            "field_id": "register_count",
+            "value": 4
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:<escape>register_count<escape>}<end_function_call>",
+        "parsedCalls": [],
+        "validationError": "FormatException: Unexpected tool arguments",
+        "decodingError": "FormatException: Unexpected tool arguments",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[{\"name\":\"clear_field\",\"arguments\":{\"field_id\":\"register_count\"}}],\"suppressed_calls\":[],\"reasoning\":\"Query asks to clear registers -> call clear_field with field_id 'register_count'.\",\"confidence\":0.1048,\"prefill_tps\":279.4,\"decode_tps\":343.4,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "register_count"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "VALUE_EXTRACTION",
+        "modelConfidence": 0.1048,
+        "suppressedCalls": [],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"register_count\", \"value\": 4}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "register_count",
+              "value": 4
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "register_count",
+            "value": {
+              "type": "integer",
+              "value": 4
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "number_weight",
+      "input": "Weight is seventy two point five kilos",
+      "expectedCalls": [
+        {
+          "name": "set_number",
+          "arguments": {
+            "field_id": "weight_kg",
+            "value": 72.5
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_number{field_id:<escape>weight_kg<escape>,value:72}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_number",
+            "arguments": {
+              "field_id": "weight_kg",
+              "value": 72
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "weight_kg",
+            "value": {
+              "type": "number",
+              "value": 72.0
+            }
+          }
+        ],
+        "passed": false,
+        "failureCategory": "VALUE_EXTRACTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[{\"name\":\"clear_field\",\"arguments\":{\"field_id\":\"weight_kg\"}}],\"suppressed_calls\":[],\"reasoning\":\"'Weight' -> field_id 'weight_kg'; 'seventy two point five kilos' -> value 72.5\",\"confidence\":0.1070,\"prefill_tps\":277.4,\"decode_tps\":372.5,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "weight_kg"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "VALUE_EXTRACTION",
+        "modelConfidence": 0.107,
+        "suppressedCalls": [],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_number\", \"arguments\": {\"field_id\": \"weight_kg\", \"value\": 72.5}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_number",
+            "arguments": {
+              "field_id": "weight_kg",
+              "value": 72.5
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "weight_kg",
+            "value": {
+              "type": "number",
+              "value": 72.5
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "number_discount",
+      "input": "Discount is twelve and a half percent",
+      "expectedCalls": [
+        {
+          "name": "set_number",
+          "arguments": {
+            "field_id": "discount_percent",
+            "value": 12.5
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_number{field_id:<escape>discount_percent<escape>,value:12.5}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_number",
+            "arguments": {
+              "field_id": "discount_percent",
+              "value": 12.5
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "discount_percent",
+            "value": {
+              "type": "number",
+              "value": 12.5
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_number\",\"arguments\":{\"field_id\":\"discount_percent\",\"value\":12.5}}],\"reasoning\":\"'discount is twelve and a half percent' -> value 12.5; 'discount' -> field_id 'discount_percent'.\",\"confidence\":0.0910,\"prefill_tps\":284.8,\"decode_tps\":365.7,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[\"set_number.value\"],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "needle_ungrounded",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.091,
+        "suppressedCalls": [
+          {
+            "name": "set_number",
+            "arguments": {
+              "field_id": "discount_percent",
+              "value": 12.5
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": true
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_number\", \"arguments\": {\"field_id\": \"discount_percent\", \"value\": 12.5}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_number",
+            "arguments": {
+              "field_id": "discount_percent",
+              "value": 12.5
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "discount_percent",
+            "value": {
+              "type": "number",
+              "value": 12.5
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "boolean_consent",
+      "input": "Yes I consent",
+      "expectedCalls": [
+        {
+          "name": "set_boolean",
+          "arguments": {
+            "field_id": "consent",
+            "value": true
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:clear_field{field_id:<escape>consent<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "consent"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "clear_value",
+            "fieldId": "consent"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "VALUE_EXTRACTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[{\"name\":\"clear_field\",\"arguments\":{\"field_id\":\"consent\"}}],\"suppressed_calls\":[],\"reasoning\":\"'consent' -> field_id 'consent'. No other fields.\",\"confidence\":0.3031,\"prefill_tps\":283.7,\"decode_tps\":370.3,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "consent"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "VALUE_EXTRACTION",
+        "modelConfidence": 0.3031,
+        "suppressedCalls": [],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_boolean\", \"arguments\": {\"field_id\": \"consent\", \"value\": true}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_boolean",
+            "arguments": {
+              "field_id": "consent",
+              "value": true
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "consent",
+            "value": {
+              "type": "boolean",
+              "value": true
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "boolean_backroom",
+      "input": "No, there is no back room",
+      "expectedCalls": [
+        {
+          "name": "set_boolean",
+          "arguments": {
+            "field_id": "has_back_room",
+            "value": false
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:clear_field{field_id:<escape>has_back_room<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "has_back_room"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "clear_value",
+            "fieldId": "has_back_room"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "VALUE_EXTRACTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"clear_field\",\"arguments\":{\"field_id\":\"has_back_room\"}}],\"reasoning\":\"'No back room' means clear the field. Field_id 'has_back_room' from query.\",\"confidence\":0.0861,\"prefill_tps\":274.3,\"decode_tps\":347.0,\"peak_ram_mb\":79.0,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0861,
+        "suppressedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "has_back_room"
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_boolean\", \"arguments\": {\"field_id\": \"has_back_room\", \"value\": false}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_boolean",
+            "arguments": {
+              "field_id": "has_back_room",
+              "value": false
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "has_back_room",
+            "value": {
+              "type": "boolean",
+              "value": false
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "string_name",
+      "input": "My name is Mukil",
+      "expectedCalls": [
+        {
+          "name": "set_string",
+          "arguments": {
+            "field_id": "name",
+            "value": "Mukil"
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:clear_field{field_id:<escape>name<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "name"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "clear_value",
+            "fieldId": "name"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "VALUE_EXTRACTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_string\",\"arguments\":{\"field_id\":\"name\",\"value\":\"Mukil\"}}],\"reasoning\":\"User wants to add a name to a field. 'Mukil' -> field_id 'name'. Value 'Mukil' from query.\",\"confidence\":0.0583,\"prefill_tps\":287.7,\"decode_tps\":376.4,\"peak_ram_mb\":79.0,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0583,
+        "suppressedCalls": [
+          {
+            "name": "set_string",
+            "arguments": {
+              "field_id": "name",
+              "value": "Mukil"
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": true
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_string\", \"arguments\": {\"field_id\": \"name\", \"value\": \"Mukil\"}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_string",
+            "arguments": {
+              "field_id": "name",
+              "value": "Mukil"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "name",
+            "value": {
+              "type": "string",
+              "value": "Mukil"
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "string_city",
+      "input": "City is Bangalore",
+      "expectedCalls": [
+        {
+          "name": "set_string",
+          "arguments": {
+            "field_id": "city",
+            "value": "Bangalore"
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:clear_field{field_id:<escape>city<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "city"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "clear_value",
+            "fieldId": "city"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "VALUE_EXTRACTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[{\"name\":\"set_string\",\"arguments\":{\"field_id\":\"city\",\"value\":\"Bangalore\"}}],\"suppressed_calls\":[],\"reasoning\":\"Query 'City is Bangalore' -> field_id 'city', value 'Bangalore'.\",\"confidence\":0.2275,\"prefill_tps\":287.3,\"decode_tps\":364.3,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [
+          {
+            "name": "set_string",
+            "arguments": {
+              "field_id": "city",
+              "value": "Bangalore"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "RUNTIME_VALIDATION",
+        "modelConfidence": 0.2275,
+        "suppressedCalls": [],
+        "candidateExactIncludingSuppressed": true
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_string\", \"arguments\": {\"field_id\": \"city\", \"value\": \"Bangalore\"}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_string",
+            "arguments": {
+              "field_id": "city",
+              "value": "Bangalore"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "city",
+            "value": {
+              "type": "string",
+              "value": "Bangalore"
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "date_visit",
+      "input": "Visit date was October fifth 2026",
+      "expectedCalls": [
+        {
+          "name": "set_date",
+          "arguments": {
+            "field_id": "visit_date",
+            "value": "2026-10-05"
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_date{field_id:<escape>visit_date<escape>,value:<escape>2026-10-05<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_date",
+            "arguments": {
+              "field_id": "visit_date",
+              "value": "2026-10-05"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "visit_date",
+            "value": {
+              "type": "date",
+              "value": "2026-10-05"
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":false,\"error\":\"tool call truncated: token budget exhausted\",\"error_code\":\"truncated\",\"reason\":\"runtime_failure\",\"function_calls\":[],\"suppressed_calls\":[],\"reasoning\":\"'Visit date' -> field_id 'visit_date'; 'October fifth 2026' -> value 'October fifth 2026'\",\"confidence\":0.0304,\"prefill_tps\":266.6,\"decode_tps\":287.4,\"peak_ram_mb\":79.1}\n",
+        "parsedCalls": [],
+        "validationError": "FormatException: Needle engine failure: truncated",
+        "decodingError": "FormatException: Needle engine failure: truncated",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": [],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_date\", \"arguments\": {\"field_id\": \"visit_date\", \"value\": \"2026-10-05\"}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_date",
+            "arguments": {
+              "field_id": "visit_date",
+              "value": "2026-10-05"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "visit_date",
+            "value": {
+              "type": "date",
+              "value": "2026-10-05"
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "date_birth",
+      "input": "DOB is fourteenth August 1992",
+      "expectedCalls": [
+        {
+          "name": "set_date",
+          "arguments": {
+            "field_id": "date_of_birth",
+            "value": "1992-08-14"
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_date{field_id:<escape>date_of_birth<escape>,value:<escape>1992-08-14<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_date",
+            "arguments": {
+              "field_id": "date_of_birth",
+              "value": "1992-08-14"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "date_of_birth",
+            "value": {
+              "type": "date",
+              "value": "1992-08-14"
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":false,\"error\":\"tool call truncated: token budget exhausted\",\"error_code\":\"truncated\",\"reason\":\"runtime_failure\",\"function_calls\":[],\"suppressed_calls\":[],\"reasoning\":\"'DOB' -> field_id 'date_of_birth'; 'fourteenth August 1992' -> value 'August 1992'.\",\"confidence\":0.0588,\"prefill_tps\":258.7,\"decode_tps\":305.8,\"peak_ram_mb\":79.1}\n",
+        "parsedCalls": [],
+        "validationError": "FormatException: Needle engine failure: truncated",
+        "decodingError": "FormatException: Needle engine failure: truncated",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": [],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_date\", \"arguments\": {\"field_id\": \"date_of_birth\", \"value\": \"1992-08-14\"}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_date",
+            "arguments": {
+              "field_id": "date_of_birth",
+              "value": "1992-08-14"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "date_of_birth",
+            "value": {
+              "type": "date",
+              "value": "1992-08-14"
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "choice_alias",
+      "input": "The promotion was autumn",
+      "expectedCalls": [
+        {
+          "name": "set_choice",
+          "arguments": {
+            "field_id": "promotion",
+            "value": "fall"
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_choice{field_id:<escape>promotion<escape>,value:<escape>autumn<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "autumn"
+            }
+          }
+        ],
+        "validationError": "FormatException: Unknown canonical option",
+        "decodingError": null,
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "MODEL_HALLUCINATION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_choice\",\"arguments\":{\"field_id\":\"promotion\",\"value\":\"summer\"}}],\"reasoning\":\"User wants to check promotion details. 'promotion' -> field_id 'promotion'. 'autumn' -> value 'autumn'.\",\"confidence\":0.0262,\"prefill_tps\":257.7,\"decode_tps\":308.8,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0262,
+        "suppressedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "summer"
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_choice\", \"arguments\": {\"field_id\": \"promotion\", \"value\": \"fall\"}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "fall"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "promotion",
+            "value": {
+              "type": "choice",
+              "value": "fall"
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "multi_selection",
+      "input": "I use Java and Flutter",
+      "expectedCalls": [
+        {
+          "name": "set_multi_choice",
+          "arguments": {
+            "field_id": "technologies",
+            "value": [
+              "java",
+              "flutter"
+            ]
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_multi_choice{field_id:<escape>technologies<escape>,value:[<escape>java<escape>,<escape>flutter<escape>,<escape>react<escape>]}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_multi_choice",
+            "arguments": {
+              "field_id": "technologies",
+              "value": [
+                "java",
+                "flutter",
+                "react"
+              ]
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "technologies",
+            "value": {
+              "type": "multi_choice",
+              "value": [
+                "flutter",
+                "java",
+                "react"
+              ]
+            }
+          }
+        ],
+        "passed": false,
+        "failureCategory": "MULTI_CHOICE_STATE",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_multi_choice\",\"arguments\":{\"field_id\":\"technologies\",\"value\":[\"java\"]}},{\"name\":\"set_multi_choice\",\"arguments\":{\"field_id\":\"technologies\",\"value\":[\"flutter\"]}}],\"reasoning\":\"'Java' and 'Flutter' are the two field identifiers.\",\"confidence\":0.0600,\"prefill_tps\":241.4,\"decode_tps\":262.9,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.06,
+        "suppressedCalls": [
+          {
+            "name": "set_multi_choice",
+            "arguments": {
+              "field_id": "technologies",
+              "value": [
+                "java"
+              ]
+            }
+          },
+          {
+            "name": "set_multi_choice",
+            "arguments": {
+              "field_id": "technologies",
+              "value": [
+                "flutter"
+              ]
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_multi_choice\", \"arguments\": {\"field_id\": \"technologies\", \"value\": [\"java\", \"flutter\"]}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_multi_choice",
+            "arguments": {
+              "field_id": "technologies",
+              "value": [
+                "java",
+                "flutter"
+              ]
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "technologies",
+            "value": {
+              "type": "multi_choice",
+              "value": [
+                "flutter",
+                "java"
+              ]
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "multi_add",
+      "input": "Also add Flutter and React",
+      "expectedCalls": [
+        {
+          "name": "set_multi_choice",
+          "arguments": {
+            "field_id": "technologies",
+            "value": [
+              "java",
+              "flutter",
+              "react"
+            ]
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "burns\n<start_function_call>call:set_multi_choice{field_id:<escape>technologies<escape>,value:[<escape>flutter<escape>,<escape>react<escape>]}<end_function_call><start_function_call>call:clear_field{}<end_function_call>",
+        "parsedCalls": [],
+        "validationError": "FormatException: Malformed FunctionGemma output",
+        "decodingError": "FormatException: Malformed FunctionGemma output",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_multi_choice\",\"arguments\":{\"field_id\":\"technologies\",\"value\":[\"flutter\"]}},{\"name\":\"set_multi_choice\",\"arguments\":{\"field_id\":\"technologies\",\"value\":[\"react\"]}}],\"reasoning\":\"Two separate calls: first field_id 'flutter' value 'flutter', second field_id 'react' value 'react'.\",\"confidence\":0.0945,\"prefill_tps\":252.7,\"decode_tps\":270.4,\"peak_ram_mb\":79.0,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0945,
+        "suppressedCalls": [
+          {
+            "name": "set_multi_choice",
+            "arguments": {
+              "field_id": "technologies",
+              "value": [
+                "flutter"
+              ]
+            }
+          },
+          {
+            "name": "set_multi_choice",
+            "arguments": {
+              "field_id": "technologies",
+              "value": [
+                "react"
+              ]
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_multi_choice\", \"arguments\": {\"field_id\": \"technologies\", \"value\": [\"flutter\", \"react\"]}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_multi_choice",
+            "arguments": {
+              "field_id": "technologies",
+              "value": [
+                "flutter",
+                "react"
+              ]
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "technologies",
+            "value": {
+              "type": "multi_choice",
+              "value": [
+                "flutter",
+                "react"
+              ]
+            }
+          }
+        ],
+        "passed": false,
+        "failureCategory": "MULTI_CHOICE_STATE",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "clear_promotion",
+      "input": "Clear the promotion",
+      "expectedCalls": [
+        {
+          "name": "clear_field",
+          "arguments": {
+            "field_id": "promotion"
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:clear_field{field_id:<escape>promotion<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "promotion"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "clear_value",
+            "fieldId": "promotion"
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[{\"name\":\"clear_field\",\"arguments\":{\"field_id\":\"promotion\"}}],\"suppressed_calls\":[],\"reasoning\":\"Query 'Clear the promotion' -> clear_field tool. 'promotion' -> field_id 'promotion'.\",\"confidence\":0.4910,\"prefill_tps\":246.1,\"decode_tps\":328.0,\"peak_ram_mb\":79.0,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "promotion"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "RUNTIME_VALIDATION",
+        "modelConfidence": 0.491,
+        "suppressedCalls": [],
+        "candidateExactIncludingSuppressed": true
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"clear_field\", \"arguments\": {\"field_id\": \"promotion\"}}]}",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "promotion"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "clear_value",
+            "fieldId": "promotion"
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "correction_age",
+      "input": "Actually I'm thirty two",
+      "expectedCalls": [
+        {
+          "name": "set_integer",
+          "arguments": {
+            "field_id": "age",
+            "value": 32
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:32}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 32
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "age",
+            "value": {
+              "type": "integer",
+              "value": 32
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":30}}],\"reasoning\":\"'thirty two' is a numeric value -> value 30.\",\"confidence\":0.0407,\"prefill_tps\":275.2,\"decode_tps\":361.6,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0407,
+        "suppressedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 30
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"age\", \"value\": 32}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 32
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "age",
+            "value": {
+              "type": "integer",
+              "value": 32
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "compound_age_consent_001",
+      "input": "Age thirty two, consent yes",
+      "expectedCalls": [
+        {
+          "name": "set_integer",
+          "arguments": {
+            "field_id": "age",
+            "value": 32
+          }
+        },
+        {
+          "name": "set_boolean",
+          "arguments": {
+            "field_id": "consent",
+            "value": true
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:32}<end_function_call><start_function_call>call:set_boolean{field_id:<escape>consent<escape>,value:yes}<end_function_call>",
+        "parsedCalls": [],
+        "validationError": "FormatException: Invalid primitive",
+        "decodingError": "FormatException: Invalid primitive",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":30}},{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":8}},{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":9}}],\"reasoning\":\"'Age' -> field_id 'age', 'thirty two' -> value 30. 'consent yes' -> field_id 'consent', value true.\",\"confidence\":0.0004,\"prefill_tps\":262.9,\"decode_tps\":210.7,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[\"set_integer.value\",\"set_integer.value\"],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "needle_ungrounded",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0004,
+        "suppressedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 30
+            }
+          },
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 8
+            }
+          },
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 9
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"age\", \"value\": 32}}]}\n{\"function_calls\": [{\"name\": \"set_boolean\", \"arguments\": {\"field_id\": \"consent\", \"value\": true}}]}",
+        "parsedCalls": [],
+        "validationError": "FormatException: Trailing JSON data",
+        "decodingError": "FormatException: Trailing JSON data",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "compound_age_consent_002",
+      "input": "Age thirty two, consent yes",
+      "expectedCalls": [
+        {
+          "name": "set_integer",
+          "arguments": {
+            "field_id": "age",
+            "value": 32
+          }
+        },
+        {
+          "name": "set_boolean",
+          "arguments": {
+            "field_id": "consent",
+            "value": true
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:32}<end_function_call><start_function_call>call:set_boolean{field_id:<escape>consent<escape>,value:yes}<end_function_call>",
+        "parsedCalls": [],
+        "validationError": "FormatException: Invalid primitive",
+        "decodingError": "FormatException: Invalid primitive",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":30}},{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":8}},{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":9}}],\"reasoning\":\"'Age' -> field_id 'age', 'thirty two' -> value 30. 'consent yes' -> field_id 'consent', value true.\",\"confidence\":0.0004,\"prefill_tps\":255.6,\"decode_tps\":202.1,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[\"set_integer.value\",\"set_integer.value\"],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "needle_ungrounded",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0004,
+        "suppressedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 30
+            }
+          },
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 8
+            }
+          },
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 9
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"age\", \"value\": 32}}]}\n{\"function_calls\": [{\"name\": \"set_boolean\", \"arguments\": {\"field_id\": \"consent\", \"value\": true}}]}",
+        "parsedCalls": [],
+        "validationError": "FormatException: Trailing JSON data",
+        "decodingError": "FormatException: Trailing JSON data",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "compound_age_consent_003",
+      "input": "Age thirty two, consent yes",
+      "expectedCalls": [
+        {
+          "name": "set_integer",
+          "arguments": {
+            "field_id": "age",
+            "value": 32
+          }
+        },
+        {
+          "name": "set_boolean",
+          "arguments": {
+            "field_id": "consent",
+            "value": true
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:32}<end_function_call><start_function_call>call:set_boolean{field_id:<escape>consent<escape>,value:yes}<end_function_call>",
+        "parsedCalls": [],
+        "validationError": "FormatException: Invalid primitive",
+        "decodingError": "FormatException: Invalid primitive",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":30}},{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":8}},{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":9}}],\"reasoning\":\"'Age' -> field_id 'age', 'thirty two' -> value 30. 'consent yes' -> field_id 'consent', value true.\",\"confidence\":0.0004,\"prefill_tps\":224.9,\"decode_tps\":188.4,\"peak_ram_mb\":79.0,\"validation\":{\"ungrounded\":[\"set_integer.value\",\"set_integer.value\"],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "needle_ungrounded",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0004,
+        "suppressedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 30
+            }
+          },
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 8
+            }
+          },
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 9
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"age\", \"value\": 32}}]}\n{\"function_calls\": [{\"name\": \"set_boolean\", \"arguments\": {\"field_id\": \"consent\", \"value\": true}}]}",
+        "parsedCalls": [],
+        "validationError": "FormatException: Trailing JSON data",
+        "decodingError": "FormatException: Trailing JSON data",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "compound_store",
+      "input": "We have a back room, four registers were open and the promotion was autumn",
+      "expectedCalls": [
+        {
+          "name": "set_boolean",
+          "arguments": {
+            "field_id": "has_back_room",
+            "value": true
+          }
+        },
+        {
+          "name": "set_integer",
+          "arguments": {
+            "field_id": "register_count",
+            "value": 4
+          }
+        },
+        {
+          "name": "set_choice",
+          "arguments": {
+            "field_id": "promotion",
+            "value": "fall"
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": " investment decisions are based on predefined rules and cannot be influenced by user preferences or external data. I cannot assist with strategic investment recommendations or portfolio management. My available tools are for data extraction, field management, and clear labeling.<end_of_turn>",
+        "parsedCalls": [],
+        "validationError": "FormatException: Malformed FunctionGemma output",
+        "decodingError": "FormatException: Malformed FunctionGemma output",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"register_count\",\"value\":4}},{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"register_count\",\"value\":42}},{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"register_count\",\"value\":18}}],\"reasoning\":\"'back room' -> field_id 'back_room'; 'four registers were open' -> value 4; 'promotion was autumn' -> field_id 'promotion', value 'autumn'.\",\"confidence\":0.0018,\"prefill_tps\":192.9,\"decode_tps\":203.2,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[\"set_integer.value\",\"set_integer.value\"],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "needle_ungrounded",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0018,
+        "suppressedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "register_count",
+              "value": 4
+            }
+          },
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "register_count",
+              "value": 42
+            }
+          },
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "register_count",
+              "value": 18
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_boolean\", \"arguments\": {\"field_id\": \"has_back_room\", \"value\": true}}]}\n{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"register_count\", \"value\": 4}}]}\n{\"function_calls\": [{\"name\": \"set_choice\", \"arguments\": {\"field_id\": \"promotion\", \"value\": \"fall\"}}]}",
+        "parsedCalls": [],
+        "validationError": "FormatException: Trailing JSON data",
+        "decodingError": "FormatException: Trailing JSON data",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "negation_consent",
+      "input": "I do not consent",
+      "expectedCalls": [
+        {
+          "name": "set_boolean",
+          "arguments": {
+            "field_id": "consent",
+            "value": false
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:clear_field{field_id:<escape>consent<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "consent"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "clear_value",
+            "fieldId": "consent"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "NEGATION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[{\"name\":\"clear_field\",\"arguments\":{\"field_id\":\"consent\"}}],\"suppressed_calls\":[],\"reasoning\":\"User wants to clear the consent field. 'consent' -> field_id 'consent'.\",\"confidence\":0.2475,\"prefill_tps\":276.7,\"decode_tps\":392.0,\"peak_ram_mb\":79.0,\"validation\":{\"ungrounded\":[],\"negation\":true}}\n",
+        "parsedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "consent"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "NEGATION",
+        "modelConfidence": 0.2475,
+        "suppressedCalls": [],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_boolean\", \"arguments\": {\"field_id\": \"consent\", \"value\": false}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_boolean",
+            "arguments": {
+              "field_id": "consent",
+              "value": false
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "consent",
+            "value": {
+              "type": "boolean",
+              "value": false
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "negation_choice",
+      "input": "It wasn't the spring promotion, it was autumn",
+      "expectedCalls": [
+        {
+          "name": "set_choice",
+          "arguments": {
+            "field_id": "promotion",
+            "value": "fall"
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_choice{field_id:<escape>promotion<escape>,value:<escape>spring<escape>}<end_function_call><start_function_call>call:clear_field{field_id:<escape>promotion<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "spring"
+            }
+          },
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "promotion"
+            }
+          }
+        ],
+        "validationError": "FormatException: Conflicting same-field writes",
+        "decodingError": null,
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_choice\",\"arguments\":{\"field_id\":\"promotion\",\"value\":\"spring\"}}],\"reasoning\":\"'spring promotion' -> value 'spring', field_id 'promotion'.\",\"confidence\":0.0580,\"prefill_tps\":230.8,\"decode_tps\":277.0,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.058,
+        "suppressedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "spring"
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_choice\", \"arguments\": {\"field_id\": \"promotion\", \"value\": \"fall\"}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "fall"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "promotion",
+            "value": {
+              "type": "choice",
+              "value": "fall"
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "reference_age",
+      "input": "Change that to thirty two",
+      "expectedCalls": [
+        {
+          "name": "set_integer",
+          "arguments": {
+            "field_id": "age",
+            "value": 32
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:32}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 32
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "age",
+            "value": {
+              "type": "integer",
+              "value": 32
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_integer\",\"arguments\":{\"value\":30,\"field_id\":\"age\"}}],\"reasoning\":\"'thirty two' -> value 30; no field_id given, use default 'age'\",\"confidence\":0.0562,\"prefill_tps\":288.4,\"decode_tps\":390.9,\"peak_ram_mb\":79.0,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0562,
+        "suppressedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "value": 30,
+              "field_id": "age"
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"age\", \"value\": 32}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 32
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "age",
+            "value": {
+              "type": "integer",
+              "value": 32
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "reference_multi",
+      "input": "Remove Flutter and keep Java",
+      "expectedCalls": [
+        {
+          "name": "set_multi_choice",
+          "arguments": {
+            "field_id": "technologies",
+            "value": [
+              "java"
+            ]
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_multi_choice{field_id:<escape>technologies<escape>,value:[<escape>flutter<escape>,<escape>java<escape>]}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_multi_choice",
+            "arguments": {
+              "field_id": "technologies",
+              "value": [
+                "flutter",
+                "java"
+              ]
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "technologies",
+            "value": {
+              "type": "multi_choice",
+              "value": [
+                "flutter",
+                "java"
+              ]
+            }
+          }
+        ],
+        "passed": false,
+        "failureCategory": "REFERENCE_RESOLUTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"clear_field\",\"arguments\":{\"field_id\":\"technologies\"}}],\"reasoning\":\"Query 'Flutter' -> field_id 'flutter'; 'Java' -> field_id 'java'; 'Java' -> field_id 'java'.\",\"confidence\":0.0427,\"prefill_tps\":236.8,\"decode_tps\":322.5,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0427,
+        "suppressedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "technologies"
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"clear_field\", \"arguments\": {\"field_id\": \"technologies\"}}]}\n\n{\"function_calls\": [{\"name\": \"set_multi_choice\", \"arguments\": {\"field_id\": \"technologies\", \"value\": [\"java\"]}}]}",
+        "parsedCalls": [],
+        "validationError": "FormatException: Trailing JSON data",
+        "decodingError": "FormatException: Trailing JSON data",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "ambiguous_number",
+      "input": "Maybe four or five",
+      "expectedCalls": [],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:3,value:4}<end_function_call><start_function_call>call:set_integer{field_id:2,value:3}<end_function_call><start_function_call>call:set_integer{field_id:1,value:2}<end_function_call>",
+        "parsedCalls": [],
+        "validationError": "FormatException: Expected String",
+        "decodingError": "FormatException: Expected String",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"register_count\",\"value\":4}}],\"reasoning\":\"'four or five' means four or five -> value 4, field_id 'register_count'.\",\"confidence\":0.0327,\"prefill_tps\":275.3,\"decode_tps\":336.6,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": 0.0327,
+        "suppressedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "register_count",
+              "value": 4
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"register_count\", \"value\": 4}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "register_count",
+              "value": 4
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "register_count",
+            "value": {
+              "type": "integer",
+              "value": 4
+            }
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "ambiguous_option",
+      "input": "The promotion was the other one",
+      "expectedCalls": [],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_choice{field_id:<escape>promotion<escape>,value:<escape>spring<escape>}<end_function_call><start_function_call>call:set_choice{field_id:<escape>promotion<escape>,value:<escape>summer<escape>}<end_function_call><start_function_call>call:set_choice{field_id:<escape>promotion<escape>,value:<escape>fall<escape>}<end_function_call><start_function_call>call:set_choice{field_id:<escape>promotion<escape>,value:<escape>winter<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "spring"
+            }
+          },
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "summer"
+            }
+          },
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "fall"
+            }
+          },
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "winter"
+            }
+          }
+        ],
+        "validationError": "FormatException: Conflicting same-field writes",
+        "decodingError": null,
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"clear_field\",\"arguments\":{\"field_id\":\"promotion\"}}],\"reasoning\":\"'promotion' -> field_id 'promotion'. No other details given.\",\"confidence\":0.0563,\"prefill_tps\":255.2,\"decode_tps\":327.3,\"peak_ram_mb\":79.0,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": 0.0563,
+        "suppressedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "promotion"
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_choice\", \"arguments\": {\"field_id\": \"promotion\", \"value\": \"fall\"}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "fall"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "promotion",
+            "value": {
+              "type": "choice",
+              "value": "fall"
+            }
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "constraint_age",
+      "input": "Age is one hundred and fifty",
+      "expectedCalls": [
+        {
+          "name": "set_integer",
+          "arguments": {
+            "field_id": "age",
+            "value": 150
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:1005}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 1005
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "invalid_value",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "fieldIds": [
+              "age"
+            ],
+            "reason": "invalid_value"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "VALUE_EXTRACTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":150}}],\"reasoning\":\"'Age' -> field_id 'age'; 'one hundred and fifty' -> value 150.\",\"confidence\":0.0831,\"prefill_tps\":275.1,\"decode_tps\":342.4,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[\"set_integer.value\"],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "needle_ungrounded",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0831,
+        "suppressedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 150
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": true
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"age\", \"value\": 150}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 150
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "invalid_value",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "fieldIds": [
+              "age"
+            ],
+            "reason": "invalid_value"
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "noise_compound",
+      "input": "age thirty to consent yes",
+      "expectedCalls": [
+        {
+          "name": "set_integer",
+          "arguments": {
+            "field_id": "age",
+            "value": 32
+          }
+        },
+        {
+          "name": "set_boolean",
+          "arguments": {
+            "field_id": "consent",
+            "value": true
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:30}<end_function_call><start_function_call>call:set_boolean{field_id:<escape>consent<escape>,value:yes}<end_function_call>",
+        "parsedCalls": [],
+        "validationError": "FormatException: Invalid primitive",
+        "decodingError": "FormatException: Invalid primitive",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":30}},{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":305}},{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"age\",\"value\":50}}],\"reasoning\":\"'age thirty' -> value 30, field_id 'age', value 30; 'consent yes' -> value 30, field_id 'consent', value true.\",\"confidence\":0.0122,\"prefill_tps\":229.9,\"decode_tps\":318.1,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[\"set_integer.value\",\"set_integer.value\"],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "needle_ungrounded",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0122,
+        "suppressedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 30
+            }
+          },
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 305
+            }
+          },
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 50
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"age\", \"value\": 30}}]}\n{\"function_calls\": [{\"name\": \"set_boolean\", \"arguments\": {\"field_id\": \"consent\", \"value\": true}}]}",
+        "parsedCalls": [],
+        "validationError": "FormatException: Trailing JSON data",
+        "decodingError": "FormatException: Trailing JSON data",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "noise_registers",
+      "input": "four registers where open",
+      "expectedCalls": [
+        {
+          "name": "set_integer",
+          "arguments": {
+            "field_id": "register_count",
+            "value": 4
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:3,value:4}<end_function_call><start_function_call>call:clear_field{field_id:<escape>register_count<escape>}<end_function_call>",
+        "parsedCalls": [],
+        "validationError": "FormatException: Expected String",
+        "decodingError": "FormatException: Expected String",
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "TOOL_FORMAT",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_integer\",\"arguments\":{\"field_id\":\"register_count\",\"value\":4}}],\"reasoning\":\"'four registers' -> value 4; 'register_count' -> field_id 'register_count'; no other fields.\",\"confidence\":0.0746,\"prefill_tps\":284.5,\"decode_tps\":369.8,\"peak_ram_mb\":79.0,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0746,
+        "suppressedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "register_count",
+              "value": 4
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": true
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_integer\", \"arguments\": {\"field_id\": \"register_count\", \"value\": 4}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "register_count",
+              "value": 4
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "register_count",
+            "value": {
+              "type": "integer",
+              "value": 4
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "noise_choice",
+      "input": "promotion was auto man",
+      "expectedCalls": [
+        {
+          "name": "set_choice",
+          "arguments": {
+            "field_id": "promotion",
+            "value": "fall"
+          }
+        }
+      ],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_choice{field_id:<escape>promotion<escape>,value:<escape>spring<escape>}<end_function_call><start_function_call>call:set_choice{field_id:<escape>promotion<escape>,value:<escape>summer<escape>}<end_function_call><start_function_call>call:set_choice{field_id:<escape>promotion<escape>,value:<escape>fall<escape>}<end_function_call><start_function_call>call:set_choice{field_id:<escape>promotion<escape>,value:<escape>winter<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "spring"
+            }
+          },
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "summer"
+            }
+          },
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "fall"
+            }
+          },
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "winter"
+            }
+          }
+        ],
+        "validationError": "FormatException: Conflicting same-field writes",
+        "decodingError": null,
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_choice\",\"arguments\":{\"field_id\":\"promotion\",\"value\":\"summer\"}}],\"reasoning\":\"'promotion' -> field_id 'promotion'; 'man' -> value 'man'.\",\"confidence\":0.0477,\"prefill_tps\":260.0,\"decode_tps\":298.2,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": 0.0477,
+        "suppressedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "summer"
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\": [{\"name\": \"set_choice\", \"arguments\": {\"field_id\": \"promotion\", \"value\": \"fall\"}}]}",
+        "parsedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "promotion",
+              "value": "fall"
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "promotion",
+            "value": {
+              "type": "choice",
+              "value": "fall"
+            }
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "out_of_context",
+      "input": "My country is India",
+      "expectedCalls": [],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_integer{field_id:<escape>age<escape>,value:30}<end_function_call><start_function_call>call:set_boolean{field_id:<escape>consent<escape>,value:true}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_integer",
+            "arguments": {
+              "field_id": "age",
+              "value": 30
+            }
+          },
+          {
+            "name": "set_boolean",
+            "arguments": {
+              "field_id": "consent",
+              "value": true
+            }
+          }
+        ],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "accept",
+        "qualityReason": "validated",
+        "canonicalActions": [
+          {
+            "type": "set_value",
+            "fieldId": "age",
+            "value": {
+              "type": "integer",
+              "value": 30
+            }
+          },
+          {
+            "type": "set_value",
+            "fieldId": "consent",
+            "value": {
+              "type": "boolean",
+              "value": true
+            }
+          }
+        ],
+        "passed": false,
+        "failureCategory": "FIELD_SELECTION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"clear_field\",\"arguments\":{\"field_id\":\"age\"}},{\"name\":\"clear_field\",\"arguments\":{\"field_id\":\"consent\"}}],\"reasoning\":\"Query asks for country India. 'country' maps to field_id 'country'. 'India' maps to field_id 'country'.\",\"confidence\":0.0290,\"prefill_tps\":255.4,\"decode_tps\":318.1,\"peak_ram_mb\":79.0,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": 0.029,
+        "suppressedCalls": [
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "age"
+            }
+          },
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "consent"
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\":[]}",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "no_answer",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "missing_information"
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    },
+    {
+      "id": "option_truncated",
+      "input": "Japan",
+      "expectedCalls": [],
+      "functionGemma": {
+        "rawOutput": "\n<start_function_call>call:set_choice{field_id:<escape>country<escape>,value:<escape>japan<escape>}<end_function_call><start_function_call>call:clear_field{field_id:<escape>country<escape>}<end_function_call>",
+        "parsedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "country",
+              "value": "japan"
+            }
+          },
+          {
+            "name": "clear_field",
+            "arguments": {
+              "field_id": "country"
+            }
+          }
+        ],
+        "validationError": "FormatException: Unknown canonical option",
+        "decodingError": null,
+        "quality": null,
+        "qualityReason": null,
+        "canonicalActions": [],
+        "passed": false,
+        "failureCategory": "MODEL_HALLUCINATION",
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      },
+      "needle3": {
+        "rawOutput": "{\"type\":\"call\",\"success\":true,\"error\":null,\"error_code\":null,\"reason\":null,\"function_calls\":[],\"suppressed_calls\":[{\"name\":\"set_choice\",\"arguments\":{\"field_id\":\"country\",\"value\":\"india\"}}],\"reasoning\":\"'Japan' -> country, 'capital' -> fields.\",\"confidence\":0.0277,\"prefill_tps\":260.2,\"decode_tps\":331.5,\"peak_ram_mb\":79.1,\"validation\":{\"ungrounded\":[],\"negation\":false}}\n",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "low_confidence",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "low_confidence"
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": 0.0277,
+        "suppressedCalls": [
+          {
+            "name": "set_choice",
+            "arguments": {
+              "field_id": "country",
+              "value": "india"
+            }
+          }
+        ],
+        "candidateExactIncludingSuppressed": false
+      },
+      "qwen3vl": {
+        "rawOutput": "{\"function_calls\":[]}",
+        "parsedCalls": [],
+        "validationError": null,
+        "decodingError": null,
+        "quality": "clarify",
+        "qualityReason": "no_answer",
+        "canonicalActions": [
+          {
+            "type": "request_clarification",
+            "reason": "missing_information"
+          }
+        ],
+        "passed": true,
+        "failureCategory": null,
+        "modelConfidence": null,
+        "suppressedCalls": null,
+        "candidateExactIncludingSuppressed": null
+      }
+    }
+  ],
+  "limitations": [
+    "Needle native engine applies grammar, grounding and suppression; pre-repair tokens unavailable.",
+    "Needle suppressed candidates never count as primary successes; QualityGate remains 0.8.",
+    "Qwen3VL host eval is text-only (no images); llama.cpp CPU build b11445 / commit 58cb913; macOS host peak RSS unavailable without GNU time -v.",
+    "Host cold process timings only; no Zebra measurement."
+  ]
+}

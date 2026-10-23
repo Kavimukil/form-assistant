@@ -1,0 +1,11 @@
+name: form_assistant_stt
+description: Phase 8 streaming STT session. The host supplies recognition; this package does not capture the microphone.
+version: 0.1.0
+publish_to: none
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+dependencies:
+  form_assistant_core:
+    path: ../form_assistant_core
+dev_dependencies:
+  test: ^1.25.0

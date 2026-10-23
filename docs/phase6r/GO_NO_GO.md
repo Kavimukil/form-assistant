@@ -1,7 +1,9 @@
-# Phase 6R decision: NO-GO FunctionGemma
+# Phase 6R FunctionGemma result: MODEL_NO_GO
 
 Date: 2026-10-06. Recovery implementation and review completed; the model-quality
-gate fails. **Phase 7 permitted: NO.** This is not a project restart.
+gate fails. **Frozen category gate: NO-GO.** Phase 7 later started under the
+2026-10-22 29/31 acceptance amendment at the end of this file. This is not a
+project restart.
 
 ## Evidence
 
@@ -73,3 +75,60 @@ integration is NO-GO. If it remains unreliable, evaluate another IntelligenceAda
 against the same frozen corpus, keeping canonical contracts, compact context,
 QualityGate, ActionRuntime and FormStateBridge. Fine-tuning or replacement is a
 separate future decision; neither was implemented. Phase 7 remains blocked.
+
+
+## Focused ablation evidence
+
+Formal model status: **MODEL_NO_GO — FunctionGemma 270M**. Its adapter, raw reports,
+frozen expectations and architecture are preserved as a benchmarked implementation.
+[35-run ablation](../../benchmarks/function_gemma_ablation/results.json): setter-only
+name and positive consent succeed 5/5; adding clear_field flips positive consent
+to clear 5/5. Negation still returns true 5/5 with only set_boolean, register
+extraction invents numeric field IDs 5/5 with only set_integer, and compound
+extraction without clear_field emits invalid yes 5/5. Tool competition is real,
+but removing clear_field does not cure basic semantic/field/type failures.
+
+Needle 3 is evaluated separately through IntelligenceAdapter using the same compact
+SemanticContext, frozen eight-tool contract and corpus. No Phase 6R architecture
+or benchmark requirements are changed, and this record does not authorize Phase 7.
+
+Needle 3 candidate evaluation is complete: **MODEL_NO_GO**, 4/31 complete cases,
+critical compound 0/3. See [model comparison](../model_evaluation/FUNCTIONGEMMA_VS_NEEDLE3.md).
+The recovery architecture and frozen gate remain unchanged; Phase 7 remains blocked.
+
+Qwen3VL-2B host-eval candidate is complete: **MODEL_NO_GO**, 22/31 complete cases,
+critical compound 0/3. Boolean/numeric typed gates pass; compound/multi-object
+JSON format and simpleExact still fail. See
+[Qwen3VL decision](../model_evaluation/QWEN3VL_2B.md).
+
+Qwen3-4B-Instruct-2507 host-eval candidate is complete: **MODEL_NO_GO**, 22/31;
+critical compound **3/3**; malformed 0%; remaining fails are ambiguity /
+multi_add / noise value extraction. See
+[Qwen3-4B decision](../model_evaluation/QWEN3_4B.md).
+
+Qwen3VL-8B-Instruct host-eval candidate is complete: **MODEL_NO_GO**, **26/31**;
+critical **3/3**; simpleExact 100%; remaining fails are negation_consent,
+reference_multi, ambiguous_number, noise_compound, noise_choice. See
+[Qwen3VL-8B decision](../model_evaluation/QWEN3VL_8B.md).
+
+Qwen3.8-27B host-eval candidate is complete: **MODEL_NO_GO**, **29/31**;
+critical **3/3**; simpleExact, boolean, numeric, multi-choice, and
+correction/reference gates pass. Choice canonical stays 75% and compound exact
+stays 80%. Remaining fails are noise_compound (age 30 vs 32) and noise_choice
+(empty calls vs promotion=fall). See
+[Qwen3.8-27B decision](../model_evaluation/QWEN3_8_27B.md).
+
+## Amendment 2026-10-22 — Phase 7 permitted
+
+The frozen thresholds in `benchmarks/function_gemma_phase6r/gate.v1.json` are
+unchanged. Qwen3.8-27B still fails that category gate on choice canonical
+(75%) and compound exact (80%).
+
+Product acceptance for leaving Phase 6R is **at least 29/31 complete cases**
+on the same frozen corpus. Qwen3.8-27B meets that bar at 29/31, with critical
+age+consent 3/3. Known residuals stay `noise_compound` (age 30 instead of 32)
+and `noise_choice` (no call instead of promotion `fall`).
+
+Phase 7 is therefore permitted as local-first hybrid/cloud fallback. The 27B
+GGUF remains a host artifact. Zebra latency and memory were not measured, so
+this amendment does not make that file the on-device runtime.

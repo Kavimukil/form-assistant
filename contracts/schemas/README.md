@@ -1,5 +1,11 @@
 # Serialized schemas
 
+These documents are the language-independent contract for Dart and for a React
+host. Actions and values have no locale. Localized labels live on field
+semantics and are omitted when empty. The TypeScript decoder in
+`bindings/form_assistant_react` reads this JSON and does not define a second
+protocol.
+
 Protocol 1.0 schemas mirror the canonical Dart codecs and golden fixtures:
 
 - `form-value.schema.json`: discriminated canonical value fragments.

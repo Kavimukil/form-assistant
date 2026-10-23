@@ -97,18 +97,38 @@ final class FieldSemantics with StructuralContract {
   final String? description;
   final String? concept;
   final List<String> aliases;
+  final Map<String, String> localizedLabels;
+  final Map<String, List<String>> localizedAliases;
   FieldSemantics(
       {required this.label,
       this.description,
       this.concept,
-      List<String> aliases = const []})
-      : aliases = canonicalStrings(aliases) {}
+      List<String> aliases = const [],
+      Map<String, String> localizedLabels = const <String, String>{},
+      Map<String, List<String>> localizedAliases =
+          const <String, List<String>>{}})
+      : aliases = canonicalStrings(aliases),
+        localizedLabels = _localeStrings(localizedLabels),
+        localizedAliases = _localeAliases(localizedAliases) {}
+
+  /// Display label for [locale]. The field id stays the canonical identity.
+  String labelFor(String locale) => _textFor(locale, localizedLabels) ?? label;
+
+  List<String> aliasesFor(String locale) =>
+      _aliasesFor(locale, localizedAliases) ?? aliases;
+
   @override
   Map<String, Object?> toJson() => {
         'label': label,
         if (description != null) 'description': description,
         if (concept != null) 'concept': concept,
         'aliases': aliases,
+        if (localizedLabels.isNotEmpty) 'localizedLabels': localizedLabels,
+        if (localizedAliases.isNotEmpty)
+          'localizedAliases': {
+            for (final entry in localizedAliases.entries)
+              entry.key: entry.value,
+          },
       };
   factory FieldSemantics.fromJson(Object? input) {
     final j = jsonObject(input);
@@ -120,6 +140,12 @@ final class FieldSemantics with StructuralContract {
       concept:
           j.containsKey('concept') ? requireType<String>(j['concept']) : null,
       aliases: j.containsKey('aliases') ? stringList(j['aliases']) : const [],
+      localizedLabels: j.containsKey('localizedLabels')
+          ? _readLocaleStrings(j['localizedLabels'])
+          : const <String, String>{},
+      localizedAliases: j.containsKey('localizedAliases')
+          ? _readLocaleAliases(j['localizedAliases'])
+          : const <String, List<String>>{},
     );
   }
 }
@@ -171,19 +197,51 @@ final class FormOption with StructuralContract {
   final String id;
   final String label;
   final List<String> aliases;
+  final Map<String, String> localizedLabels;
+  final Map<String, List<String>> localizedAliases;
   final Map<String, Object?> extensions;
   FormOption(
       {required this.id,
       required this.label,
       List<String> aliases = const [],
+      Map<String, String> localizedLabels = const <String, String>{},
+      Map<String, List<String>> localizedAliases =
+          const <String, List<String>>{},
       Map<String, Object?> extensions = const {}})
       : aliases = canonicalStrings(aliases),
+        localizedLabels = _localeStrings(localizedLabels),
+        localizedAliases = _localeAliases(localizedAliases),
         extensions = jsonObject(extensions) {}
+
+  String labelFor(String locale) => _textFor(locale, localizedLabels) ?? label;
+
+  List<String> aliasesFor(String locale) =>
+      _aliasesFor(locale, localizedAliases) ?? aliases;
+
+  /// Id plus the names for [locale]. A localized label replaces the base label
+  /// for that locale; the option id remains the written value.
+  List<String> namesFor(String locale) {
+    final key = _localeKey(locale);
+    final language = key.split('-').first;
+    final has = localizedLabels.containsKey(key) ||
+        localizedLabels.containsKey(language) ||
+        localizedAliases.containsKey(key) ||
+        localizedAliases.containsKey(language);
+    if (!has) return [id, label, ...aliases];
+    return [id, labelFor(locale), ...aliasesFor(locale)];
+  }
+
   @override
   Map<String, Object?> toJson() => {
         'id': id,
         'label': label,
         'aliases': aliases,
+        if (localizedLabels.isNotEmpty) 'localizedLabels': localizedLabels,
+        if (localizedAliases.isNotEmpty)
+          'localizedAliases': {
+            for (final entry in localizedAliases.entries)
+              entry.key: entry.value,
+          },
         'extensions': extensions,
       };
   factory FormOption.fromJson(Object? input) {
@@ -192,6 +250,12 @@ final class FormOption with StructuralContract {
       id: requireType<String>(j['id']),
       label: requireType<String>(j['label']),
       aliases: j.containsKey('aliases') ? stringList(j['aliases']) : const [],
+      localizedLabels: j.containsKey('localizedLabels')
+          ? _readLocaleStrings(j['localizedLabels'])
+          : const <String, String>{},
+      localizedAliases: j.containsKey('localizedAliases')
+          ? _readLocaleAliases(j['localizedAliases'])
+          : const <String, List<String>>{},
       extensions:
           j.containsKey('extensions') ? jsonObject(j['extensions']) : const {},
     );
@@ -249,6 +313,58 @@ final class ChoiceDefinition extends ValueDefinition {
   const ChoiceDefinition({required this.multiple});
   @override
   Map<String, Object?> toJson() => {'type': 'choice', 'multiple': multiple};
+}
+
+String _localeKey(String locale) {
+  final key = locale.trim().replaceAll('_', '-').toLowerCase();
+  if (key.isEmpty) throw ArgumentError('Invalid locale');
+  return key;
+}
+
+Map<String, String> _localeStrings(Map<String, String> input) {
+  final out = <String, String>{};
+  for (final entry in input.entries) {
+    if (entry.value.trim().isEmpty) {
+      throw ArgumentError('Empty localized label');
+    }
+    out[_localeKey(entry.key)] = entry.value;
+  }
+  final keys = out.keys.toList()..sort();
+  return Map.unmodifiable({for (final key in keys) key: out[key]!});
+}
+
+Map<String, List<String>> _localeAliases(Map<String, List<String>> input) {
+  final out = <String, List<String>>{};
+  for (final entry in input.entries) {
+    final aliases = canonicalStrings(entry.value);
+    if (aliases.isEmpty) throw ArgumentError('Empty localized aliases');
+    out[_localeKey(entry.key)] = aliases;
+  }
+  final keys = out.keys.toList()..sort();
+  return Map.unmodifiable({for (final key in keys) key: out[key]!});
+}
+
+Map<String, String> _readLocaleStrings(Object? input) {
+  final raw = jsonObject(input);
+  return _localeStrings({
+    for (final entry in raw.entries) entry.key: requireType<String>(entry.value)
+  });
+}
+
+Map<String, List<String>> _readLocaleAliases(Object? input) {
+  final raw = jsonObject(input);
+  return _localeAliases(
+      {for (final entry in raw.entries) entry.key: stringList(entry.value)});
+}
+
+String? _textFor(String locale, Map<String, String> labels) {
+  final key = _localeKey(locale);
+  return labels[key] ?? labels[key.split('-').first];
+}
+
+List<String>? _aliasesFor(String locale, Map<String, List<String>> aliases) {
+  final key = _localeKey(locale);
+  return aliases[key] ?? aliases[key.split('-').first];
 }
 
 abstract final class FormIRCodec {

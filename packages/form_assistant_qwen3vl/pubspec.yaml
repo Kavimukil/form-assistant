@@ -1,0 +1,13 @@
+name: form_assistant_qwen3vl
+description: Qwen3VL llama.cpp IntelligenceAdapter using the frozen Phase 6R extraction contract.
+version: 0.1.0
+publish_to: none
+environment:
+  sdk: ">=3.6.0 <4.0.0"
+dependencies:
+  form_assistant_core:
+    path: ../form_assistant_core
+  form_assistant_function_gemma:
+    path: ../form_assistant_function_gemma
+dev_dependencies:
+  test: ^1.25.0

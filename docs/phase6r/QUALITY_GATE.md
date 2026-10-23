@@ -6,9 +6,12 @@ Identical writes are deduplicated with a count; independent call order is preser
 Provider-neutral QualityGate validates constraints and allowed actions; invalid values
 become canonical clarification and cannot commit. Empty extraction clarifies.
 
-Internal outcomes are ACCEPT/REJECT/CLARIFY/FALLBACK. FALLBACK is reserved and not
-routed in the initial benchmark. Strict decoding errors remain explicit exceptions,
-not repaired empty answers. Canonical outcomes remain compatible accept/clarify.
+Internal outcomes are ACCEPT/REJECT/CLARIFY/FALLBACK. `QualityGate.evaluate` still
+returns only accept or clarify, and ambiguous reasons stay clarify even when
+fallback is allowed. Phase 7 `considerFallback` promotes only a non-ambiguous
+local failure, and `HybridIntelligenceAdapter` is what routes that to cloud.
+Strict decoding errors remain explicit exceptions, not repaired empty answers.
+Canonical outcomes remain compatible accept/clarify.
 
 Migration conflict: original core test intentionally retains a valid write and
 clarifies an invalid same-field write. Keep that provider-neutral default unchanged;

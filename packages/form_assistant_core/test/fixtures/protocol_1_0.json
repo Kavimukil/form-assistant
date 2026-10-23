@@ -1,0 +1,56 @@
+{
+  "specVersion": "1.0",
+  "actions": [
+    {
+      "type": "set_value",
+      "fieldId": "age",
+      "value": {"type": "integer", "value": 32}
+    },
+    {
+      "type": "set_value",
+      "fieldId": "name",
+      "value": {"type": "string", "value": "Ada"}
+    },
+    {
+      "type": "set_value",
+      "fieldId": "score",
+      "value": {"type": "number", "value": 1.5}
+    },
+    {
+      "type": "set_value",
+      "fieldId": "consent",
+      "value": {"type": "boolean", "value": true}
+    },
+    {
+      "type": "set_value",
+      "fieldId": "dob",
+      "value": {"type": "date", "value": "2024-02-29"}
+    },
+    {
+      "type": "set_value",
+      "fieldId": "plan",
+      "value": {"type": "choice", "value": "basic"}
+    },
+    {
+      "type": "set_value",
+      "fieldId": "tags",
+      "value": {"type": "multi_choice", "value": ["a", "b"]}
+    },
+    {"type": "clear_value", "fieldId": "age"},
+    {
+      "type": "navigate",
+      "target": {"type": "field", "fieldId": "name"}
+    },
+    {"type": "navigate", "target": {"type": "next"}},
+    {"type": "navigate", "target": {"type": "previous"}},
+    {
+      "type": "request_clarification",
+      "reason": "ambiguous",
+      "fieldIds": ["age"],
+      "detail": "Which age?"
+    }
+  ],
+  "unknownActions": [
+    {"type": "delete_form"}
+  ]
+}

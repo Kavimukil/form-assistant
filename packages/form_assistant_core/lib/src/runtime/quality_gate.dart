@@ -11,6 +11,19 @@ final class QualityDecision {
       : actions = List.unmodifiable(actions);
 }
 
+/// Reasons that stay clarification. They are not cloud fallbacks.
+const qualityClarificationReasons = {
+  'low_confidence',
+  'no_answer',
+  'conflicting_writes',
+  'invalid_value',
+  'non_writable_field',
+  'disallowed_action',
+  'unknown_context_field',
+  'unknown_navigation_field',
+  'unknown_clarification_field',
+};
+
 /// Provider-neutral proposal safety check. Runtime/bridge still validate commits.
 final class QualityGate {
   final double minimumConfidence;
@@ -113,5 +126,24 @@ final class QualityGate {
         invalid ? QualityOutcome.clarify : QualityOutcome.accept,
         invalid ? 'invalid_value' : 'validated',
         checked);
+  }
+
+  /// Accept stays accept. Ambiguous and invalid clarifications stay clarify.
+  /// Any other clarify or an existing fallback becomes fallback only when
+  /// [allowFallback] is true; otherwise it stays clarify.
+  QualityDecision considerFallback(QualityDecision decision,
+      {required bool allowFallback}) {
+    if (decision.outcome == QualityOutcome.accept) return decision;
+    final staysLocal = qualityClarificationReasons.contains(decision.reason);
+    if (!allowFallback || staysLocal) {
+      return decision.outcome == QualityOutcome.clarify
+          ? decision
+          : QualityDecision(
+              QualityOutcome.clarify, decision.reason, decision.actions);
+    }
+    return decision.outcome == QualityOutcome.fallback
+        ? decision
+        : QualityDecision(
+            QualityOutcome.fallback, decision.reason, decision.actions);
   }
 }
